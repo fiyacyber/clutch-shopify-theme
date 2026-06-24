@@ -1,0 +1,623 @@
+{% doc %}
+Renders the Clutch Smart Business Card flagship homepage section.
+@example
+{% render 'clutch-connect-card-section' %}
+{% enddoc %}
+
+<section class="ch-connect" aria-labelledby="ch-connect-title">
+  <div class="ch-inner ch-connect__inner">
+    <div class="ch-connect__copy">
+      <p class="ch-eyebrow">Smart Business Card</p>
+      <h2 id="ch-connect-title">Smart Business Cards Powered by QR Pro</h2>
+      <p class="ch-connect__subtitle">
+        Premium metal NFC business cards that connect customers to a live digital profile, dynamic QR code,
+        lead form, and scan/tap analytics.
+      </p>
+      <p class="ch-connect__body">
+        Share your contact info, website, socials, portfolio, or lead form with a tap or scan. QR Pro Hosting keeps
+        your card editable, trackable, and ready for every follow-up.
+      </p>
+      <ul class="ch-connect__features" aria-label="Clutch Smart Business Card features">
+        <li>Premium metal NFC business card</li>
+        <li>NFC tap destination + dynamic QR code</li>
+        <li>Editable Clutch digital profile</li>
+        <li>Lead capture and Apple Wallet contact card</li>
+        <li>Scan/tap tracking with QR Pro analytics</li>
+      </ul>
+      <div class="ch-connect__pricing" aria-label="Clutch Smart Business Card pricing">
+        <span><strong>$149</strong> Smart Business Card</span>
+        <span><strong>$99</strong> additional cards</span>
+        <span><strong>$14.99/month</strong> QR Pro Hosting</span>
+      </div>
+      <div class="ch-connect__actions">
+        <a class="ch-btn ch-btn--primary" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+        <a class="ch-btn ch-btn--ghost-dark" href="/pages/qr-pro">See QR Pro Hosting</a>
+      </div>
+    </div>
+
+    <div class="ch-connect__visual" data-mockup-version="two-card-metal" aria-hidden="true">
+      {% render 'clutch-connect-card-mockup' %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.ch-connect {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 166, 101, 0.16), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #F7F8FA 100%);
+  overflow: hidden;
+  padding: clamp(3rem, 7vw, 6rem) 0;
+}
+
+.ch-connect__inner {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 6vw, 4.5rem);
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+}
+
+.ch-connect__copy h2 {
+  color: #384862;
+  font-size: clamp(2rem, 5vw, 4.4rem);
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  margin: 0 0 1rem;
+  max-width: 760px;
+  text-wrap: balance;
+}
+
+.ch-connect__subtitle {
+  color: rgba(56, 72, 98, 0.86);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.55;
+  margin: 0 0 1rem;
+  max-width: 720px;
+}
+
+.ch-connect__body {
+  color: rgba(56, 72, 98, 0.76);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0 0 1.5rem;
+  max-width: 680px;
+}
+
+.ch-connect__features {
+  display: grid;
+  gap: 0.7rem;
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+}
+
+.ch-connect__features li {
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(56, 72, 98, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(56, 72, 98, 0.06);
+  color: #384862;
+  display: flex;
+  font-weight: 750;
+  gap: 0.75rem;
+  padding: 0.78rem 0.9rem;
+}
+
+.ch-connect__features li::before {
+  align-items: center;
+  background: rgba(255, 166, 101, 0.18);
+  border-radius: 999px;
+  color: #FFA665;
+  content: '✓';
+  display: inline-flex;
+  flex: 0 0 24px;
+  font-size: 0.85rem;
+  font-weight: 950;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+}
+
+.ch-connect__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.ch-connect__pricing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: -0.6rem 0 1.75rem;
+}
+
+.ch-connect__pricing span {
+  background: #fff;
+  border: 1px solid rgba(255, 166, 101, 0.28);
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(56, 72, 98, 0.06);
+  color: rgba(56, 72, 98, 0.82);
+  display: inline-flex;
+  gap: 0.35rem;
+  padding: 0.68rem 0.9rem;
+}
+
+.ch-connect__pricing strong {
+  color: #384862;
+}
+
+.ch-connect__visual {
+  min-height: 0;
+  perspective: 1200px;
+  position: relative;
+}
+
+.ch-connect__visual::before {
+  background: radial-gradient(circle, rgba(255, 166, 101, 0.26), transparent 66%);
+  border-radius: 999px;
+  content: '';
+  filter: blur(10px);
+  height: 360px;
+  position: absolute;
+  right: 2%;
+  top: 8%;
+  width: 360px;
+}
+
+.ch-connect__card {
+  aspect-ratio: 1.586 / 1;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255, 166, 101, 0.18), transparent 24%),
+    linear-gradient(135deg, #101827 0%, #24344f 45%, #0c111c 100%);
+  border: 1px solid rgba(255, 166, 101, 0.35);
+  border-radius: 24px;
+  box-shadow: 0 35px 80px rgba(15, 23, 42, 0.28);
+  box-sizing: border-box;
+  color: #fff;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  left: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding: clamp(1.15rem, 2.3vw, 1.8rem);
+  position: absolute;
+  top: 18%;
+  transform: perspective(1200px) rotateY(-8deg) rotateX(4deg) rotateZ(-2deg);
+  transform-origin: center;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+  width: clamp(340px, 42vw, 560px);
+  z-index: 2;
+}
+
+.ch-connect__card::before {
+  background: linear-gradient(115deg, transparent 22%, rgba(255, 255, 255, 0.92) 43%, transparent 62%);
+  content: '';
+  filter: blur(14px);
+  inset: -36% -42%;
+  opacity: 0.18;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-18%) rotate(8deg);
+}
+
+.ch-connect__card::after {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 48%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 12px);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.ch-connect__visual:hover .ch-connect__card {
+  box-shadow: 0 40px 90px rgba(24, 33, 48, 0.34);
+  transform: perspective(1200px) rotateY(-4deg) rotateX(2deg) translateY(-6px);
+}
+
+.ch-connect__card-top,
+.ch-connect__card-footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.ch-connect__logo {
+  display: block;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.24));
+  height: auto;
+  max-height: clamp(34px, 5vw, 54px);
+  object-fit: contain;
+  object-position: left center;
+  width: clamp(110px, 16vw, 170px);
+}
+
+.ch-connect__nfc {
+  display: inline-grid;
+  gap: 4px;
+  justify-items: end;
+  transform: rotate(-4deg);
+}
+
+.ch-connect__nfc i {
+  border: 2px solid #FFA665;
+  border-left: 0;
+  border-radius: 0 999px 999px 0;
+  display: block;
+  height: 14px;
+  opacity: 0.9;
+  width: 10px;
+}
+
+.ch-connect__nfc i:nth-child(2) {
+  height: 22px;
+  width: 18px;
+}
+
+.ch-connect__nfc i:nth-child(3) {
+  height: 30px;
+  width: 26px;
+}
+
+.ch-connect__card-body {
+  align-items: center;
+  display: grid;
+  gap: clamp(1rem, 2.8vw, 1.8rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  position: relative;
+  z-index: 1;
+}
+
+.ch-connect__identity span,
+.ch-connect__card-footer span {
+  color: rgba(255, 255, 255, 0.56);
+  display: block;
+  font-size: clamp(0.58rem, 1.1vw, 0.72rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ch-connect__identity strong {
+  color: #fff;
+  display: block;
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-top: 0.35rem;
+  text-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.ch-connect__identity em {
+  color: #FFA665;
+  display: block;
+  font-size: clamp(0.82rem, 1.5vw, 1rem);
+  font-style: normal;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  margin-top: 0.45rem;
+  text-transform: uppercase;
+}
+
+.ch-connect__qr-block {
+  display: grid;
+  gap: 0.55rem;
+  justify-items: center;
+}
+
+.ch-connect__qr-block span {
+  color: rgba(255, 255, 255, 0.66);
+  font-size: clamp(0.5rem, 1vw, 0.64rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ch-connect__qr {
+  background: #fff;
+  border: 7px solid #fff;
+  border-radius: 18px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
+  display: grid;
+  gap: 3px;
+  grid-template-columns: repeat(6, 1fr);
+  height: clamp(98px, 11vw, 138px);
+  padding: 4px;
+  width: clamp(98px, 11vw, 138px);
+}
+
+.ch-connect__qr i {
+  background: #101827;
+  border-radius: 2px;
+}
+
+.ch-connect__qr i:nth-child(2n),
+.ch-connect__qr i:nth-child(7),
+.ch-connect__qr i:nth-child(13),
+.ch-connect__qr i:nth-child(19),
+.ch-connect__qr i:nth-child(31) {
+  background: #FFA665;
+}
+
+.ch-connect__card-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 0.85rem;
+}
+
+.ch-connect__phone {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), #f8fafc);
+  border: 1px solid rgba(56, 72, 98, 0.08);
+  border-radius: 30px;
+  box-shadow: 0 28px 70px rgba(56, 72, 98, 0.18);
+  display: grid;
+  gap: 0.72rem;
+  justify-items: center;
+  padding: 1rem 0.85rem 0.95rem;
+  position: absolute;
+  right: 0;
+  top: 4%;
+  width: clamp(150px, 16vw, 210px);
+  z-index: 1;
+}
+
+.ch-connect__phone-speaker {
+  background: #d6dce5;
+  border-radius: 999px;
+  height: 5px;
+  width: 44px;
+}
+
+.ch-connect__phone-avatar {
+  align-items: center;
+  background: linear-gradient(135deg, #FFA665, #ffc596);
+  border-radius: 999px;
+  color: #384862;
+  display: flex;
+  font-size: 0.82rem;
+  font-weight: 950;
+  height: 52px;
+  justify-content: center;
+  margin-top: 0.1rem;
+  width: 52px;
+}
+
+.ch-connect__phone strong {
+  color: #384862;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.ch-connect__phone span {
+  color: rgba(56, 72, 98, 0.55);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ch-connect__phone-actions {
+  display: grid;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.ch-connect__phone-actions i {
+  background: #384862;
+  border-radius: 999px;
+  color: #ffffff;
+  display: block;
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 850;
+  padding: 0.55rem 0.75rem;
+  text-align: center;
+}
+
+.ch-connect__phone-actions i:nth-child(3) {
+  background: #FFA665;
+  color: #384862;
+}
+
+.ch-connect__badges {
+  bottom: 7%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  left: 4%;
+  position: absolute;
+  z-index: 3;
+}
+
+.ch-connect__finishes {
+  display: flex;
+  gap: 0.65rem;
+  position: absolute;
+  right: 3%;
+  top: 67%;
+  z-index: 3;
+}
+
+.ch-connect__finish {
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  box-shadow: 0 14px 30px rgba(56, 72, 98, 0.16);
+  color: #384862;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 0.5rem 0.72rem;
+}
+
+.ch-connect__finish--black {
+  background: linear-gradient(135deg, #101827, #334155);
+  color: #fff;
+}
+
+.ch-connect__finish--white {
+  background: linear-gradient(135deg, #ffffff, #e8edf4);
+}
+
+.ch-connect__badges span {
+  background: #fff;
+  border: 1px solid rgba(255, 166, 101, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 14px 32px rgba(56, 72, 98, 0.14);
+  color: #384862;
+  display: grid;
+  font-size: 0.72rem;
+  font-weight: 850;
+  gap: 0.08rem;
+  min-width: 92px;
+  padding: 0.62rem 0.85rem;
+  text-transform: uppercase;
+}
+
+.ch-connect__badges strong {
+  color: #FFA665;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+@media screen and (max-width: 899px) {
+  .ch-connect__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .ch-connect__visual {
+    min-height: 560px;
+    width: 100%;
+  }
+
+  .ch-connect__card {
+    width: min(100%, 560px);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .ch-connect {
+    padding: 3rem 0;
+  }
+
+  .ch-connect__copy h2 {
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .ch-connect__actions {
+    flex-direction: column;
+  }
+
+  .ch-connect__actions .ch-btn {
+    width: 100%;
+  }
+
+  .ch-connect__visual {
+    display: grid;
+    gap: 1rem;
+    min-height: 0;
+    perspective: none;
+  }
+
+  .ch-connect__card,
+  .ch-connect__phone,
+  .ch-connect__finishes,
+  .ch-connect__badges {
+    left: auto;
+    position: relative;
+    right: auto;
+    top: auto;
+  }
+
+  .ch-connect__card {
+    margin-inline: auto;
+    order: 1;
+    transform: none;
+    width: 100%;
+  }
+
+  .ch-connect__visual:hover .ch-connect__card {
+    transform: translateY(-4px);
+  }
+
+  .ch-connect__phone {
+    justify-self: end;
+    order: 2;
+    width: min(72%, 230px);
+  }
+
+  .ch-connect__finishes {
+    justify-content: center;
+    order: 3;
+  }
+
+  .ch-connect__badges {
+    justify-content: center;
+    order: 4;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .ch-connect__card {
+    aspect-ratio: 1.586 / 1;
+    padding: 1rem;
+  }
+
+  .ch-connect__card-body {
+    gap: 0.6rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .ch-connect__logo {
+    width: 96px;
+  }
+
+  .ch-connect__identity strong {
+    font-size: 1.45rem;
+  }
+
+  .ch-connect__identity em {
+    font-size: 0.72rem;
+  }
+
+  .ch-connect__qr-block {
+    gap: 0.35rem;
+  }
+
+  .ch-connect__qr {
+    border-width: 5px;
+    gap: 2px;
+    height: 74px;
+    width: 74px;
+  }
+
+  .ch-connect__qr-block span,
+  .ch-connect__card-footer span,
+  .ch-connect__identity span {
+    font-size: 0.48rem;
+  }
+
+  .ch-connect__nfc i {
+    height: 10px;
+    width: 8px;
+  }
+
+  .ch-connect__nfc i:nth-child(2) {
+    height: 16px;
+    width: 14px;
+  }
+
+  .ch-connect__nfc i:nth-child(3) {
+    height: 22px;
+    width: 20px;
+  }
+
+  .ch-connect__phone {
+    justify-self: center;
+    width: min(100%, 230px);
+  }
+}
+{% endstylesheet %}

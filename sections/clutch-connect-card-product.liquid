@@ -1,0 +1,467 @@
+{% liquid
+  assign current_product = product
+  if current_product == blank
+    assign current_product = closest.product
+  endif
+%}
+
+{% if current_product.handle == 'clutch-connect-card' %}
+  <section class="cc-product" aria-labelledby="cc-product-title">
+    <div class="cc-product__inner">
+      <div class="cc-product__hero">
+        <div class="cc-product__copy">
+          <p class="cc-product__eyebrow">Clutch Smart Business Card</p>
+          <h2 id="cc-product-title">One Card. Unlimited Updates.</h2>
+          <p>
+            Share your contact info, website, socials, portfolio, or lead form with a tap or scan — powered by
+            QR Pro Hosting.
+          </p>
+          <div class="cc-product__pricing" aria-label="Clutch Smart Business Card pricing">
+            <span><strong>$149</strong> Smart Business Card</span>
+            <span><strong>$99</strong> Additional Smart Cards</span>
+            <span><strong>$14.99/month</strong> QR Pro Hosting</span>
+          </div>
+        </div>
+
+        <div class="cc-product__mockup" aria-hidden="true">
+          {% render 'clutch-connect-card-mockup' %}
+        </div>
+      </div>
+
+      <div class="cc-product__material">
+        <div>
+          <p class="cc-product__eyebrow">Premium Metal Card. Smart Digital Profile.</p>
+          <h3>Premium Metal Card. Smart Digital Profile.</h3>
+          <p>
+            Your card is programmed to a Clutch-hosted dynamic URL. You can update your profile, links, and
+            destination anytime without replacing the physical card.
+          </p>
+        </div>
+        <ul>
+          <li>Dynamic QR code</li>
+          <li>NFC tap destination</li>
+          <li>Editable digital profile</li>
+          <li>Apple Wallet contact card</li>
+          <li>Lead capture form</li>
+          <li>Scan/tap tracking</li>
+          <li>Basic analytics dashboard</li>
+          <li>PNG, SVG, JPEG, and PDF QR downloads</li>
+          <li>Unlimited profile updates</li>
+        </ul>
+      </div>
+
+      <div class="cc-product__finishes" aria-label="Available visual finish options">
+        <article class="cc-product__finish cc-product__finish--black">
+          <span></span>
+          <h3>Black Metal</h3>
+          <p>Dark steel finish with engraved-style Clutch branding and smart QR/NFC sharing.</p>
+        </article>
+        <article class="cc-product__finish cc-product__finish--white">
+          <span></span>
+          <h3>Pearl White Metal</h3>
+          <p>Clean pearl metal finish with premium contrast details for a polished first impression.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .cc-product {
+    background: #F7F8FA;
+    color: #384862;
+    padding: clamp(3rem, 7vw, 6rem) 0;
+  }
+
+  .cc-product__inner {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    margin: 0 auto;
+    max-width: 1180px;
+    padding: 0 24px;
+  }
+
+  .cc-product__hero,
+  .cc-product__material,
+  .cc-product__finish {
+    background: #fff;
+    border: 1px solid rgba(255, 166, 101, 0.35);
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(56, 72, 98, 0.1);
+  }
+
+  .cc-product__hero {
+    align-items: center;
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+    overflow: hidden;
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .cc-product__eyebrow {
+    color: #FFA665;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .cc-product h2,
+  .cc-product h3,
+  .cc-product p {
+    margin-top: 0;
+  }
+
+  .cc-product__copy h2 {
+    font-size: clamp(2.35rem, 5vw, 5rem);
+    letter-spacing: -0.05em;
+    line-height: 0.98;
+    margin-bottom: 1rem;
+    text-wrap: balance;
+  }
+
+  .cc-product__copy p,
+  .cc-product__material p,
+  .cc-product__finish p {
+    color: rgba(56, 72, 98, 0.76);
+    font-size: clamp(1rem, 1.7vw, 1.16rem);
+    line-height: 1.65;
+  }
+
+  .cc-product__pricing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .cc-product__pricing span {
+    border: 1px solid rgba(255, 166, 101, 0.32);
+    border-radius: 999px;
+    color: rgba(56, 72, 98, 0.82);
+    padding: 0.7rem 0.9rem;
+  }
+
+  .cc-product__pricing strong {
+    color: #384862;
+  }
+
+  .cc-product__mockup {
+    min-height: 0;
+    perspective: none;
+    position: relative;
+  }
+
+  .cc-product__card {
+    aspect-ratio: 1.586 / 1;
+    background:
+      radial-gradient(circle at 16% 18%, rgba(255, 166, 101, 0.18), transparent 24%),
+      linear-gradient(135deg, #101827 0%, #24344f 45%, #0c111c 100%);
+    border: 1px solid rgba(255, 166, 101, 0.35);
+    border-radius: 24px;
+    box-shadow: 0 35px 80px rgba(15, 23, 42, 0.28);
+    color: #fff;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    padding: clamp(1rem, 2vw, 1.65rem);
+    position: absolute;
+    right: 0;
+    top: 14%;
+    transform: perspective(1200px) rotateY(-8deg) rotateX(4deg) rotateZ(-2deg);
+    width: clamp(340px, 42vw, 560px);
+    z-index: 2;
+  }
+
+  .cc-product__card::before {
+    background: linear-gradient(115deg, transparent 22%, rgba(255, 255, 255, 0.92) 43%, transparent 62%);
+    content: '';
+    filter: blur(14px);
+    inset: -36% -42%;
+    opacity: 0.18;
+    pointer-events: none;
+    position: absolute;
+    transform: translateX(-18%) rotate(8deg);
+  }
+
+  .cc-product__card::after {
+    background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 12px);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .cc-product__card-top,
+  .cc-product__card-main,
+  .cc-product__card p {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cc-product__card-top,
+  .cc-product__card-main {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .cc-product__card img {
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.24));
+    height: auto;
+    width: clamp(110px, 15vw, 170px);
+  }
+
+  .cc-product__nfc {
+    display: inline-grid;
+    gap: 4px;
+    justify-items: end;
+  }
+
+  .cc-product__nfc i {
+    border: 2px solid #FFA665;
+    border-left: 0;
+    border-radius: 0 999px 999px 0;
+    display: block;
+    height: 14px;
+    width: 10px;
+  }
+
+  .cc-product__nfc i:nth-child(2) {
+    height: 22px;
+    width: 18px;
+  }
+
+  .cc-product__nfc i:nth-child(3) {
+    height: 30px;
+    width: 26px;
+  }
+
+  .cc-product__card-main span,
+  .cc-product__card p {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .cc-product__card-main strong {
+    display: block;
+    font-size: clamp(1.65rem, 4vw, 2.7rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-top: 0.35rem;
+  }
+
+  .cc-product__qr {
+    background: #fff;
+    border: 7px solid #fff;
+    border-radius: 18px;
+    display: grid;
+    gap: 3px;
+    grid-template-columns: repeat(6, 1fr);
+    height: clamp(96px, 10vw, 132px);
+    padding: 4px;
+    width: clamp(96px, 10vw, 132px);
+  }
+
+  .cc-product__qr i {
+    background: #101827;
+    border-radius: 2px;
+  }
+
+  .cc-product__qr i:nth-child(2n),
+  .cc-product__qr i:nth-child(7),
+  .cc-product__qr i:nth-child(13),
+  .cc-product__qr i:nth-child(19),
+  .cc-product__qr i:nth-child(31) {
+    background: #FFA665;
+  }
+
+  .cc-product__profile {
+    background: #fff;
+    border: 1px solid rgba(56, 72, 98, 0.08);
+    border-radius: 28px;
+    box-shadow: 0 24px 60px rgba(56, 72, 98, 0.16);
+    color: #384862;
+    display: grid;
+    gap: 0.7rem;
+    justify-items: center;
+    left: 0;
+    padding: 1rem;
+    position: absolute;
+    top: 2%;
+    width: 190px;
+    z-index: 1;
+  }
+
+  .cc-product__avatar {
+    align-items: center;
+    background: #FFA665;
+    border-radius: 999px;
+    display: flex;
+    font-weight: 950;
+    height: 52px;
+    justify-content: center;
+    width: 52px;
+  }
+
+  .cc-product__profile span {
+    color: rgba(56, 72, 98, 0.62);
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .cc-product__profile i {
+    background: #FFA665;
+    border-radius: 999px;
+    color: #384862;
+    font-style: normal;
+    font-weight: 900;
+    padding: 0.55rem 0.8rem;
+  }
+
+  .cc-product__material {
+    align-items: start;
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .cc-product__material h3 {
+    font-size: clamp(1.7rem, 3vw, 3rem);
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+
+  .cc-product__material ul {
+    display: grid;
+    gap: 0.8rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cc-product__material li {
+    background: #F7F8FA;
+    border: 1px solid rgba(56, 72, 98, 0.08);
+    border-radius: 14px;
+    font-weight: 800;
+    padding: 0.85rem 1rem;
+  }
+
+  .cc-product__finishes {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cc-product__finish {
+    padding: 1.2rem;
+  }
+
+  .cc-product__finish span {
+    aspect-ratio: 1.586 / 1;
+    border-radius: 18px;
+    display: block;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+
+  .cc-product__finish--black span {
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 40%),
+      repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 12px),
+      linear-gradient(135deg, #101827, #24344f 48%, #0c111c);
+    border: 1px solid rgba(255, 166, 101, 0.35);
+  }
+
+  .cc-product__finish--white span {
+    background:
+      linear-gradient(135deg, rgba(255, 166, 101, 0.2), transparent 34%),
+      repeating-linear-gradient(135deg, rgba(56, 72, 98, 0.08) 0 1px, transparent 1px 12px),
+      linear-gradient(135deg, #ffffff, #edf1f6 55%, #d9e0ea);
+    border: 1px solid rgba(56, 72, 98, 0.14);
+  }
+
+  .cc-product__finish h3 {
+    margin-bottom: 0.45rem;
+  }
+
+  @media screen and (max-width: 899px) {
+    .cc-product__hero,
+    .cc-product__material,
+    .cc-product__finishes {
+      grid-template-columns: 1fr;
+    }
+
+    .cc-product__card {
+      left: 0;
+      right: auto;
+      width: min(100%, 560px);
+    }
+  }
+
+  @media screen and (max-width: 520px) {
+    .cc-product__hero,
+    .cc-product__material {
+      padding: 1rem;
+    }
+
+    .cc-product__mockup {
+      display: grid;
+      gap: 1rem;
+      min-height: 0;
+    }
+
+    .cc-product__card,
+    .cc-product__profile {
+      left: auto;
+      position: relative;
+      right: auto;
+      top: auto;
+    }
+
+    .cc-product__card {
+      aspect-ratio: 1.586 / 1;
+      padding: 1rem;
+      transform: none;
+      width: 100%;
+    }
+
+    .cc-product__card-main strong {
+      font-size: 1.4rem;
+    }
+
+    .cc-product__card-main span,
+    .cc-product__card p {
+      font-size: 0.48rem;
+    }
+
+    .cc-product__qr {
+      border-width: 5px;
+      gap: 2px;
+      height: 72px;
+      width: 72px;
+    }
+
+    .cc-product__profile {
+      justify-self: center;
+      width: min(100%, 220px);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Smart Card Product",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,143 @@
+<section class="clutch-home-hero color-{{ section.settings.color_scheme }}">
+  <div class="clutch-home-hero__inner">
+    <img
+      class="clutch-home-hero__logo"
+      src="{{ 'clutch-hero-logo-1920x700.png' | asset_url }}"
+      alt="Clutch Print Shop"
+      width="1920"
+      height="700"
+      loading="eager"
+    >
+    <h1>Print Products Built For Growing Businesses</h1>
+    <p>
+      Order business cards, flyers, signs, banners, QR-enabled print campaigns, and custom bundles from one clean shop.
+    </p>
+    <div class="clutch-home-hero__actions">
+      <a class="button clutch-home-hero__button" href="{{ routes.all_products_collection_url }}">Shop Products</a>
+      <a class="button-secondary clutch-home-hero__button" href="/pages/contact">Request Custom Order</a>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-home-hero {
+    background: linear-gradient(135deg, rgba(56, 72, 98, 0.96), rgba(56, 72, 98, 0.86));
+    box-sizing: border-box;
+    display: grid;
+    min-height: clamp(550px, 60vh, 650px);
+    overflow: visible;
+    padding: clamp(5rem, 9vw, 6.75rem) var(--page-margin) 80px;
+    place-items: center;
+  }
+
+  .clutch-home-hero__inner {
+    display: grid;
+    justify-items: center;
+    margin-inline: auto;
+    max-width: 900px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .clutch-home-hero__logo {
+    aspect-ratio: 1920 / 700;
+    display: block;
+    height: auto;
+    margin: 0 auto clamp(0.85rem, 2vw, 1.25rem);
+    max-width: min(520px, 82vw);
+    object-fit: contain;
+    width: 100%;
+  }
+
+  .clutch-home-hero h1 {
+    color: #fff;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1.7rem, 5.6vw, 3.5rem);
+    line-height: 0.95;
+    margin: 0 auto;
+    max-width: 900px;
+    text-wrap: balance;
+  }
+
+  .clutch-home-hero p {
+    color: rgba(255, 255, 255, 0.84);
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(0.92rem, 2vw, 1.05rem);
+    line-height: 1.5;
+    margin: 0.9rem auto 0;
+    max-width: 620px;
+  }
+
+  .clutch-home-hero__actions {
+    display: grid;
+    gap: 0.75rem;
+    margin: 40px auto 0;
+    max-width: 460px;
+    position: static;
+  }
+
+  .clutch-home-hero__button {
+    min-height: 50px;
+    width: 100%;
+  }
+
+  .clutch-home-hero__actions .button {
+    background: #ffa665 !important;
+    color: #384862 !important;
+  }
+
+  .clutch-home-hero__actions .button-secondary {
+    background: transparent !important;
+    border-color: rgba(255, 255, 255, 0.72) !important;
+    color: #fff !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    .clutch-home-hero__actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .clutch-home-hero {
+      min-height: clamp(550px, 60vh, 650px);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .clutch-home-hero {
+      min-height: auto;
+      padding-block: 4.5rem 80px;
+    }
+
+    .clutch-home-hero__logo {
+      max-width: min(360px, 86vw);
+    }
+
+    .clutch-home-hero h1 {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Clutch homepage hero",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clutch homepage hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,233 @@
+{% doc %}
+Renders a Business Kit campaign tracking callout with a CSS dashboard preview.
+@example
+{% render 'clutch-business-kit-tracking-callout' %}
+{% enddoc %}
+
+<section class="cbk-track" aria-labelledby="cbk-track-title">
+  <div class="ch-inner cbk-track__inner">
+    <div class="cbk-track__copy">
+      <p class="ch-eyebrow">Print Smarter. Track Everything.</p>
+      <h2 id="cbk-track-title">Know Which Marketing Actually Works</h2>
+      <p>
+        Every Business Kit can include dynamic Clutch QR tracking so you can see which printed materials
+        generate scans, engagement, and leads.
+      </p>
+      <p class="cbk-track__powered">
+        Powered by QR Pro, your QR codes remain editable, trackable, and connected to scan analytics through
+        a single dashboard.
+      </p>
+      <ul class="cbk-track__features">
+        <li>Track business card scans</li>
+        <li>Track flyer scans</li>
+        <li>Track door hanger scans</li>
+        <li>Track yard sign scans</li>
+        <li>Compare performance by printed material</li>
+        <li>Update QR destinations anytime</li>
+      </ul>
+    </div>
+
+    <div class="cbk-track__dashboard" aria-label="Example marketing performance dashboard">
+      <div class="cbk-track__dashboard-top">
+        <span>Marketing Performance</span>
+        <strong>Total: 483 scans</strong>
+      </div>
+      <div class="cbk-track__rows">
+        <div style="--bar: 30%">
+          <span>Business Cards</span>
+          <strong>147 scans</strong>
+          <i></i>
+        </div>
+        <div style="--bar: 17%">
+          <span>Flyers</span>
+          <strong>83 scans</strong>
+          <i></i>
+        </div>
+        <div style="--bar: 9%">
+          <span>Door Hangers</span>
+          <strong>41 scans</strong>
+          <i></i>
+        </div>
+        <div style="--bar: 44%">
+          <span>Yard Signs</span>
+          <strong>212 scans</strong>
+          <i></i>
+        </div>
+      </div>
+      <div class="cbk-track__winner">
+        <span>Top Performer</span>
+        <strong>Yard Signs — 212 scans — 44% of total engagement</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.cbk-track {
+  background: #F7F8FA;
+  overflow: hidden;
+  padding: clamp(3rem, 7vw, 5.5rem) 0;
+}
+
+.cbk-track__inner {
+  align-items: center;
+  display: grid;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+}
+
+.cbk-track__copy h2 {
+  color: #384862;
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+
+.cbk-track__copy p {
+  color: rgba(56, 72, 98, 0.78);
+  font-size: clamp(1rem, 2vw, 1.14rem);
+  line-height: 1.65;
+  margin: 0 0 1rem;
+}
+
+.cbk-track__powered {
+  background: #fff;
+  border: 1px solid rgba(255, 166, 101, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(56, 72, 98, 0.07);
+  font-weight: 800;
+  padding: 1rem;
+}
+
+.cbk-track__features {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 1.3rem 0 0;
+  padding: 0;
+}
+
+.cbk-track__features li {
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(56, 72, 98, 0.08);
+  border-radius: 14px;
+  color: #384862;
+  display: flex;
+  font-weight: 850;
+  gap: 0.65rem;
+  padding: 0.75rem 0.85rem;
+}
+
+.cbk-track__features li::before {
+  background: rgba(255, 166, 101, 0.18);
+  border-radius: 999px;
+  color: #FFA665;
+  content: '✓';
+  display: inline-flex;
+  flex: 0 0 24px;
+  font-weight: 950;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+}
+
+.cbk-track__dashboard {
+  background: #fff;
+  border: 1px solid rgba(255, 166, 101, 0.36);
+  border-radius: 24px;
+  box-shadow: 0 28px 70px rgba(56, 72, 98, 0.14);
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.1rem, 3vw, 1.7rem);
+}
+
+.cbk-track__dashboard-top,
+.cbk-track__winner {
+  background: #384862;
+  border-radius: 18px;
+  color: #fff;
+  padding: 1rem;
+}
+
+.cbk-track__dashboard-top {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.cbk-track__dashboard-top span,
+.cbk-track__winner span {
+  color: #FFA665;
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cbk-track__dashboard-top strong,
+.cbk-track__winner strong {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.cbk-track__rows {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cbk-track__rows div {
+  background: #F7F8FA;
+  border: 1px solid rgba(56, 72, 98, 0.08);
+  border-radius: 16px;
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: 1fr auto;
+  padding: 0.85rem;
+}
+
+.cbk-track__rows span,
+.cbk-track__rows strong {
+  color: #384862;
+  font-weight: 850;
+}
+
+.cbk-track__rows i {
+  background: rgba(56, 72, 98, 0.12);
+  border-radius: 999px;
+  display: block;
+  grid-column: 1 / -1;
+  height: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cbk-track__rows i::before {
+  background: linear-gradient(90deg, #FFA665, #384862);
+  border-radius: inherit;
+  content: '';
+  inset: 0 auto 0 0;
+  position: absolute;
+  width: var(--bar);
+}
+
+@media screen and (max-width: 899px) {
+  .cbk-track__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .cbk-track__features {
+    grid-template-columns: 1fr;
+  }
+
+  .cbk-track__dashboard-top {
+    display: grid;
+  }
+}
+{% endstylesheet %}

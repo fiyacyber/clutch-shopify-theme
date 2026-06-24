@@ -1,0 +1,155 @@
+<section class="clutch-product-clarity color-{{ section.settings.color_scheme }}">
+  <div class="clutch-product-clarity__inner">
+    <div class="clutch-product-clarity__heading">
+      <p class="clutch-eyebrow">What Happens Next</p>
+      <h2>Clear steps from checkout to campaign launch.</h2>
+      <p>
+        Clutch combines premium print, optional QR Pro hosting, and practical support so your materials are easy to
+        order, approve, and track.
+      </p>
+    </div>
+
+    <div class="clutch-product-clarity__grid">
+      <article class="clutch-product-clarity__card">
+        <h3>How Your Smart Card Works</h3>
+        <p>
+          Your metal NFC card opens an editable Clutch digital profile by tap or QR scan, helping customers save your
+          contact details and reach your business faster.
+        </p>
+      </article>
+
+      <article class="clutch-product-clarity__card">
+        <h3>How QR Pro Hosting Works</h3>
+        <p>
+          QR Pro hosting ($14.99/month) keeps destinations editable and provides dashboard access, profile hosting, and
+          scan analytics for trackable campaigns.
+        </p>
+      </article>
+
+      <article class="clutch-product-clarity__card">
+        <h3>After Checkout</h3>
+        <p>
+          You can upload print-ready artwork during checkout. If you request design help, Clutch will prepare a clean,
+          print-ready layout before production.
+        </p>
+      </article>
+
+      <article class="clutch-product-clarity__card">
+        <h3>Artwork &amp; Proofing</h3>
+        <p>
+          Upload PDF, AI, EPS, PSD, PNG, or JPG files at 300 DPI when possible. Proofs are reviewed before production
+          when required for your order.
+        </p>
+      </article>
+
+      <article class="clutch-product-clarity__card">
+        <h3>Turnaround Time</h3>
+        <p>
+          Standard turnaround varies by product, quantity, finish, and proofing needs. Custom requests may take longer
+          and will be confirmed before production.
+        </p>
+      </article>
+
+      <article class="clutch-product-clarity__card">
+        <h3>QR Pro Billing &amp; Support</h3>
+        <p>
+          QR Pro hosting is billed monthly and can be cancelled going forward. Support is available by email and text
+          only for order, artwork, and QR setup questions.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-product-clarity {
+    background: #f7f8fa;
+    color: #384862;
+    padding: clamp(2.75rem, 6vw, 4.5rem) var(--page-margin);
+  }
+
+  .clutch-product-clarity__inner {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    margin-inline: auto;
+    max-width: 1180px;
+  }
+
+  .clutch-product-clarity__heading {
+    display: grid;
+    gap: 0.75rem;
+    margin-inline: auto;
+    max-width: 760px;
+    text-align: center;
+  }
+
+  .clutch-product-clarity__heading h2 {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.02;
+    margin: 0;
+  }
+
+  .clutch-product-clarity__heading p,
+  .clutch-product-clarity__card p {
+    color: rgb(56 72 98 / 0.78);
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .clutch-product-clarity__grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .clutch-product-clarity__card {
+    background: #fff;
+    border: 1px solid rgb(255 166 101 / 0.55);
+    border-radius: 20px;
+    box-shadow: 0 18px 48px rgb(15 23 42 / 0.08);
+    display: grid;
+    gap: 0.65rem;
+    padding: clamp(1.15rem, 3vw, 1.5rem);
+  }
+
+  .clutch-product-clarity__card h3 {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .clutch-product-clarity__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .clutch-product-clarity__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Clutch product clarity",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clutch product clarity"
+    }
+  ]
+}
+{% endschema %}

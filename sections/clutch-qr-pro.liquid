@@ -1,0 +1,179 @@
+<section class="clutch-qr-pro color-{{ section.settings.color_scheme }}">
+  <div class="clutch-qr-pro__inner">
+    <div class="clutch-qr-pro__content">
+      <p class="clutch-qr-pro__eyebrow">QR Pro</p>
+      <h2>More Than Just Printing</h2>
+      <p>
+        Most print companies stop at printing. Clutch helps you track what happens after your materials are delivered.
+      </p>
+      <p>
+        QR Pro Hosting powers dynamic QR codes, NFC smart cards, editable digital profiles, scan/tap tracking,
+        lead capture, exports, and dashboard analytics.
+      </p>
+    </div>
+
+    <div class="clutch-qr-pro__features">
+      <div class="clutch-qr-pro__feature">
+        <h3>Dynamic QR Codes</h3>
+        <p>Update destinations after printing without reordering materials.</p>
+      </div>
+      <div class="clutch-qr-pro__feature">
+        <h3>Scan Tracking</h3>
+        <p>See how many people scan your printed campaigns.</p>
+      </div>
+      <div class="clutch-qr-pro__feature">
+        <h3>Editable URLs</h3>
+        <p>Send customers to websites, booking pages, reviews, forms, and offers.</p>
+      </div>
+      <div class="clutch-qr-pro__feature">
+        <h3>Customer Portal</h3>
+        <p>Manage links, download QR files, and view scan activity.</p>
+      </div>
+    </div>
+
+    <div class="clutch-qr-pro__pricing" aria-label="QR Pro pricing">
+      <div class="clutch-qr-pro__price-card">
+        <h3>QR Pro Powers Tracking</h3>
+        <p>Dynamic QR hosting, editable destinations, dashboard access, and scan analytics.</p>
+      </div>
+      <div class="clutch-qr-pro__price-card">
+        <h3>QR Pro Hosting</h3>
+        <p>$14.99/month, up to 10 dynamic QR codes, smart card hosting, and basic analytics</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-qr-pro {
+    background: #384862;
+    padding: clamp(3rem, 7vw, 5.5rem) var(--page-margin);
+  }
+
+  .clutch-qr-pro__inner {
+    display: grid;
+    gap: 1.5rem;
+    margin-inline: auto;
+    max-width: 1180px;
+  }
+
+  .clutch-qr-pro__eyebrow {
+    color: #ffa665;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .clutch-qr-pro h2 {
+    color: #fff;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.05;
+    margin: 0.65rem 0 1rem;
+  }
+
+  .clutch-qr-pro__content p {
+    color: rgba(255, 255, 255, 0.82);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 0.85rem;
+    max-width: 640px;
+  }
+
+  .clutch-qr-pro__content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .clutch-qr-pro__features {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .clutch-qr-pro__feature {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    padding: 1rem;
+  }
+
+  .clutch-qr-pro__feature h3 {
+    color: #ffa665;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.15rem;
+    margin: 0 0 0.45rem;
+  }
+
+  .clutch-qr-pro__feature p {
+    color: rgba(255, 255, 255, 0.82);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .clutch-qr-pro__pricing {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .clutch-qr-pro__price-card {
+    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+    padding: 1rem;
+  }
+
+  .clutch-qr-pro__price-card h3 {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.1rem;
+    margin: 0 0 0.45rem;
+  }
+
+  .clutch-qr-pro__price-card p {
+    color: rgba(34, 34, 34, 0.82);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .clutch-qr-pro__inner {
+      align-items: center;
+      grid-template-columns: 0.85fr 1.15fr;
+    }
+
+    .clutch-qr-pro__features {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .clutch-qr-pro__pricing {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "QR Pro",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "QR Pro"
+    }
+  ]
+}
+{% endschema %}

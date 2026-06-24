@@ -1,0 +1,73 @@
+{% doc %}
+  Renders Clutch Business Cards navigation links.
+
+  @param {string} variant - desktop, mobile_bar, or drawer
+  @param {number} [animation_index] - Optional drawer animation index
+{% enddoc %}
+
+{% liquid
+  assign current_path = request.path
+  assign business_cards_active = false
+  if current_path contains '/products/standard-business-cards' or current_path contains '/products/premium-business-cards' or current_path contains '/products/clutch-connect-card' or current_path contains '/pages/smart-business-card'
+    assign business_cards_active = true
+  endif
+%}
+
+{% if variant == 'desktop' %}
+  <li
+    role="presentation"
+    class="menu-list__list-item clutch-business-cards-nav"
+    on:focus="/activate"
+    on:blur="/deactivate"
+    on:pointerenter="/activate"
+    on:pointerleave="/deactivate"
+  >
+    <a
+      href="/products/standard-business-cards"
+      data-skip-node-update="true"
+      class="menu-list__link{% if business_cards_active %} menu-list__link--active{% endif %}"
+      aria-haspopup="true"
+      aria-expanded="false"
+      ref="menuitem"
+      {% if business_cards_active %}
+        aria-current="page"
+      {% endif %}
+    >
+      <span class="menu-list__link-title">Business Cards</span>
+    </a>
+    <div class="clutch-business-cards-nav__submenu" aria-label="Business Cards menu">
+      <a href="/products/standard-business-cards">Standard Business Cards</a>
+      <a href="/products/premium-business-cards">Premium Business Cards</a>
+      <a href="/products/clutch-connect-card">Smart Business Card</a>
+    </div>
+  </li>
+{% elsif variant == 'drawer' %}
+  <li
+    class="menu-drawer__list-item"
+    style="--menu-drawer-animation-index: {{ animation_index | default: 1 }};"
+  >
+    <details class="clutch-business-cards-drawer">
+      <summary class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset{% if business_cards_active %} menu-drawer__menu-item--active{% endif %}">
+        <span class="menu-drawer__menu-item-text wrap-text">Business Cards</span>
+      </summary>
+      <ul class="clutch-business-cards-drawer__list list-unstyled" role="list">
+        <li><a href="/products/standard-business-cards">Standard Business Cards</a></li>
+        <li><a href="/products/premium-business-cards">Premium Business Cards</a></li>
+        <li><a href="/products/clutch-connect-card">Smart Business Card</a></li>
+      </ul>
+    </details>
+  </li>
+{% else %}
+  <li>
+    <a
+      href="/products/standard-business-cards"
+      id="MenuItem-business-cards"
+      class="menu-list__item{% if business_cards_active %} menu-list__item--active{% endif %}"
+      {% if business_cards_active %}
+        aria-current="page"
+      {% endif %}
+    >
+      Business Cards
+    </a>
+  </li>
+{% endif %}

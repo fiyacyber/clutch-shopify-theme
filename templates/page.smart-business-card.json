@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "clutch-smart-business-card-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,264 @@
+<section id="business-kits" class="clutch-business-kits color-{{ section.settings.color_scheme }}">
+  <div class="clutch-business-kits__inner">
+    <div class="clutch-business-kits__header">
+      <p class="clutch-business-kits__eyebrow">Business Kits</p>
+      <h2>Print bundles built to launch faster and track smarter.</h2>
+      <p>
+        Every Business Kit includes dynamic Clutch QR technology for each printed marketing piece included in the kit.
+        Powered by QR Pro, your QR codes remain editable, trackable, and connected to scan analytics through a single dashboard.
+      </p>
+    </div>
+
+    <div class="clutch-business-kits__grid">
+      <article class="clutch-kit-card">
+        <div class="clutch-kit-card__body">
+          <p class="clutch-kit-card__label">Starter</p>
+          <h3>Starter Kit</h3>
+          <ul class="clutch-kit-card__features">
+            <li>Business Cards + QR Tracking</li>
+            <li>Flyers + QR Tracking</li>
+            <li>Editable QR Destinations</li>
+            <li>Launch-Ready Campaign</li>
+          </ul>
+          <a class="button clutch-kit-card__button" href="/products/startup-kit">View Kit Details &rarr;</a>
+        </div>
+      </article>
+
+      <article class="clutch-kit-card clutch-kit-card--featured">
+        <div class="clutch-kit-card__body">
+          <p class="clutch-kit-card__badge">Most Popular</p>
+          <p class="clutch-kit-card__label">Growth</p>
+          <h3>Growth Kit</h3>
+          <ul class="clutch-kit-card__features">
+            <li>Business Cards + QR Tracking</li>
+            <li>Flyers + QR Tracking</li>
+            <li>Door Hangers + QR Tracking</li>
+            <li>Compare Scans by Material</li>
+            <li>QR Pro Dashboard Access</li>
+          </ul>
+          <a class="button clutch-kit-card__button" href="/products/growth-kit">View Kit Details &rarr;</a>
+        </div>
+      </article>
+
+      <article class="clutch-kit-card">
+        <div class="clutch-kit-card__body">
+          <p class="clutch-kit-card__label">Contractor</p>
+          <h3>Contractor Kit</h3>
+          <ul class="clutch-kit-card__features">
+            <li>Professional Design Free</li>
+            <li>Business Cards + QR Tracking</li>
+            <li>Door Hangers + QR Tracking</li>
+            <li>Yard Signs + QR Tracking</li>
+            <li>Compare Scans by Material</li>
+            <li>Lead Tracking &amp; Review Links</li>
+          </ul>
+          <a class="button clutch-kit-card__button" href="/products/contractor-kit">View Kit Details &rarr;</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="clutch-business-kits__custom">
+      <p>Need a custom bundle?</p>
+      <a class="button clutch-business-kits__custom-button" href="mailto:info@clutchprintshop.com">
+        Request Custom Bundle
+      </a>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-business-kits {
+    background: #f6f8fb;
+    padding: clamp(3rem, 7vw, 5.5rem) var(--page-margin);
+  }
+
+  .clutch-business-kits__inner {
+    margin-inline: auto;
+    max-width: 1180px;
+  }
+
+  .clutch-business-kits__header {
+    margin: 0 auto clamp(1.5rem, 4vw, 2.35rem);
+    max-width: 760px;
+    text-align: center;
+  }
+
+  .clutch-business-kits__eyebrow,
+  .clutch-kit-card__label {
+    color: #ffa665;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .clutch-business-kits__header h2 {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.6rem);
+    line-height: 1;
+    margin: 0.6rem 0 1rem;
+  }
+
+  .clutch-business-kits__header p:last-child {
+    color: rgba(56, 72, 98, 0.82);
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .clutch-business-kits__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  .clutch-kit-card {
+    background: #fff;
+    border: 1px solid rgba(56, 72, 98, 0.14);
+    border-radius: 22px;
+    box-shadow: 0 14px 38px rgba(56, 72, 98, 0.08);
+    display: flex;
+    min-height: 405px;
+  }
+
+  .clutch-kit-card--featured {
+    background: #fff7f0;
+    border-color: rgba(255, 166, 101, 0.65);
+    box-shadow: 0 20px 46px rgba(255, 166, 101, 0.18);
+  }
+
+  .clutch-kit-card__body {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: clamp(1.35rem, 4vw, 1.7rem);
+    text-align: center;
+  }
+
+  .clutch-kit-card__badge {
+    align-self: center;
+    background: #384862;
+    border-radius: 999px;
+    box-shadow: 0 12px 24px rgba(56, 72, 98, 0.18);
+    color: #fff;
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.85rem;
+    padding: 0.4rem 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .clutch-kit-card__label {
+    margin-bottom: 0.7rem;
+  }
+
+  .clutch-kit-card h3 {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1.45rem, 4vw, 1.95rem);
+    line-height: 1.08;
+    margin: 0 0 1rem;
+  }
+
+  .clutch-kit-card__features {
+    display: grid;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  .clutch-kit-card__features li {
+    align-items: flex-start;
+    background: #f6f8fb;
+    border: 1px solid rgba(56, 72, 98, 0.08);
+    border-radius: 12px;
+    color: rgba(56, 72, 98, 0.92);
+    display: grid;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.93rem;
+    gap: 0.7rem;
+    grid-template-columns: 18px 1fr;
+    line-height: 1.45;
+    padding: 0.62rem 0.78rem;
+  }
+
+  .clutch-kit-card--featured .clutch-kit-card__features li {
+    background: rgba(255, 166, 101, 0.08);
+    border-color: rgba(255, 166, 101, 0.18);
+  }
+
+  .clutch-kit-card__features li::before {
+    color: #ffa665;
+    content: '✓';
+    font-size: 0.9rem;
+    font-weight: 900;
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .clutch-kit-card__button {
+    background: #ffa665 !important;
+    color: #384862 !important;
+    margin-top: auto;
+    min-height: 48px;
+    width: 100%;
+  }
+
+  .clutch-business-kits__custom {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: clamp(1.75rem, 4vw, 2.5rem) auto 0;
+    text-align: center;
+  }
+
+  .clutch-business-kits__custom p {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .clutch-business-kits__custom-button {
+    background: #384862 !important;
+    color: #fff !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    .clutch-business-kits__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Business Kits",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Business Kits"
+    }
+  ]
+}
+{% endschema %}

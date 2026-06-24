@@ -1,0 +1,670 @@
+{% liquid
+  assign qr_pro_product = all_products['qr-pro']
+  assign qr_pro_variant = qr_pro_product.selected_or_first_available_variant
+  assign qr_pro_selling_plan = blank
+
+  if qr_pro_product != blank and qr_pro_product.selling_plan_groups.size > 0
+    assign qr_pro_selling_plan = qr_pro_product.selling_plan_groups.first.selling_plans.first
+  endif
+
+  assign qr_pro_variant_id = section.settings.qr_pro_variant_id | strip
+  if qr_pro_variant_id == blank and qr_pro_variant != blank
+    assign qr_pro_variant_id = qr_pro_variant.id
+  endif
+  if qr_pro_variant_id == blank
+    assign qr_pro_variant_id = 44480859766826
+  endif
+
+  assign qr_pro_selling_plan_id = section.settings.qr_pro_selling_plan_id | strip
+  if qr_pro_selling_plan_id == blank and qr_pro_selling_plan != blank
+    assign qr_pro_selling_plan_id = qr_pro_selling_plan.id
+  endif
+  if qr_pro_selling_plan_id == blank
+    assign qr_pro_selling_plan_id = 3331817514
+  endif
+
+%}
+
+<main class="clutch-qr-page color-{{ section.settings.color_scheme }}">
+  <section class="clutch-qr-page__hero">
+    <div class="clutch-qr-page__wrap clutch-qr-page__hero-inner">
+      <p class="clutch-qr-page__eyebrow">CLUTCH QR</p>
+      <h1>QR Pro Hosting For Smart Print Marketing</h1>
+      <p>Hosting for dynamic QR codes, NFC smart cards, digital profiles, and scan/tap analytics.</p>
+      <div class="clutch-qr-page__actions">
+        {% if qr_pro_variant_id != blank %}
+          <form method="post" action="{{ routes.cart_add_url }}" class="clutch-qr-page__button-form">
+            <input type="hidden" name="id" value="{{ qr_pro_variant_id }}">
+            {% if qr_pro_selling_plan_id != blank %}
+              <input type="hidden" name="selling_plan" value="{{ qr_pro_selling_plan_id }}">
+            {% endif %}
+            <button type="submit" class="button clutch-qr-page__button">Start With QR Pro</button>
+          </form>
+        {% else %}
+          <a class="button clutch-qr-page__button" href="/products/qr-pro">Start With QR Pro</a>
+        {% endif %}
+        <a class="button-secondary clutch-qr-page__button" href="#how-it-works">See How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="clutch-qr-trust">
+    <div class="clutch-qr-page__wrap">
+      <h2>Powered By QR Pro Hosting</h2>
+      <div class="clutch-qr-trust__grid">
+        <span>Dynamic QR Technology</span>
+        <span>Change Your Link Anytime</span>
+        <span>NFC Tap Tracking</span>
+        <span>Single Dashboard Access</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="clutch-qr-page__section">
+    <div class="clutch-qr-page__wrap">
+      <div class="clutch-qr-page__section-heading">
+        <h2>How Clutch QR Works</h2>
+      </div>
+
+      <div class="clutch-qr-page__card-grid clutch-qr-page__card-grid--four">
+        <article class="clutch-qr-card">
+          <span class="clutch-qr-card__number">1</span>
+          <h3>Print</h3>
+          <p>Order business cards, flyers, yard signs, banners, postcards, or door hangers.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <span class="clutch-qr-card__number">2</span>
+          <h3>Scan</h3>
+          <p>Customers scan your QR code with their phone.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <span class="clutch-qr-card__number">3</span>
+          <h3>Track</h3>
+          <p>See how many people interacted with your printed materials.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <span class="clutch-qr-card__number">4</span>
+          <h3>Update Anytime</h3>
+          <p>Change where the QR code goes without reprinting anything.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="clutch-qr-page__section clutch-qr-page__section--soft">
+    <div class="clutch-qr-page__wrap">
+      <div class="clutch-qr-page__section-heading">
+        <h2>What Can Your QR Code Do?</h2>
+      </div>
+
+      <div class="clutch-qr-page__card-grid">
+        <article class="clutch-qr-card">
+          <p class="clutch-qr-card__type">Restaurant</p>
+          <h3>QR Code → Menu</h3>
+          <p>Update your menu anytime without reprinting.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <p class="clutch-qr-card__type">Contractor</p>
+          <h3>QR Code → Quote Request Form</h3>
+          <p>See how many people scanned your yard signs, flyers, or door hangers.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <p class="clutch-qr-card__type">Realtor</p>
+          <h3>QR Code → Property Listing</h3>
+          <p>Send buyers to a listing, walkthrough video, or contact form.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <p class="clutch-qr-card__type">Local Business</p>
+          <h3>QR Code → Google Reviews</h3>
+          <p>Send happy customers directly to your review page.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <p class="clutch-qr-card__type">Event</p>
+          <h3>QR Code → Ticket Page</h3>
+          <p>Drive people to registration, tickets, or event details.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <p class="clutch-qr-card__type">Service Business</p>
+          <h3>QR Code → Booking Page</h3>
+          <p>Let customers schedule appointments from printed materials.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="clutch-qr-page__section">
+    <div class="clutch-qr-page__wrap">
+      <div class="clutch-qr-page__section-heading">
+        <h2>Why Businesses Use Clutch QR</h2>
+      </div>
+
+      <div class="clutch-qr-page__card-grid clutch-qr-page__card-grid--four">
+        <article class="clutch-qr-card">
+          <h3>Save Money</h3>
+          <p>Update links without reprinting your materials.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <h3>Get More Leads</h3>
+          <p>Send customers directly to quote forms, booking pages, menus, promotions, or reviews.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <h3>Measure Results</h3>
+          <p>See how many people scanned your printed materials.</p>
+        </article>
+        <article class="clutch-qr-card">
+          <h3>Keep Everything Together</h3>
+          <p>Manage your print and QR campaigns from one clean dashboard.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="clutch-qr-difference">
+    <div class="clutch-qr-page__wrap clutch-qr-difference__inner">
+      <h2>Most print companies stop at printing. <span class="clutch-qr-page__accent">Clutch</span> helps you track what happens after your materials are delivered.</h2>
+      <p>
+        Your printed materials should do more than look good. With Clutch QR, every card, flyer, sign, or banner can send
+        customers to the right place and show you what is working.
+      </p>
+    </div>
+  </section>
+
+  <section id="qr-pro-pricing" class="clutch-qr-page__section clutch-qr-page__section--soft">
+    <div class="clutch-qr-page__wrap">
+      <div class="clutch-qr-page__section-heading">
+        <h2>QR Pro Hosting</h2>
+      </div>
+
+      <div class="clutch-qr-page__pricing-grid clutch-qr-page__pricing-grid--single">
+        <article class="clutch-qr-price-card">
+          <div>
+            <h3>What QR Pro Powers</h3>
+            <p class="clutch-qr-price-card__price">Dynamic QR, NFC cards, profiles, exports, and analytics</p>
+          </div>
+          <ul>
+            <li>Smart business card hosting</li>
+            <li>NFC tap destination and tracking</li>
+            <li>Editable QR destinations</li>
+            <li>Editable digital profile</li>
+            <li>Lead capture form</li>
+            <li>Apple Wallet contact card</li>
+          </ul>
+          <a class="button clutch-qr-page__button" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+        </article>
+
+        <article class="clutch-qr-price-card clutch-qr-price-card--featured">
+          <div>
+            <h3>QR Pro Hosting</h3>
+            <p class="clutch-qr-price-card__price">$14.99/month</p>
+            <p class="clutch-qr-price-card__best">Required for editable smart card and QR features</p>
+          </div>
+          <ul>
+            <li>Up to 10 dynamic QR codes</li>
+            <li>Smart business card hosting</li>
+            <li>NFC tap tracking</li>
+            <li>Editable QR destinations</li>
+            <li>Editable digital profile</li>
+            <li>Apple Wallet contact card</li>
+            <li>Lead capture form</li>
+            <li>Scan/tap tracking</li>
+            <li>Basic analytics dashboard</li>
+            <li>QR exports: PNG, SVG, JPEG, PDF</li>
+          </ul>
+          {% if qr_pro_variant_id != blank %}
+            <form method="post" action="{{ routes.cart_add_url }}" class="clutch-qr-page__button-form">
+              <input type="hidden" name="id" value="{{ qr_pro_variant_id }}">
+              {% if qr_pro_selling_plan_id != blank %}
+                <input type="hidden" name="selling_plan" value="{{ qr_pro_selling_plan_id }}">
+              {% endif %}
+              <button type="submit" class="button clutch-qr-page__button">Start QR Pro</button>
+            </form>
+          {% else %}
+            <a class="button clutch-qr-page__button" href="/products/qr-pro">Start QR Pro</a>
+          {% endif %}
+        </article>
+
+      </div>
+
+      <p class="clutch-qr-page__subscription-note">
+        QR Pro Hosting ($14.99/month) provides dashboard access, editable QR destinations, profile hosting, scan/tap analytics, lead capture, and QR exports.
+      </p>
+    </div>
+  </section>
+
+  <section class="clutch-qr-page__section">
+    <div class="clutch-qr-page__wrap clutch-qr-page__faq-wrap">
+      <div class="clutch-qr-page__section-heading">
+        <h2>QR Pro Questions</h2>
+      </div>
+
+      <div class="clutch-qr-page__faq-list">
+        <details class="clutch-qr-faq">
+          <summary>What is a Clutch QR code?</summary>
+          <p>A Clutch QR code lets you change where the QR code sends people after your materials are printed.</p>
+        </details>
+        <details class="clutch-qr-faq">
+          <summary>What can I link my QR code to?</summary>
+          <p>You can link to websites, booking pages, Google reviews, menus, quote forms, promotions, landing pages, contact pages, or event pages.</p>
+        </details>
+        <details class="clutch-qr-faq">
+          <summary>Why is QR Pro used with Business Kits?</summary>
+          <p>QR Pro powers the dynamic QR technology included with your kit. It provides hosting, destination editing, dashboard access, and scan analytics so your printed marketing stays connected and measurable.</p>
+        </details>
+        <details class="clutch-qr-faq">
+          <summary>Can I see how many people scanned?</summary>
+          <p>Yes. Clutch QR shows scan activity so you can measure how your printed materials perform.</p>
+        </details>
+        <details class="clutch-qr-faq">
+          <summary>Can I download my QR code?</summary>
+          <p>Yes. customers can download QR files for print and digital use.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="clutch-qr-page__final">
+    <div class="clutch-qr-page__wrap clutch-qr-page__final-inner">
+      <h2>Ready To Make Your Print Trackable?</h2>
+      <p>Build campaigns with editable QR destinations, digital profiles, scan/tap analytics, and exports powered by QR Pro Hosting.</p>
+      <div class="clutch-qr-page__actions">
+        <a class="button clutch-qr-page__button" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% stylesheet %}
+  .clutch-qr-page {
+    background: #fff;
+    color: #384862;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .clutch-qr-page__wrap {
+    margin-inline: auto;
+    max-width: 1180px;
+    width: min(100% - 2rem, 1180px);
+  }
+
+  .clutch-qr-page__hero {
+    background: linear-gradient(135deg, #384862, rgba(56, 72, 98, 0.9));
+    color: #fff;
+    padding: clamp(4rem, 10vw, 7rem) 0 clamp(3.5rem, 8vw, 5.5rem);
+  }
+
+  .clutch-qr-page__hero-inner,
+  .clutch-qr-page__final-inner,
+  .clutch-qr-difference__inner {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .clutch-qr-page__eyebrow,
+  .clutch-qr-card__type {
+    color: #ffa665;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .clutch-qr-page h1,
+  .clutch-qr-page h2,
+  .clutch-qr-page h3 {
+    font-family: 'Exo 2', sans-serif;
+  }
+
+  .clutch-qr-page__accent {
+    color: #ffa665;
+  }
+
+  .clutch-qr-page__hero .clutch-qr-page__eyebrow {
+    color: #ffa665;
+  }
+
+  .clutch-qr-page h1 {
+    color: #fff;
+    font-size: clamp(2.45rem, 9vw, 5.4rem);
+    line-height: 0.96;
+    margin: 0.75rem auto 1rem;
+    max-width: 860px;
+    text-wrap: balance;
+  }
+
+  .clutch-qr-page__hero p,
+  .clutch-qr-page__final p,
+  .clutch-qr-difference p {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 760px;
+  }
+
+  .clutch-qr-page__actions {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 2rem;
+    width: min(100%, 500px);
+  }
+
+  .clutch-qr-page__button-form {
+    margin: 0;
+  }
+
+  .clutch-qr-page__button-form .clutch-qr-page__button {
+    width: 100%;
+  }
+
+  .clutch-qr-page__button {
+    min-height: 52px;
+    width: 100%;
+  }
+
+  .clutch-qr-page .button {
+    background: #ffa665 !important;
+    color: #384862 !important;
+  }
+
+  .clutch-qr-page .button-secondary {
+    background: transparent !important;
+    border-color: currentColor !important;
+    color: inherit !important;
+  }
+
+  .clutch-qr-trust {
+    background: #fff;
+    border-bottom: 1px solid rgba(56, 72, 98, 0.12);
+    padding: clamp(1.75rem, 4vw, 2.75rem) 0;
+  }
+
+  .clutch-qr-trust h2 {
+    color: #384862;
+    font-size: clamp(1.45rem, 4vw, 2.1rem);
+    line-height: 1.05;
+    margin: 0 0 1.25rem;
+    text-align: center;
+  }
+
+  .clutch-qr-trust__grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .clutch-qr-trust__grid span {
+    background: #f8f7f4;
+    border: 1px solid rgba(56, 72, 98, 0.12);
+    border-radius: 999px;
+    color: #384862;
+    font-weight: 800;
+    padding: 0.8rem 1rem;
+    text-align: center;
+  }
+
+  .clutch-qr-page__section,
+  .clutch-qr-page__final,
+  .clutch-qr-difference {
+    padding: clamp(3rem, 7vw, 5.5rem) 0;
+  }
+
+  .clutch-qr-page__section--soft {
+    background: #f8f7f4;
+  }
+
+  .clutch-qr-page__section-heading {
+    margin: 0 auto clamp(1.6rem, 4vw, 2.75rem);
+    max-width: 820px;
+    text-align: center;
+  }
+
+  .clutch-qr-page__section-heading h2,
+  .clutch-qr-page__final h2,
+  .clutch-qr-difference h2 {
+    color: #384862;
+    font-size: clamp(1.9rem, 5vw, 3.35rem);
+    line-height: 1.05;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .clutch-qr-page__card-grid,
+  .clutch-qr-page__pricing-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .clutch-qr-page__pricing-grid--single {
+    margin-inline: auto;
+    max-width: 980px;
+  }
+
+  .clutch-qr-card,
+  .clutch-qr-price-card,
+  .clutch-qr-faq {
+    background: #fff;
+    border: 1px solid rgba(56, 72, 98, 0.14);
+    border-radius: 22px;
+    box-shadow: 0 14px 34px rgba(56, 72, 98, 0.07);
+  }
+
+  .clutch-qr-card,
+  .clutch-qr-price-card {
+    padding: clamp(1.25rem, 4vw, 1.75rem);
+  }
+
+  .clutch-qr-card__number {
+    align-items: center;
+    background: rgba(255, 166, 101, 0.2);
+    border-radius: 999px;
+    color: #384862;
+    display: inline-flex;
+    font-weight: 900;
+    height: 2.2rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+    width: 2.2rem;
+  }
+
+  .clutch-qr-card__type {
+    margin-bottom: 0.7rem;
+  }
+
+  .clutch-qr-card h3,
+  .clutch-qr-price-card h3 {
+    color: #384862;
+    font-size: clamp(1.25rem, 4vw, 1.65rem);
+    line-height: 1.1;
+    margin: 0 0 0.65rem;
+  }
+
+  .clutch-qr-card p,
+  .clutch-qr-price-card p,
+  .clutch-qr-price-card li,
+  .clutch-qr-faq p {
+    color: rgba(34, 34, 34, 0.82);
+    font-size: 0.96rem;
+    line-height: 1.55;
+  }
+
+  .clutch-qr-card p,
+  .clutch-qr-price-card p {
+    margin: 0;
+  }
+
+  .clutch-qr-difference {
+    background: #384862;
+  }
+
+  .clutch-qr-difference h2 {
+    color: #fff;
+    max-width: 980px;
+  }
+
+  .clutch-qr-difference p {
+    margin-top: 1rem;
+  }
+
+  .clutch-qr-price-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .clutch-qr-price-card--featured {
+    border-color: rgba(255, 166, 101, 0.8);
+    box-shadow: 0 18px 46px rgba(255, 166, 101, 0.18);
+  }
+
+  .clutch-qr-price-card__price {
+    color: #ffa665 !important;
+    font-size: 1.25rem !important;
+    font-weight: 900;
+  }
+
+  .clutch-qr-price-card__best {
+    color: rgba(56, 72, 98, 0.78) !important;
+    font-weight: 800;
+    margin-top: 0.35rem !important;
+  }
+
+  .clutch-qr-price-card ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .clutch-qr-price-card li::marker {
+    color: #ffa665;
+  }
+
+  .clutch-qr-price-card .button {
+    margin-top: auto;
+  }
+
+  .clutch-qr-price-card .clutch-qr-page__button-form {
+    margin-top: auto;
+  }
+
+  .clutch-qr-page__subscription-note {
+    color: rgba(34, 34, 34, 0.78);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 1.5rem auto 0;
+    max-width: 900px;
+    text-align: center;
+  }
+
+  .clutch-qr-page__faq-wrap {
+    max-width: 900px;
+  }
+
+  .clutch-qr-page__faq-list {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .clutch-qr-faq {
+    padding: 1rem 1.15rem;
+  }
+
+  .clutch-qr-faq summary {
+    color: #384862;
+    cursor: pointer;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.12rem;
+    font-weight: 800;
+  }
+
+  .clutch-qr-faq p {
+    margin: 0.75rem 0 0;
+  }
+
+  .clutch-qr-page__final {
+    background: #384862;
+  }
+
+  .clutch-qr-page__final h2 {
+    color: #fff;
+  }
+
+  .clutch-qr-page__final p {
+    margin-top: 1rem;
+  }
+
+  .clutch-qr-page__final .clutch-qr-page__actions {
+    grid-template-columns: minmax(0, 410px);
+    justify-content: center;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 650px) {
+    .clutch-qr-trust__grid,
+    .clutch-qr-page__card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .clutch-qr-page__actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .clutch-qr-page__card-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .clutch-qr-page__card-grid--four,
+    .clutch-qr-trust__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .clutch-qr-page__pricing-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .clutch-qr-page__pricing-grid--single {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "QR Pro landing page",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "QR subscription add-to-cart"
+    },
+    {
+      "type": "text",
+      "id": "qr_pro_variant_id",
+      "label": "QR Pro variant ID",
+      "info": "Optional. Used by Start QR Pro buttons."
+    },
+    {
+      "type": "text",
+      "id": "qr_pro_selling_plan_id",
+      "label": "QR Pro selling plan ID",
+      "info": "Optional. Add this to force subscription line items."
+    }
+  ],
+  "presets": [
+    {
+      "name": "QR Pro landing page"
+    }
+  ]
+}
+{% endschema %}

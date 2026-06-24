@@ -1,0 +1,282 @@
+<section class="clutch-contact-page color-{{ section.settings.color_scheme }}">
+  <div class="clutch-contact-page__wrap">
+    <div class="clutch-contact-page__intro">
+      <p class="clutch-contact-page__eyebrow">Clutch Print Shop</p>
+      <h1>Contact</h1>
+      <p>Tell us about your project and we will get back to you as soon as possible.</p>
+    </div>
+
+    {%- form 'contact', id: 'ClutchContactForm', class: 'clutch-contact-page__form' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="clutch-contact-page__alert clutch-contact-page__alert--success" tabindex="-1" autofocus>
+          Thanks for reaching out. We received your message and will reply shortly.
+        </div>
+      {%- elsif form.errors -%}
+        <div class="clutch-contact-page__alert clutch-contact-page__alert--error" tabindex="-1" autofocus>
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="clutch-contact-page__grid">
+        <div class="clutch-contact-page__field">
+          <label for="ClutchContactName">Name</label>
+          <input
+            id="ClutchContactName"
+            type="text"
+            name="contact[name]"
+            value="{% if form.name %}{{ form.name | escape }}{% endif %}"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="clutch-contact-page__field">
+          <label for="ClutchContactEmail">Email</label>
+          <input
+            id="ClutchContactEmail"
+            type="email"
+            name="contact[email]"
+            value="{% if form.email %}{{ form.email | escape }}{% endif %}"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            required
+          >
+        </div>
+
+        <div class="clutch-contact-page__field">
+          <label for="ClutchContactPhone">Phone Number</label>
+          <input
+            id="ClutchContactPhone"
+            type="tel"
+            name="contact[phone]"
+            value="{% if form.phone %}{{ form.phone | escape }}{% endif %}"
+            autocomplete="tel"
+          >
+        </div>
+
+        <div class="clutch-contact-page__field">
+          <label for="ClutchContactCompany">Company Name</label>
+          <input
+            id="ClutchContactCompany"
+            type="text"
+            name="contact[Company Name]"
+            value="{% if form.company %}{{ form.company | escape }}{% endif %}"
+            autocomplete="organization"
+          >
+        </div>
+
+        <div class="clutch-contact-page__field">
+          <label for="ClutchContactNeed">What do you need?</label>
+          <input
+            id="ClutchContactNeed"
+            type="text"
+            name="contact[What do you need?]"
+            value="{% if form['What do you need?'] %}{{ form['What do you need?'] | escape }}{% endif %}"
+          >
+        </div>
+
+        <div class="clutch-contact-page__field">
+          <label for="ClutchContactProduct">Order/Product Interested In</label>
+          <input
+            id="ClutchContactProduct"
+            type="text"
+            name="contact[Order/Product Interested In]"
+            value="{% if form['Order/Product Interested In'] %}{{ form['Order/Product Interested In'] | escape }}{% endif %}"
+          >
+        </div>
+
+        <div class="clutch-contact-page__field clutch-contact-page__field--full">
+          <label for="ClutchContactMessage">Message</label>
+          <textarea
+            id="ClutchContactMessage"
+            name="contact[body]"
+            rows="6"
+            required
+          >{% if form.body %}{{ form.body | escape }}{% endif %}</textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="button clutch-contact-page__submit">Send Message</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-contact-page {
+    background:
+      radial-gradient(circle at 10% 0%, rgba(255, 166, 101, 0.18), transparent 45%),
+      radial-gradient(circle at 90% 20%, rgba(56, 72, 98, 0.12), transparent 42%),
+      #f6f8fb;
+    color: #384862;
+    font-family: 'Montserrat', sans-serif;
+    padding: clamp(2.5rem, 7vw, 5rem) var(--page-margin);
+  }
+
+  .clutch-contact-page__wrap {
+    width: min(100%, 980px);
+    margin-inline: auto;
+    display: grid;
+    gap: clamp(1rem, 2.6vw, 1.6rem);
+  }
+
+  .clutch-contact-page__intro,
+  .clutch-contact-page__form {
+    border-radius: 26px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .clutch-contact-page__intro {
+    background:
+      linear-gradient(130deg, rgba(56, 72, 98, 0.97), rgba(56, 72, 98, 0.9) 62%, rgba(255, 166, 101, 0.32));
+    border: 1px solid rgba(56, 72, 98, 0.24);
+    box-shadow: 0 22px 46px rgba(56, 72, 98, 0.18);
+    color: #fff;
+  }
+
+  .clutch-contact-page__form {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(56, 72, 98, 0.12);
+    box-shadow: 0 18px 40px rgba(56, 72, 98, 0.09);
+    backdrop-filter: blur(3px);
+  }
+
+  .clutch-contact-page__eyebrow {
+    color: #ffa665;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .clutch-contact-page h1 {
+    color: #fff;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.05;
+    margin: 0.65rem 0 0.8rem;
+  }
+
+  .clutch-contact-page__intro p {
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 66ch;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .clutch-contact-page__alert {
+    border-radius: 14px;
+    margin-bottom: 1rem;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .clutch-contact-page__alert--success {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(22, 163, 74, 0.35);
+    color: #166534;
+  }
+
+  .clutch-contact-page__alert--error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(220, 38, 38, 0.35);
+    color: #991b1b;
+  }
+
+  .clutch-contact-page__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  .clutch-contact-page__field {
+    display: grid;
+    gap: 0.42rem;
+  }
+
+  .clutch-contact-page__field label {
+    color: #384862;
+    font-weight: 700;
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .clutch-contact-page__field input,
+  .clutch-contact-page__field textarea,
+  .clutch-contact-page__field select {
+    width: 100%;
+    border: 1px solid rgba(56, 72, 98, 0.24);
+    border-radius: 14px;
+    background: rgba(246, 248, 251, 0.86);
+    color: #384862;
+    font: inherit;
+    padding: 0.78rem 0.88rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .clutch-contact-page__field input:focus,
+  .clutch-contact-page__field textarea:focus,
+  .clutch-contact-page__field select:focus {
+    border-color: #ffa665;
+    box-shadow: 0 0 0 4px rgba(255, 166, 101, 0.2);
+    background: #fff;
+    outline: 0;
+  }
+
+  .clutch-contact-page__field textarea {
+    resize: vertical;
+  }
+
+  .clutch-contact-page__submit {
+    margin-top: 1rem;
+    background: linear-gradient(145deg, #ffa665, #f39d64);
+    border-color: #f39d64;
+    box-shadow: 0 14px 26px rgba(243, 157, 100, 0.34);
+    color: #1f2937;
+    font-weight: 800;
+    width: 100%;
+  }
+
+  .clutch-contact-page__submit:hover {
+    background: linear-gradient(145deg, #ffb37d, #ffa665);
+    border-color: #ffa665;
+    transform: translateY(-1px);
+  }
+
+  @media screen and (min-width: 750px) {
+    .clutch-contact-page__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .clutch-contact-page__field--full {
+      grid-column: 1 / -1;
+    }
+
+    .clutch-contact-page__submit {
+      width: auto;
+      min-width: 200px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Clutch contact page",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clutch contact page"
+    }
+  ]
+}
+{% endschema %}

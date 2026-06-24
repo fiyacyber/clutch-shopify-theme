@@ -1,0 +1,15 @@
+{% comment %}
+  Main product overview section
+  Renders the product overview cards (What's Included, Best For, Turnaround & Proofing)
+{% endcomment %}
+
+<div class="section" id="shopify-section-{{ section.id }}">
+  {% include 'clutch-product-overview' %}
+</div>
+
+{% schema %}
+  {
+    "name": "Product Overview",
+    "settings": []
+  }
+{% endschema %}

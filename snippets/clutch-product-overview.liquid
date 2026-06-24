@@ -1,0 +1,287 @@
+{% liquid
+  assign product = closest.product
+  assign product_handle = product.handle | downcase
+
+  assign is_startup_kit = false
+  assign is_growth_kit = false
+  assign is_contractor_kit = false
+  assign is_business_kit = false
+  assign is_qr_product = false
+  assign is_connect_card = false
+
+  if product_handle == 'starter-kit' or product_handle == 'startup-kit'
+    assign is_startup_kit = true
+    assign is_business_kit = true
+  elsif product_handle == 'growth-kit'
+    assign is_growth_kit = true
+    assign is_business_kit = true
+  elsif product_handle == 'contractor-kit'
+    assign is_contractor_kit = true
+    assign is_business_kit = true
+  endif
+
+  if product_handle contains 'qr-pro'
+    assign is_qr_product = true
+  endif
+
+  if product_handle == 'clutch-connect-card'
+    assign is_connect_card = true
+  endif
+
+  assign summary_title = 'Product Summary'
+  assign summary_text = 'Premium print products built to make your marketing look polished, communicate faster, and convert more customers.'
+  assign included_items = 'Professional Design Add-On|$200 flat fee|Premium print-ready layout|Built for easy reorders' | split: '|'
+  assign best_for_items = 'Local Businesses|Contractors|Events|Promotions|New Business Launches' | split: '|'
+  assign support_items = 'File review included|Proof before production when required|Standard turnaround varies by product|Professional support available' | split: '|'
+
+  if is_connect_card
+    assign summary_title = 'Clutch Smart Business Card'
+    assign summary_text = 'A premium metal NFC business card that opens your editable digital profile by tap or QR scan.'
+    assign included_items = 'Premium metal NFC business card|Editable digital profile|Dynamic QR code|NFC tap destination|Lead capture form|Apple Wallet contact card|QR Pro Hosting and analytics' | split: '|'
+    assign best_for_items = 'Contractors|Realtors|Sales reps|Barbers|Creators|Local businesses' | split: '|'
+    assign support_items = '$149 Smart Business Card|$99 Additional Smart Cards|$14.99/month QR Pro Hosting|Update links anytime|Track scans and engagement' | split: '|'
+  elsif is_business_kit
+    assign summary_title = 'Business Kit'
+    assign summary_text = 'Print bundles with campaign-level QR tracking so you can compare which materials generate scans, engagement, and leads.'
+    assign best_for_items = 'Local Businesses|Contractors|Events|Promotions|New Business Launches|Campaign Tracking' | split: '|'
+    assign support_items = 'QR Pro dashboard access|Editable QR destinations|Track scans by material type|Update links without reprinting' | split: '|'
+
+    if is_startup_kit
+      assign summary_text = 'Perfect for businesses launching their brand with business cards and flyers that can be tracked separately.'
+      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Editable QR Destinations|QR Pro Dashboard Access' | split: '|'
+    elsif is_growth_kit
+      assign summary_text = 'Designed for businesses focused on generating leads and comparing performance across cards, flyers, and door hangers.'
+      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Door Hangers + QR Tracking|Compare Scans by Material|QR Pro Dashboard Access' | split: '|'
+    elsif is_contractor_kit
+      assign summary_text = 'Built for contractors and service businesses that need to compare cards, door hangers, and yard signs by scan performance.'
+      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Door Hangers + QR Tracking|Yard Signs + QR Tracking|Compare Scans by Material|QR Pro Dashboard Access' | split: '|'
+    endif
+  elsif is_qr_product
+    assign summary_title = 'Clutch QR™ Add-On'
+    assign summary_text = 'Add a dynamic Clutch QR™ Code and track customer engagement beyond the mailbox, flyer, sign, or business card.'
+    assign included_items = 'Editable destination links|Scan tracking|QR analytics|Review links|Booking links|Website traffic tracking|Promotions and offers' | split: '|'
+    assign best_for_items = 'Print campaigns|Local service businesses|Lead generation|Reorderable marketing' | split: '|'
+    assign support_items = 'Editable destinations included|Analytics available where applicable|Support from Clutch before launch|Works with existing print campaigns' | split: '|'
+  endif
+%}
+
+<section class="clutch-product-overview">
+  <div class="clutch-product-overview__hero">
+    <p class="clutch-product-overview__eyebrow">{{ summary_title }}</p>
+    <h2>
+      {% if is_connect_card %}
+        Premium Metal Card. Smart Digital Profile.
+      {% elsif is_qr_product %}
+        Turn Printed Marketing Into Trackable Marketing
+      {% elsif is_business_kit %}
+        Campaign-level QR tracking for every printed material.
+      {% else %}
+        Make your print order clear, premium, and ready to convert.
+      {% endif %}
+    </h2>
+    <p class="clutch-product-overview__summary">{{ summary_text }}</p>
+  </div>
+
+  <div class="clutch-product-overview__grid">
+    <article class="clutch-product-overview__card">
+      <p class="clutch-product-overview__card-kicker">What&apos;s Included</p>
+      <ul class="clutch-product-overview__list">
+        {% for item in included_items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </article>
+
+    <article class="clutch-product-overview__card">
+      <p class="clutch-product-overview__card-kicker">Best For</p>
+      <ul class="clutch-product-overview__pill-list">
+        {% for item in best_for_items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </article>
+
+    <article class="clutch-product-overview__card clutch-product-overview__card--trust">
+      <p class="clutch-product-overview__card-kicker">Turnaround &amp; Proofing</p>
+      <ul class="clutch-product-overview__list">
+        {% for item in support_items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </article>
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-product-overview {
+    display: grid;
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+    margin: clamp(2rem, 4vw, 3rem) auto;
+    max-width: 1180px;
+    padding-inline: 24px;
+    width: 100%;
+  }
+
+  .product-information .clutch-product-overview {
+    display: none;
+  }
+
+  .clutch-product-overview__hero,
+  .clutch-product-overview__card {
+    background: #fff;
+    border: 1px solid rgb(255 166 101 / 0.45);
+    border-radius: 18px;
+    box-shadow: 0 16px 36px rgb(56 72 98 / 0.08);
+  }
+
+  .clutch-product-overview__hero {
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    grid-template-areas:
+      "eyebrow"
+      "headline"
+      "summary";
+    padding: 24px;
+  }
+
+  .clutch-product-overview__eyebrow,
+  .clutch-product-overview__card-kicker {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: var(--font-size--xs);
+    font-weight: 800;
+    color: #FFA665;
+  }
+
+  .clutch-product-overview__eyebrow {
+    grid-area: eyebrow;
+  }
+
+  .clutch-product-overview__hero h2 {
+    grid-area: headline;
+    margin: 0;
+    color: #384862;
+    font-size: clamp(2rem, 10vw, 3rem);
+    line-height: 1.02;
+    max-width: 100%;
+    text-wrap: balance;
+    overflow-wrap: normal;
+  }
+
+  .clutch-product-overview__summary {
+    grid-area: summary;
+    margin: 0;
+    max-width: 42rem;
+    color: rgb(56 72 98 / 0.78);
+    font-size: clamp(1rem, 2vw, 1.08rem);
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .clutch-product-overview__grid {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.25rem);
+    grid-template-columns: 1fr;
+  }
+
+  .clutch-product-overview__card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: clamp(1.25rem, 2.5vw, 1.6rem);
+  }
+
+  .clutch-product-overview__list,
+  .clutch-product-overview__pill-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    margin: 0.85rem 0 0;
+  }
+
+  .clutch-product-overview__list li,
+  .clutch-product-overview__pill-list li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: rgb(56 72 98 / 0.86);
+    line-height: 1.5;
+  }
+
+  .clutch-product-overview__list li::before,
+  .clutch-product-overview__pill-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.35rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ffa665, #f39d64);
+    box-shadow: 0 0 0 4px rgb(255 166 101 / 0.16);
+  }
+
+  .clutch-product-overview__pill-list {
+    grid-template-columns: 1fr;
+  }
+
+  .clutch-product-overview__card--trust {
+    background: #fff;
+  }
+
+  @media screen and (min-width: 750px) {
+    .clutch-product-overview__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .clutch-product-overview {
+      max-width: 1180px;
+      padding-inline: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .clutch-product-overview__hero {
+      align-items: start;
+      grid-template-areas:
+        "eyebrow headline"
+        "summary headline";
+      grid-template-columns: minmax(0, 0.35fr) minmax(0, 0.65fr);
+      padding: clamp(2rem, 4vw, 3rem);
+    }
+
+    .clutch-product-overview__hero h2 {
+      font-size: clamp(2.25rem, 4vw, 4.5rem);
+      line-height: 1;
+      max-width: 14ch;
+    }
+
+    .clutch-product-overview__summary {
+      align-self: start;
+      max-width: 34ch;
+    }
+
+    .clutch-product-overview__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .clutch-product-overview__card {
+      border-radius: 18px;
+    }
+
+    .clutch-product-overview__pill-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .clutch-product-overview__hero {
+      padding: 24px;
+    }
+
+    .clutch-product-overview__card {
+      padding: 24px;
+    }
+  }
+{% endstylesheet %}

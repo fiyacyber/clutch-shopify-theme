@@ -1,0 +1,281 @@
+{% liquid
+  assign current_product = product
+  if current_product == blank
+    assign current_product = closest.product
+  endif
+
+  assign product_handle = current_product.handle | downcase
+  assign is_business_kit = false
+
+  if product_handle == 'starter-kit' or product_handle == 'startup-kit' or product_handle == 'growth-kit' or product_handle == 'contractor-kit'
+    assign is_business_kit = true
+  endif
+%}
+
+{% if is_business_kit %}
+  <section class="cbk-product" aria-labelledby="cbk-product-title">
+    <div class="cbk-product__inner">
+      <div class="cbk-product__hero">
+        <div>
+          <p class="cbk-product__eyebrow">QR Campaign Tracking</p>
+          <h2 id="cbk-product-title">Campaign-Level QR Tracking Included</h2>
+          <p>
+            Your Business Kit is built to help you measure what works. Each printed marketing piece can receive
+            its own dynamic Clutch QR Code, allowing you to track scans separately for business cards, flyers,
+            door hangers, postcards, yard signs, and more.
+          </p>
+          <p class="cbk-product__powered">
+            Powered by QR Pro, your QR codes remain editable, trackable, and connected to scan analytics through
+            a single dashboard.
+          </p>
+          <p class="cbk-product__hosting">
+            QR Pro hosting ($14.99/month) provides dashboard access, editable QR destinations, profile hosting,
+            and scan analytics.
+          </p>
+        </div>
+
+        <div class="cbk-product__dashboard" aria-label="Example campaign analytics dashboard">
+          <div class="cbk-product__dashboard-top">
+            <span>Marketing Performance</span>
+            <strong>Total: 483 scans</strong>
+          </div>
+          <div class="cbk-product__rows">
+            <div style="--bar: 30%"><span>Business Cards</span><strong>147 scans</strong><i></i></div>
+            <div style="--bar: 17%"><span>Flyers</span><strong>83 scans</strong><i></i></div>
+            <div style="--bar: 9%"><span>Door Hangers</span><strong>41 scans</strong><i></i></div>
+            <div style="--bar: 44%"><span>Yard Signs</span><strong>212 scans</strong><i></i></div>
+          </div>
+          <div class="cbk-product__winner">
+            <span>Top Performer</span>
+            <strong>Yard Signs — 212 scans — 44% of total engagement</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="cbk-product__faq">
+        <h3>Business Kit QR Questions</h3>
+        <details>
+          <summary>Can I track each printed material separately?</summary>
+          <p>Yes. Each printed material in your Business Kit can receive its own dynamic Clutch QR Code, so you can compare scans from business cards, flyers, door hangers, yard signs, postcards, and other campaign materials.</p>
+        </details>
+        <details>
+          <summary>Why is QR Pro used with Business Kits?</summary>
+          <p>QR Pro powers the dynamic QR technology included with your kit. It provides hosting, destination editing, dashboard access, and scan analytics so your printed marketing stays connected and measurable.</p>
+        </details>
+        <details>
+          <summary>Can I use one QR code for the whole kit?</summary>
+          <p>Yes. Customers may request one shared QR code for the full kit, but separate QR codes are recommended if you want to compare performance by material.</p>
+        </details>
+        <details>
+          <summary>Do I need to reprint if my website changes?</summary>
+          <p>No. Dynamic Clutch QR Codes allow you to update destinations without reprinting your materials.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+.cbk-product {
+  background: #F7F8FA;
+  color: #384862;
+  padding: clamp(2.5rem, 6vw, 5rem) 0;
+}
+
+.cbk-product__inner {
+  display: grid;
+  gap: clamp(1.2rem, 3vw, 2rem);
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 0 24px;
+}
+
+.cbk-product__hero,
+.cbk-product__faq {
+  background: #fff;
+  border: 1px solid rgba(255, 166, 101, 0.36);
+  border-radius: 24px;
+  box-shadow: 0 22px 58px rgba(56, 72, 98, 0.1);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.cbk-product__hero {
+  align-items: center;
+  display: grid;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+}
+
+.cbk-product__eyebrow {
+  color: #FFA665;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+}
+
+.cbk-product h2,
+.cbk-product h3,
+.cbk-product p {
+  margin-top: 0;
+}
+
+.cbk-product h2 {
+  font-size: clamp(2rem, 4.5vw, 4.2rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin-bottom: 1rem;
+  text-wrap: balance;
+}
+
+.cbk-product p {
+  color: rgba(56, 72, 98, 0.78);
+  font-size: clamp(1rem, 1.8vw, 1.12rem);
+  line-height: 1.65;
+}
+
+.cbk-product__powered,
+.cbk-product__hosting {
+  border-radius: 16px;
+  font-weight: 850;
+  padding: 1rem;
+}
+
+.cbk-product__powered {
+  background: #F7F8FA;
+  border: 1px solid rgba(56, 72, 98, 0.08);
+}
+
+.cbk-product__hosting {
+  background: rgba(255, 166, 101, 0.14);
+  border: 1px solid rgba(255, 166, 101, 0.34);
+  margin-bottom: 0;
+}
+
+.cbk-product__dashboard {
+  border: 1px solid rgba(255, 166, 101, 0.32);
+  border-radius: 22px;
+  box-shadow: 0 20px 48px rgba(56, 72, 98, 0.12);
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.4rem);
+}
+
+.cbk-product__dashboard-top,
+.cbk-product__winner {
+  background: #384862;
+  border-radius: 16px;
+  color: #fff;
+  padding: 1rem;
+}
+
+.cbk-product__dashboard-top {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.cbk-product__dashboard-top span,
+.cbk-product__winner span {
+  color: #FFA665;
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cbk-product__dashboard-top strong,
+.cbk-product__winner strong {
+  display: block;
+  margin-top: 0.3rem;
+}
+
+.cbk-product__rows {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.cbk-product__rows div {
+  background: #F7F8FA;
+  border: 1px solid rgba(56, 72, 98, 0.08);
+  border-radius: 15px;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr auto;
+  padding: 0.8rem;
+}
+
+.cbk-product__rows span,
+.cbk-product__rows strong {
+  color: #384862;
+  font-weight: 850;
+}
+
+.cbk-product__rows i {
+  background: rgba(56, 72, 98, 0.12);
+  border-radius: 999px;
+  display: block;
+  grid-column: 1 / -1;
+  height: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cbk-product__rows i::before {
+  background: linear-gradient(90deg, #FFA665, #384862);
+  border-radius: inherit;
+  content: '';
+  inset: 0 auto 0 0;
+  position: absolute;
+  width: var(--bar);
+}
+
+.cbk-product__faq {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cbk-product__faq h3 {
+  font-size: clamp(1.45rem, 3vw, 2.4rem);
+  letter-spacing: -0.025em;
+  margin-bottom: 0.5rem;
+}
+
+.cbk-product__faq details {
+  background: #F7F8FA;
+  border: 1px solid rgba(56, 72, 98, 0.08);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.cbk-product__faq summary {
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.cbk-product__faq details p {
+  margin: 0.75rem 0 0;
+}
+
+@media screen and (max-width: 899px) {
+  .cbk-product__hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .cbk-product__dashboard-top,
+  .cbk-product__rows div {
+    grid-template-columns: 1fr;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Business Kit QR Tracking",
+  "settings": []
+}
+{% endschema %}

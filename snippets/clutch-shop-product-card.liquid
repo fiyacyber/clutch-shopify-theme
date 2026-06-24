@@ -1,0 +1,144 @@
+{% doc %}
+  Clutch shop product card for the grouped /collections/all shop page.
+
+  @param {object} product - Product to render.
+{% enddoc %}
+
+{% liquid
+  assign product_title_downcase = product.title | downcase
+  assign is_business_kits_card = false
+  assign product_description = 'Premium print essentials with easy artwork upload.'
+  assign kit_display_price = blank
+
+  if card_context == 'business-kits'
+    assign is_business_kits_card = true
+  endif
+
+  if product_title_downcase contains 'business card'
+    assign product_description = 'Professional cards for everyday networking.'
+  elsif product_title_downcase contains 'flyer'
+    assign product_description = 'Promote offers, events, and services fast.'
+  elsif product_title_downcase contains 'brochure'
+    assign product_description = 'Folded print pieces for polished presentations.'
+  elsif product_title_downcase contains 'postcard'
+    assign product_description = 'Compact promos for offers and follow-ups.'
+  elsif product_title_downcase contains 'yard sign'
+    assign product_description = 'Durable outdoor signs for local visibility.'
+  elsif product_title_downcase contains 'banner'
+    assign product_description = 'Large-format vinyl banners for bold displays.'
+  elsif product_title_downcase contains 'door hanger'
+    assign product_description = 'Neighborhood-ready print for local outreach.'
+  elsif product_title_downcase contains 'starter kit' or product_title_downcase contains 'startup kit'
+    assign product_description = 'Business cards and flyers with QR tracking by material type.'
+  elsif product_title_downcase contains 'growth kit'
+    assign product_description = 'Cards, flyers, and door hangers with campaign-level QR tracking.'
+  elsif product_title_downcase contains 'contractor kit'
+    assign product_description = 'Cards, door hangers, and yard signs with QR Pro dashboard tracking.'
+  endif
+
+  case product.handle
+    when 'starter-kit'
+      assign kit_display_price = 24900
+    when 'startup-kit'
+      assign kit_display_price = 24900
+    when 'growth-kit'
+      assign kit_display_price = 74900
+    when 'contractor-kit'
+      assign kit_display_price = 109900
+  endcase
+
+  assign starting_price = product.price_min
+  if kit_display_price != blank
+    assign starting_price = kit_display_price
+  endif
+  if starting_price == blank or starting_price <= 0
+    for product_variant in product.variants
+      if product_variant.price > 0
+        assign starting_price = product_variant.price
+        break
+      endif
+    endfor
+  endif
+
+  if is_business_kits_card
+    assign kit_label = 'STARTER'
+    assign kit_title = 'Starter Kit'
+    assign kit_button = 'View Kit Details &rarr;'
+    assign kit_features = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Editable QR Destinations|Launch-Ready Campaign' | split: '|'
+
+    if product.handle == 'growth-kit'
+      assign kit_label = 'GROWTH'
+      assign kit_title = 'Growth Kit'
+      assign kit_button = 'View Kit Details &rarr;'
+      assign kit_features = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Door Hangers + QR Tracking|Compare Scans by Material|QR Pro Dashboard Access' | split: '|'
+    elsif product.handle == 'contractor-kit'
+      assign kit_label = 'CONTRACTOR'
+      assign kit_title = 'Contractor Kit'
+      assign kit_button = 'View Kit Details &rarr;'
+      assign kit_features = 'Professional Design Free|Business Cards + QR Tracking|Door Hangers + QR Tracking|Yard Signs + QR Tracking|Compare Scans by Material|Lead Tracking & Review Links' | split: '|'
+    endif
+  endif
+%}
+
+{% if is_business_kits_card %}
+  <article class="clutch-shop-card clutch-shop-card--kit{% if product.handle == 'growth-kit' %} clutch-shop-card--kit-featured{% endif %}">
+    <div class="clutch-shop-card--kit-body">
+      {% if product.handle == 'growth-kit' %}
+        <span class="clutch-shop-card--kit-flag">Most Popular</span>
+      {% endif %}
+      <p class="clutch-shop-card--kit-label">{{ kit_label }}</p>
+      <h3 class="clutch-shop-card--kit-title">{{ kit_title }}</h3>
+      <ul class="clutch-shop-card--kit-features" aria-label="{{ kit_title }} features">
+        {% for feature in kit_features %}
+          <li{% if feature contains 'Clutch QR™ Code' %} class="clutch-shop-card--kit-feature-row-highlight"{% endif %}>{{ feature }}</li>
+        {% endfor %}
+      </ul>
+      <a class="button clutch-shop-card--kit-button" href="{{ product.url }}">{{ kit_button }}</a>
+    </div>
+  </article>
+{% else %}
+<article class="clutch-shop-card">
+  <a class="clutch-shop-card__media" href="{{ product.url }}" aria-label="Shop {{ product.title | escape }}">
+    {% if product.featured_media.preview_image %}
+      {{
+        product.featured_media.preview_image
+        | image_url: width: 700
+        | image_tag: loading: 'lazy', widths: '350, 500, 700', sizes: '(min-width: 990px) 33vw, 100vw'
+      }}
+    {% else %}
+      <span class="clutch-shop-card__placeholder">
+        <span class="clutch-shop-card__placeholder-label">Clutch Print Preview</span>
+      </span>
+    {% endif %}
+  </a>
+
+  <div class="clutch-shop-card__body">
+    <div class="clutch-card-badges" aria-label="Product highlights">
+      {% if product_title_downcase contains 'growth kit' %}
+        <span class="clutch-card-badge">Best Value</span>
+      {% else %}
+        <span class="clutch-card-badge">QR Tracking Included</span>
+      {% endif %}
+      <span class="clutch-card-badge">Design Available</span>
+    </div>
+
+    <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <p>{{ product_description }}</p>
+
+    <div class="clutch-shop-card__footer">
+      {% if starting_price > 0 %}
+        <span class="clutch-shop-card__price">
+          {% if kit_display_price != blank %}
+            {{ starting_price | money_without_trailing_zeros }}
+          {% else %}
+            Starting at {{ starting_price | money_without_trailing_zeros }}
+          {% endif %}
+        </span>
+      {% endif %}
+      <div class="clutch-card-actions">
+        <a class="button clutch-card-button" href="{{ product.url }}">View Product</a>
+      </div>
+    </div>
+  </div>
+</article>
+{% endif %}

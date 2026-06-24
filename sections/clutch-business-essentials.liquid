@@ -1,0 +1,220 @@
+{% liquid
+  assign essentials = 'standard-business-cards::Business Cards::Professional cards for everyday networking.||premium-flyers::Flyers::Promote offers, events, and services fast.||door-hangers::Door Hangers::Neighborhood-ready print for local outreach.||yard-signs::Yard Signs::Durable outdoor signs for local visibility.||premium-postcards::Postcards::Compact promos for offers and follow-ups.||tri-fold-brochures::Brochures::Folded print pieces for polished presentations.||vinyl-banners::Banners::Large-format banners for bold displays.' | split: '||'
+%}
+
+<section class="clutch-business-essentials color-{{ section.settings.color_scheme }}">
+  <div class="clutch-business-essentials__inner">
+    <div class="clutch-business-essentials__header">
+      <p class="clutch-business-essentials__eyebrow">Business Essentials</p>
+      <h2>Essential print products for growing businesses.</h2>
+    </div>
+
+    <div class="clutch-business-essentials__grid">
+      {% for essential in essentials %}
+        {% assign parts = essential | split: '::' %}
+        {% assign product_handle = parts[0] %}
+        {% assign product = all_products[product_handle] %}
+        {% assign product_image = product.featured_media.preview_image %}
+        {% if product_image == blank %}
+          {% assign product_image = product.featured_image %}
+        {% endif %}
+        {% assign product_url = product.url %}
+        {% if product_url == blank %}
+          {% assign product_url = '/products/' | append: product_handle %}
+        {% endif %}
+        <article class="clutch-essential-card">
+          {% if product_image != blank %}
+            {{
+              product_image
+              | image_url: width: 640
+              | image_tag:
+                class: 'clutch-essential-card__image',
+                loading: 'lazy',
+                sizes: '(min-width: 990px) 25vw, (min-width: 650px) 50vw, 100vw'
+            }}
+          {% else %}
+            <div class="clutch-essential-card__media">
+              <span>{{ parts[1] }}</span>
+            </div>
+          {% endif %}
+          <div class="clutch-essential-card__body">
+            <div class="clutch-essential-card__badges" aria-label="Product highlights">
+              <span>QR Tracking Available</span>
+              <span>Design Available</span>
+            </div>
+            <h3>{{ parts[1] }}</h3>
+            <p>{{ parts[2] }}</p>
+            {% if product != blank %}
+              <p class="clutch-essential-card__price">Starting at {{ product.price_min | money_without_trailing_zeros }}</p>
+            {% endif %}
+            <a class="button clutch-essential-card__button" href="{{ product_url }}">View Product</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-business-essentials {
+    background: #fff;
+    padding: clamp(2rem, 4vw, 3.5rem) var(--page-margin) clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .clutch-business-essentials__inner {
+    margin-inline: auto;
+    max-width: 1180px;
+  }
+
+  .clutch-business-essentials__header {
+    margin: 0 auto clamp(1.5rem, 4vw, 2.5rem);
+    max-width: 720px;
+    text-align: center;
+  }
+
+  .clutch-business-essentials__eyebrow {
+    color: #ffa665;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .clutch-business-essentials h2 {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    line-height: 1.05;
+    margin: 0.65rem 0 0.8rem;
+  }
+
+  .clutch-business-essentials__header p:last-child {
+    color: rgba(34, 34, 34, 0.78);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .clutch-business-essentials__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  .clutch-essential-card {
+    background: #fff;
+    border: 1px solid rgba(56, 72, 98, 0.12);
+    border-radius: 22px;
+    box-shadow: 0 10px 28px rgba(56, 72, 98, 0.06);
+    display: grid;
+    overflow: hidden;
+  }
+
+  .clutch-essential-card__media {
+    align-items: center;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, rgba(56, 72, 98, 0.08), rgba(255, 166, 101, 0.14));
+    color: rgba(56, 72, 98, 0.74);
+    display: flex;
+    font-size: 0.82rem;
+    font-weight: 800;
+    justify-content: center;
+    letter-spacing: 0.06em;
+    padding: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .clutch-essential-card__image {
+    aspect-ratio: 4 / 3;
+    display: block;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .clutch-essential-card__body {
+    display: grid;
+    gap: 0.85rem;
+    padding: 1.05rem;
+  }
+
+  .clutch-essential-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .clutch-essential-card__badges span {
+    background: rgba(255, 166, 101, 0.16);
+    border: 1px solid rgba(255, 166, 101, 0.36);
+    border-radius: 999px;
+    color: #384862;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    padding: 0.42rem 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .clutch-essential-card h3 {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .clutch-essential-card p {
+    color: rgba(34, 34, 34, 0.82);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .clutch-essential-card__price {
+    color: #384862 !important;
+    font-weight: 800;
+  }
+
+  .clutch-essential-card__button {
+    margin-top: auto;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 650px) {
+    .clutch-business-essentials__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .clutch-business-essentials__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Business Essentials",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Business Essentials"
+    }
+  ]
+}
+{% endschema %}

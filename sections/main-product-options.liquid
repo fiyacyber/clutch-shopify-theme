@@ -1,0 +1,15 @@
+{% comment %}
+  Main product options section
+  Renders the Clutch print product options panel
+{% endcomment %}
+
+<div class="section" id="shopify-section-{{ section.id }}">
+  {% include 'clutch-print-product-options', section_id: section.id %}
+</div>
+
+{% schema %}
+  {
+    "name": "Product Options",
+    "settings": []
+  }
+{% endschema %}
