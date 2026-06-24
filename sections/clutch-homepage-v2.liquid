@@ -30,10 +30,59 @@
   </div>
 </section>
 
+<!-- ============================================================
+  2. OFFER OVERVIEW
+============================================================ -->
+<section class="ch-offers" id="what-we-offer">
+  <div class="ch-inner">
+    <div class="ch-section-header">
+      <p class="ch-eyebrow">What We Offer</p>
+      <h2>One shop for print, QR tools, and business launch materials.</h2>
+      <p class="ch-offers__intro">
+        From everyday networking pieces to trackable campaigns, Clutch helps you get the materials,
+        links, and customer touchpoints your business needs to look polished and measure what works.
+      </p>
+    </div>
+
+    <div class="ch-offers__grid">
+      <a class="ch-offer-card" href="/products/standard-business-cards">
+        <span class="ch-offer-card__kicker">Cards</span>
+        <h3>Business Cards</h3>
+        <p>Standard, premium, and smart business card options for in-person networking.</p>
+      </a>
+      <a class="ch-offer-card" href="/products/premium-flyers">
+        <span class="ch-offer-card__kicker">Promos</span>
+        <h3>Flyers & Handouts</h3>
+        <p>Full-color print pieces for events, sales, menus, service lists, and announcements.</p>
+      </a>
+      <a class="ch-offer-card" href="/products/door-hangers">
+        <span class="ch-offer-card__kicker">Local Reach</span>
+        <h3>Door Hangers & Postcards</h3>
+        <p>Neighborhood-ready outreach for contractors, home services, real estate, and local offers.</p>
+      </a>
+      <a class="ch-offer-card" href="/products/yard-signs">
+        <span class="ch-offer-card__kicker">Visibility</span>
+        <h3>Signs & Banners</h3>
+        <p>Outdoor-ready yard signs, vinyl banners, and large-format materials for visibility.</p>
+      </a>
+      <a class="ch-offer-card ch-offer-card--accent" href="/pages/qr-pro">
+        <span class="ch-offer-card__kicker">QR Pro</span>
+        <h3>QR Tracking & Digital Profiles</h3>
+        <p>Dynamic QR codes, scan analytics, editable destinations, and Clutch Connect profiles.</p>
+      </a>
+      <a class="ch-offer-card" href="/collections/business-kits">
+        <span class="ch-offer-card__kicker">Bundles</span>
+        <h3>Business Kits & Custom Orders</h3>
+        <p>Bundled launch materials, design help, file review, and custom print requests.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
 {% render 'clutch-connect-card-section' %}
 
 <!-- ============================================================
-  2. QR PRO / CLUTCH QR TRACKING
+  3. QR PRO / CLUTCH QR TRACKING
 ============================================================ -->
 <section class="ch-qrpro" id="qr-tracking">
   <div class="ch-inner ch-qrpro__inner">
@@ -84,7 +133,7 @@
 </section>
 
 <!-- ============================================================
-  3. BUSINESS KITS
+  4. BUSINESS KITS
 ============================================================ -->
 {%- liquid
   assign kits = 'starter-kit::STARTER::Starter Kit::View Kit Details &rarr;::Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Editable QR Destinations|Launch-Ready Campaign||growth-kit::GROWTH::Growth Kit::View Kit Details &rarr;::Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Door Hangers + QR Tracking|Compare Scans by Material|QR Pro Dashboard Access||contractor-kit::CONTRACTOR::Contractor Kit::View Kit Details &rarr;::Professional Design Free|Business Cards + QR Tracking|Door Hangers + QR Tracking|Yard Signs + QR Tracking|Lead Tracking & Review Links|QR Pro Dashboard Access' | split: '||'
@@ -152,7 +201,7 @@
 {% render 'clutch-business-kit-tracking-callout' %}
 
 <!-- ============================================================
-  5. BUSINESS ESSENTIALS
+  6. BUSINESS ESSENTIALS
 ============================================================ -->
 {%- liquid
   assign essentials = 'standard-business-cards::Business Cards::Professional cards for everyday networking.||premium-flyers::Flyers::Promote offers, events, and services fast.||door-hangers::Door Hangers::Neighborhood-ready print for local outreach.||yard-signs::Yard Signs::Durable outdoor signs for local visibility.||premium-postcards::Postcards::Compact promos for offers and follow-ups.||tri-fold-brochures::Brochures::Folded print pieces for polished presentations.||vinyl-banners::Banners::Large-format banners for bold displays.' | split: '||'
@@ -205,7 +254,7 @@
 </section>
 
 <!-- ============================================================
-  6. CUSTOM ORDER CTA
+  7. CUSTOM ORDER CTA
 ============================================================ -->
 <section class="ch-cta">
   <div class="ch-inner ch-cta__inner">
@@ -233,6 +282,7 @@
 }
 
 .shopify-section:has(.ch-hero),
+.shopify-section:has(.ch-offers),
 .shopify-section:has(.ch-essentials),
 .shopify-section:has(.ch-qrpro),
 .shopify-section:has(.ch-kits),
@@ -266,6 +316,14 @@
   color: #384862;
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   margin: 0;
+}
+
+.ch-section-header > p:not(.ch-eyebrow) {
+  color: rgba(56, 72, 98, 0.78);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0.85rem auto 0;
+  max-width: 760px;
 }
 
 /* ====================================================
@@ -409,7 +467,85 @@
 }
 
 /* ====================================================
-   2. BUSINESS ESSENTIALS
+   2. OFFER OVERVIEW
+==================================================== */
+.ch-offers {
+  background: #fff;
+  padding: clamp(3rem, 6vw, 5rem) 0;
+}
+
+.ch-offers__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ch-offer-card {
+  background: linear-gradient(180deg, #ffffff, #f7f8fb);
+  border: 1px solid rgba(56,72,98,0.1);
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(56,72,98,0.07);
+  color: #384862;
+  display: block;
+  min-height: 212px;
+  padding: 1.25rem;
+  position: relative;
+  text-decoration: none;
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+
+.ch-offer-card::after {
+  background: #FFA665;
+  border-radius: 999px;
+  content: '';
+  height: 8px;
+  left: 1.25rem;
+  position: absolute;
+  top: 1.25rem;
+  width: 34px;
+}
+
+.ch-offer-card:hover {
+  border-color: rgba(255,166,101,0.55);
+  box-shadow: 0 22px 48px rgba(56,72,98,0.13);
+  transform: translateY(-4px);
+}
+
+.ch-offer-card--accent {
+  background: linear-gradient(160deg, #384862, #273449);
+  color: #fff;
+}
+
+.ch-offer-card__kicker {
+  color: #FFA665;
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin: 2rem 0 0.65rem;
+  text-transform: uppercase;
+}
+
+.ch-offer-card h3 {
+  color: inherit;
+  font-size: 1.18rem;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.ch-offer-card p {
+  color: rgba(56,72,98,0.76);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+}
+
+.ch-offer-card--accent p {
+  color: rgba(255,255,255,0.78);
+}
+
+/* ====================================================
+   6. BUSINESS ESSENTIALS
 ==================================================== */
 .ch-essentials {
   background:
@@ -866,6 +1002,8 @@
 
   .ch-essentials__grid { grid-template-columns: repeat(2, 1fr); }
 
+  .ch-offers__grid { grid-template-columns: repeat(2, 1fr); }
+
   .ch-kits__grid { grid-template-columns: 1fr; }
 
   .ch-qrpro__mockup-wrap {
@@ -878,6 +1016,7 @@
 }
 
 @media screen and (max-width: 480px) {
+  .ch-offers__grid,
   .ch-essentials__grid { grid-template-columns: 1fr; }
 }
 {% endstylesheet %}

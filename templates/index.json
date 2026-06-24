@@ -10,7 +10,7 @@
 {
   "sections": {
     "clutch_homepage_rebuild": {
-      "type": "clutch-homepage",
+      "type": "clutch-homepage-v2",
       "settings": {}
     }
   },
