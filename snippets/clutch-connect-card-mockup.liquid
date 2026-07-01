@@ -1,253 +1,158 @@
 {% doc %}
-Static Smart Business Card showcase.
-Replaces the old interactive/animated mockup with a clean product visual.
+Static blank metal NFC card showcase inspired by wholesale card finish references.
 {% enddoc %}
 
-<div class="ccard-showcase" aria-hidden="true">
-  <div class="ccard-showcase__meta">
-    <p class="ccard-showcase__meta-left">Solid Steel</p>
-    <p class="ccard-showcase__meta-right">Dynamic Clutch QR</p>
+<div class="ccard-showcase" aria-label="Blank metal smart business card finish preview">
+  <div class="ccard-showcase__cards">
+    <article class="ccard-blank-card ccard-blank-card--black" aria-label="Matte black blank metal NFC card"></article>
+    <article class="ccard-blank-card ccard-blank-card--silver" aria-label="Brushed silver blank metal NFC card"></article>
+    <article class="ccard-blank-card ccard-blank-card--gold" aria-label="Brushed gold blank metal NFC card"></article>
   </div>
 
-  <div class="ccard-showcase__stage">
-    <div class="ccard-showcase__cards">
-      <div class="ccard-showcase__card ccard-showcase__card--black ccard-showcase__card--front">
-        <span class="ccard-showcase__logo-mark">C</span>
-      </div>
-
-      <div class="ccard-showcase__card ccard-showcase__card--black ccard-showcase__card--back">
-        <div class="ccard-showcase__qr" aria-label="QR preview">
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-        </div>
-      </div>
-
-      <div class="ccard-showcase__card ccard-showcase__card--pearl ccard-showcase__card--front">
-        <span class="ccard-showcase__logo-mark ccard-showcase__logo-mark--dark">C</span>
-      </div>
-
-      <div class="ccard-showcase__card ccard-showcase__card--pearl ccard-showcase__card--back">
-        <div class="ccard-showcase__qr" aria-label="QR preview">
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="ccard-showcase__wallets">
-    <div class="ccard-wallet-badge">
-      <span class="ccard-wallet-badge__brand">Add to</span>
-      <span class="ccard-wallet-badge__name">Apple Wallet</span>
-    </div>
-    <div class="ccard-wallet-badge">
-      <span class="ccard-wallet-badge__brand">Add to</span>
-      <span class="ccard-wallet-badge__name">Google Wallet</span>
-    </div>
-  </div>
-
-  <div class="ccard-showcase__finish-row">
-    <p>Matte Black - Silver Engraving</p>
-    <p>Silver Pearl - Black Engraving</p>
+  <div class="ccard-showcase__finish-labels" aria-hidden="true">
+    <span>Matte Black</span>
+    <span>Brushed Silver</span>
+    <span>Brushed Gold</span>
   </div>
 </div>
 
 {% stylesheet %}
   .ccard-showcase {
     display: grid;
-    gap: clamp(0.9rem, 2vw, 1.4rem);
+    gap: 0.7rem;
     margin-inline: auto;
-    max-width: 760px;
+    max-width: 620px;
     width: 100%;
   }
 
-  .ccard-showcase__meta {
-    align-items: baseline;
-    color: #FFA665;
+  .ccard-showcase__header {
+    align-items: end;
     display: flex;
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 900;
+    gap: 1rem;
     justify-content: space-between;
-    letter-spacing: 0.03em;
+  }
+
+  .ccard-showcase__header span {
+    color: #FFA665;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
-  .ccard-showcase__meta p {
-    margin: 0;
-  }
-
-  .ccard-showcase__meta-left {
-    font-size: clamp(1rem, 2.4vw, 1.9rem);
-  }
-
-  .ccard-showcase__meta-right {
-    font-size: clamp(0.82rem, 2vw, 1.5rem);
+  .ccard-showcase__header strong {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1rem, 2.2vw, 1.45rem);
+    line-height: 1.05;
     text-align: right;
-  }
-
-  .ccard-showcase__stage {
-    background:
-      radial-gradient(circle at 6% 8%, rgba(255, 255, 255, 0.18), transparent 22%),
-      radial-gradient(circle at 90% 88%, rgba(255, 166, 101, 0.13), transparent 28%),
-      linear-gradient(145deg, #202a3c 0%, #0f1624 100%);
-    border: 1px solid rgba(255, 166, 101, 0.18);
-    border-radius: 22px;
-    box-shadow: 0 30px 72px rgba(15, 23, 42, 0.34);
-    padding: clamp(1rem, 2.4vw, 1.45rem);
   }
 
   .ccard-showcase__cards {
     display: grid;
-    gap: clamp(0.7rem, 1.8vw, 1rem);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.75rem, 2vw, 1rem);
   }
 
-  .ccard-showcase__card {
+  .ccard-blank-card {
     aspect-ratio: 1.586 / 1;
-    border-radius: 16px;
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+    border-radius: 18px;
+    box-shadow: 0 20px 42px rgba(15, 23, 42, 0.18);
+    display: grid;
     overflow: hidden;
+    padding: 0;
     position: relative;
   }
 
-  .ccard-showcase__card::before {
-    background: linear-gradient(120deg, transparent 15%, rgba(255, 255, 255, 0.25) 42%, transparent 62%);
+  .ccard-blank-card::before {
+    background:
+      linear-gradient(115deg, transparent 18%, rgba(255, 255, 255, 0.58) 42%, transparent 62%),
+      repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 10px);
     content: '';
-    inset: 0;
-    position: absolute;
+    inset: -24%;
+    opacity: 0.55;
     pointer-events: none;
-  }
-
-  .ccard-showcase__card--black {
-    background: linear-gradient(135deg, #0c121e 0%, #111a2b 48%, #060a13 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .ccard-showcase__card--pearl {
-    background: linear-gradient(140deg, #f7f8fa 0%, #eceff3 48%, #d9dee8 100%);
-    border: 1px solid rgba(15, 23, 42, 0.1);
-  }
-
-  .ccard-showcase__logo-mark {
-    align-items: center;
-    border: 3px solid #f8fafc;
-    border-radius: 8px;
-    color: #f8fafc;
-    display: inline-flex;
-    font-family: 'Exo 2', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    height: 34px;
-    justify-content: center;
-    left: 12px;
-    line-height: 1;
     position: absolute;
-    top: 12px;
-    width: 34px;
+    transform: rotate(7deg);
   }
 
-  .ccard-showcase__logo-mark--dark {
-    border-color: #111827;
-    color: #111827;
-  }
-
-  .ccard-showcase__qr {
-    background: #fff;
-    border-radius: 7px;
-    display: grid;
-    gap: 1px;
-    grid-template-columns: repeat(5, 1fr);
-    padding: 3px;
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    width: 40px;
-  }
-
-  .ccard-showcase__qr i {
-    background: #0f172a;
-    border-radius: 1px;
-    display: block;
-    height: 6px;
-    width: 6px;
-  }
-
-  .ccard-showcase__wallets {
-    display: grid;
-    gap: 0.55rem;
-    justify-items: start;
-  }
-
-  .ccard-wallet-badge {
-    align-items: center;
-    background: #111;
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: 999px;
+  .ccard-blank-card--black {
+    background:
+      linear-gradient(135deg, #101827 0%, #1e2b44 45%, #060a13 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     color: #fff;
+  }
+
+  .ccard-blank-card--silver {
+    background:
+      repeating-linear-gradient(100deg, rgba(56, 72, 98, 0.12) 0 1px, transparent 1px 10px),
+      linear-gradient(135deg, #ffffff 0%, #dfe5ed 52%, #bfc8d3 100%);
+    border: 1px solid rgba(56, 72, 98, 0.16);
+    color: #071D33;
+  }
+
+  .ccard-blank-card--gold {
+    background:
+      repeating-linear-gradient(100deg, rgba(120, 75, 20, 0.14) 0 1px, transparent 1px 10px),
+      linear-gradient(135deg, #ffe2a8 0%, #d5a34d 52%, #95621c 100%);
+    border: 1px solid rgba(120, 75, 20, 0.18);
+    color: #071D33;
+  }
+
+  .ccard-showcase__finish-labels {
     display: grid;
-    gap: 0.08rem;
-    min-height: 48px;
-    min-width: 210px;
-    padding: 0.45rem 1.05rem;
+    gap: clamp(0.75rem, 2vw, 1rem);
   }
 
-  .ccard-wallet-badge__brand {
-    font-size: 0.68rem;
-    letter-spacing: 0.04em;
-    line-height: 1;
-    opacity: 0.95;
-    text-transform: uppercase;
-  }
-
-  .ccard-wallet-badge__name {
-    font-size: 1.05rem;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  .ccard-showcase__finish-row {
-    color: #FFA665;
-    display: grid;
-    font-family: 'Exo 2', sans-serif;
+  .ccard-showcase__finish-labels span {
+    color: #384862;
+    font-size: 0.75rem;
     font-weight: 900;
-    gap: 0.25rem;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.1em;
+    text-align: center;
     text-transform: uppercase;
   }
 
-  .ccard-showcase__finish-row p {
-    margin: 0;
-    font-size: clamp(0.95rem, 2vw, 1.7rem);
-    line-height: 1.1;
+  .ccard-showcase__highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
   }
 
-  @media (max-width: 760px) {
-    .ccard-showcase__meta {
-      display: grid;
-      gap: 0.2rem;
-      justify-items: start;
+  .ccard-showcase__highlights span {
+    background: #fff7f0;
+    border: 1px solid rgba(255, 166, 101, 0.36);
+    border-radius: 999px;
+    color: #384862;
+    font-size: 0.78rem;
+    font-weight: 850;
+    padding: 0.52rem 0.72rem;
+  }
+
+  @media (min-width: 760px) {
+    .ccard-showcase__cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .ccard-showcase__meta-right {
+    .ccard-showcase__finish-labels {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ccard-blank-card {
+      min-height: 136px;
+    }
+  }
+
+  @media (max-width: 759px) {
+    .ccard-showcase__header {
+      align-items: start;
+      display: grid;
+    }
+
+    .ccard-showcase__header strong {
       text-align: left;
     }
 
-    .ccard-showcase__cards {
-      grid-template-columns: 1fr;
-    }
-
-    .ccard-showcase__wallets {
-      justify-items: stretch;
-    }
-
-    .ccard-wallet-badge {
-      min-width: 0;
+    .ccard-showcase__highlights span {
       width: 100%;
     }
   }

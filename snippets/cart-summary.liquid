@@ -258,6 +258,11 @@
 </div>
 
 <div class="cart__ctas">
+  <div class="clutch-cart-shipping-note" aria-label="Free shipping included">
+    <strong>Free shipping included</strong>
+    <span>Every Clutch order ships free. No shipping code needed at checkout.</span>
+  </div>
+
   <button
     type="submit"
     id="checkout"
@@ -293,6 +298,28 @@
     border-block: 1px solid var(--color-border);
     padding-block: 0;
     margin-block-start: var(--margin-3xs);
+  }
+
+  .clutch-cart-shipping-note {
+    display: grid;
+    gap: 0.25rem;
+    margin-bottom: var(--gap-sm);
+    padding: 0.85rem;
+    border: 1px solid rgba(255, 166, 101, 0.42);
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(255, 166, 101, 0.16), rgba(56, 72, 98, 0.04));
+    color: #384862;
+  }
+
+  .clutch-cart-shipping-note strong {
+    color: #071D33;
+    font-weight: 900;
+  }
+
+  .clutch-cart-shipping-note span {
+    color: rgba(56, 72, 98, 0.78);
+    font-size: 0.84rem;
+    line-height: 1.45;
   }
 
   .cart-actions__divider {

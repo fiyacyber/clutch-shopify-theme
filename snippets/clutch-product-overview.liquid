@@ -4,7 +4,6 @@
 
   assign is_startup_kit = false
   assign is_growth_kit = false
-  assign is_contractor_kit = false
   assign is_business_kit = false
   assign is_qr_product = false
   assign is_connect_card = false
@@ -14,9 +13,6 @@
     assign is_business_kit = true
   elsif product_handle == 'growth-kit'
     assign is_growth_kit = true
-    assign is_business_kit = true
-  elsif product_handle == 'contractor-kit'
-    assign is_contractor_kit = true
     assign is_business_kit = true
   endif
 
@@ -37,24 +33,21 @@
   if is_connect_card
     assign summary_title = 'Clutch Smart Business Card'
     assign summary_text = 'A premium metal NFC business card that opens your editable digital profile by tap or QR scan.'
-    assign included_items = 'Premium metal NFC business card|Editable digital profile|Dynamic QR code|NFC tap destination|Lead capture form|Apple Wallet contact card|QR Pro Hosting and analytics' | split: '|'
+    assign included_items = 'Premium metal NFC business card|Editable digital profile|Dynamic QR code|NFC tap destination|Lead capture form|Apple Wallet contact card|Clutch Connect Hosting and analytics' | split: '|'
     assign best_for_items = 'Contractors|Realtors|Sales reps|Barbers|Creators|Local businesses' | split: '|'
-    assign support_items = '$149 Smart Business Card|$99 Additional Smart Cards|$14.99/month QR Pro Hosting|Update links anytime|Track scans and engagement' | split: '|'
+    assign support_items = '$49.99 Smart Business Card|$49.99 Additional Smart Cards|+$19.99 Optional Engraving|$14.99/month Clutch Connect Hosting|Update links anytime|Track scans and engagement' | split: '|'
   elsif is_business_kit
     assign summary_title = 'Business Kit'
     assign summary_text = 'Print bundles with campaign-level QR tracking so you can compare which materials generate scans, engagement, and leads.'
     assign best_for_items = 'Local Businesses|Contractors|Events|Promotions|New Business Launches|Campaign Tracking' | split: '|'
-    assign support_items = 'QR Pro dashboard access|Editable QR destinations|Track scans by material type|Update links without reprinting' | split: '|'
+    assign support_items = 'Clutch Connect dashboard access|Editable QR destinations|Track scans by material type|Update links without reprinting' | split: '|'
 
     if is_startup_kit
       assign summary_text = 'Perfect for businesses launching their brand with business cards and flyers that can be tracked separately.'
-      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Editable QR Destinations|QR Pro Dashboard Access' | split: '|'
+      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Editable QR Destinations|Clutch Connect Dashboard Access' | split: '|'
     elsif is_growth_kit
       assign summary_text = 'Designed for businesses focused on generating leads and comparing performance across cards, flyers, and door hangers.'
-      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Door Hangers + QR Tracking|Compare Scans by Material|QR Pro Dashboard Access' | split: '|'
-    elsif is_contractor_kit
-      assign summary_text = 'Built for contractors and service businesses that need to compare cards, door hangers, and yard signs by scan performance.'
-      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Door Hangers + QR Tracking|Yard Signs + QR Tracking|Compare Scans by Material|QR Pro Dashboard Access' | split: '|'
+      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Door Hangers + QR Tracking|Compare Scans by Material|Clutch Connect Dashboard Access' | split: '|'
     endif
   elsif is_qr_product
     assign summary_title = 'Clutch QR™ Add-On'

@@ -15,7 +15,7 @@
   assign is_qr_product = false
   assign is_connect_card = false
 
-  if product_handle == 'starter-kit' or product_handle == 'startup-kit' or product_handle == 'growth-kit' or product_handle == 'contractor-kit'
+  if product_handle == 'starter-kit' or product_handle == 'startup-kit' or product_handle == 'growth-kit'
     assign is_business_kit = true
   endif
 
@@ -40,12 +40,13 @@
       <h3>Tap or scan to share your profile</h3>
       <p>
         Clutch Smart Business Card includes a premium metal NFC card, editable digital profile, dynamic QR code,
-        and QR Pro Hosting with scan/tap analytics.
+        and Clutch Connect Hosting with scan/tap analytics.
       </p>
       <div class="clutch-addon-badges">
-        <span>$149 Smart Business Card</span>
-        <span>$99 additional cards</span>
-        <span>$14.99/month QR Pro Hosting</span>
+        <span>$49.99 Smart Business Card</span>
+        <span>$49.99 additional cards</span>
+        <span>+$19.99 optional engraving</span>
+        <span>$14.99/month Clutch Connect Hosting</span>
         <span>QR + NFC sharing</span>
         <span>Editable profile</span>
         <span>Scan analytics</span>
@@ -74,7 +75,7 @@
         <div class="clutch-info-panel">
           <h3>Plan options</h3>
           <ul>
-          <li>QR Pro Hosting - $14.99/month, up to 10 dynamic QR codes</li>
+          <li>Clutch Connect Hosting - $14.99/month, up to 10 dynamic QR codes</li>
           <li>Business Kits can track scans by printed material from one dashboard</li>
         </ul>
       </div>
@@ -91,7 +92,7 @@
         <h3>Track each printed material separately</h3>
         <p>
           Each printed material in your Business Kit can receive its own dynamic Clutch QR Code. Track business cards,
-          flyers, door hangers, yard signs, postcards, and more from one QR Pro dashboard.
+          flyers, door hangers, yard signs, postcards, and more from one Clutch Connect dashboard.
         </p>
         <div class="clutch-addon-badges">
           <span>Business card scans</span>
@@ -99,7 +100,7 @@
           <span>Door hanger scans</span>
           <span>Yard sign scans</span>
           <span>Editable destinations</span>
-          <span>$14.99/month QR Pro hosting</span>
+          <span>$14.99/month Clutch Connect hosting</span>
         </div>
       </div>
     {% endif %}
@@ -159,19 +160,19 @@
         class="clutch-select field__input"
         name="properties[QR Package]"
       >
-        <option value="QR Tracking Available - Add QR Pro hosting">
-          QR Tracking Available — Add QR Pro hosting
+        <option value="QR Tracking Available - Add Clutch Connect hosting">
+          QR Tracking Available — Add Clutch Connect hosting
         </option>
         <option
-          value="QR Pro - $14.99/month, up to 10 dynamic QR codes"
+          value="Clutch Connect - $14.99/month, up to 10 dynamic QR codes"
           data-clutch-qr-addon-handle="qr-pro"
           data-clutch-qr-addon-variant-id="{{ qr_pro_variant.id }}"
         >
-          QR Pro — $14.99/month, up to 10 dynamic QR codes
+          Clutch Connect — $14.99/month, up to 10 dynamic QR codes
         </option>
       </select>
       <p class="clutch-field-help">
-        Add QR Pro hosting for editable destinations, scan analytics, and dashboard access.
+        Add Clutch Connect hosting for editable destinations, scan analytics, and dashboard access.
       </p>
     </div>
   {% endif %}
