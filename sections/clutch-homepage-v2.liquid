@@ -10,12 +10,12 @@
         <span class="chp-badge">Premium print powered by Clutch Connect</span>
         <h1 id="chp-hero-title">Print Smarter. Track Everything.</h1>
         <p>
-          Premium print products and Smart Business Cards powered by Clutch Connect - track QR scans, NFC taps, leads,
+          Premium print products and Smart Clutch Cards powered by Clutch Connect - track QR scans, NFC taps, leads,
           contact saves, profile views, and campaign performance from one dashboard.
         </p>
         <div class="chp-actions">
           <a class="chp-btn chp-btn--primary" href="/collections/business-kits">Shop Business Kits</a>
-          <a class="chp-btn chp-btn--secondary" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+          <a class="chp-btn chp-btn--secondary" href="/products/clutch-connect-card">Shop Smart Clutch Card</a>
         </div>
         <div class="chp-proof" aria-label="Platform highlights">
           <span>QR scan tracking</span>
@@ -48,10 +48,13 @@
         <span class="chp-eyebrow">Clutch Connect Platform</span>
         <h2 id="chp-platform-title">Every print piece can become a trackable campaign.</h2>
         <p>
-          Clutch Connect connects your printed marketing to campaign analytics, digital profiles,
-          lead capture, QR/NFC engagement, and location visibility.
+          Clutch Connect powers digital profiles, lead capture, and profile analytics.
+          QR Pro powers dynamic QR campaigns, scan reporting, and campaign performance tracking.
         </p>
-        <a class="chp-btn chp-btn--primary" href="/pages/qr-pro">Explore Clutch Connect</a>
+        <div class="chp-actions">
+          <a class="chp-btn chp-btn--primary" href="/pages/clutch-connect">Explore Clutch Connect</a>
+          <a class="chp-btn chp-btn--secondary" href="/pages/qr-pro">Explore QR Pro</a>
+        </div>
       </div>
       <div class="chp-feature-grid">
         <article class="chp-card chp-feature"><h3>Dynamic QR Codes</h3><p>Update destinations after printing and measure campaign scans.</p></article>
@@ -67,7 +70,7 @@
   <section class="chp-section chp-smart-cards" aria-labelledby="chp-smart-cards-title">
     <div class="chp-shell chp-smart-cards__grid">
       <div class="chp-smart-cards__copy">
-        <span class="chp-eyebrow">Smart Business Cards</span>
+        <span class="chp-eyebrow">Smart Clutch Card</span>
         <h2 id="chp-smart-cards-title">Blank metal NFC cards connected to your Clutch Connect profile.</h2>
         <p>
           Choose matte black, brushed silver, or brushed gold NTAG213 metal cards. Optional custom engraving is available,
@@ -79,7 +82,7 @@
           <span>NFC tap + dynamic QR setup</span>
         </div>
         <div class="chp-actions">
-          <a class="chp-btn chp-btn--primary" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+          <a class="chp-btn chp-btn--primary" href="/products/clutch-connect-card">Shop Smart Clutch Card</a>
           <a class="chp-btn chp-btn--secondary" href="/pages/smart-business-card">View Details</a>
         </div>
       </div>
@@ -92,7 +95,7 @@
   {% render 'clutch-connect-card-section' %}
 
   {%- liquid
-    assign kits = 'starter-kit::STARTER::$399::Starter Kit::250 business cards, 250 flyers, QR campaign tracking, and artwork review.||growth-kit::GROWTH::$649::Growth Kit::500 business cards, 500 flyers, 500 door hangers, Clutch Connect reporting, and optional yard signs.||custom-order::AGENCY / CUSTOM::Custom quote::Custom quantities, multi-location campaigns, yard signs, banners, and reporting setup.' | split: '||'
+    assign kits = 'starter-kit::STARTER::$399::Starter Kit::250 business cards, 250 flyers, QR campaign tracking, and artwork review.||growth-kit::GROWTH::$649::Growth Kit::500 business cards, 500 flyers, 500 door hangers, Clutch Connect reporting, and optional 100 yard signs.||custom-order::AGENCY / CUSTOM::Custom quote::Custom quantities, multi-location campaigns, yard signs, banners, and reporting setup.' | split: '||'
   -%}
 
   <section class="chp-section chp-kits" id="business-kits" aria-labelledby="chp-kits-title">
@@ -139,7 +142,7 @@
               {%- elsif handle == 'growth-kit' -%}
                 <li>500 business cards</li>
                 <li>500 flyers + 500 door hangers</li>
-                <li>Optional 50 yard signs +$299</li>
+                <li>Optional: Add 100 1-color, 2-sided yard signs for $399.</li>
               {%- else -%}
                 <li>Custom print quantities</li>
                 <li>Yard signs, banners, and mailers</li>
@@ -170,6 +173,41 @@
           <h3>Trackable print campaigns connected to software.</h3>
           <ul><li>Trackable print campaigns</li><li>QR/NFC analytics</li><li>Clutch Connect profile</li><li>Lead capture and campaign reporting</li></ul>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="chp-section chp-plan-ladder" aria-labelledby="chp-plan-ladder-title">
+    <div class="chp-shell">
+      <div class="chp-section-head">
+        <span class="chp-eyebrow">Plans</span>
+        <h2 id="chp-plan-ladder-title">Plans that grow with your business.</h2>
+        <p>Start free, then unlock advanced lead capture, dynamic QR tracking, and agency reporting as you scale.</p>
+      </div>
+      <div class="chp-plan-grid">
+        <article class="chp-card chp-plan-card">
+          <small>Free digital profile</small>
+          <h3>Clutch Connect Basic</h3>
+          <p>Free profile, contact buttons, links, and starter Lead Inbox.</p>
+        </article>
+        <article class="chp-card chp-plan-card">
+          <small>Connect+ lead capture</small>
+          <h3>Clutch Connect+</h3>
+          <p>Advanced builder, forms, source tracking, and profile analytics.</p>
+        </article>
+        <article class="chp-card chp-plan-card">
+          <small>QR Pro print tracking</small>
+          <h3>QR Pro</h3>
+          <p>100 dynamic QR campaigns, exports, scan analytics, and campaign reporting.</p>
+        </article>
+        <article class="chp-card chp-plan-card">
+          <small>Agency reporting</small>
+          <h3>Agency</h3>
+          <p>250+ QR codes, higher volume, client reporting, and custom onboarding.</p>
+        </article>
+      </div>
+      <div class="chp-plan-ladder__actions">
+        <a class="chp-btn chp-btn--primary" href="/pages/pricing">View Full Pricing</a>
       </div>
     </div>
   </section>
@@ -259,6 +297,7 @@
   .chp-proof span { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; color: rgba(255,255,255,0.82); font-size: 0.78rem; font-weight: 800; padding: 0.5rem 0.7rem; }
 
   .chp-step-grid, .chp-feature-grid, .chp-kit-grid, .chp-product-grid, .chp-compare-grid { display: grid; gap: 1rem; }
+  .chp-plan-grid { display: grid; gap: 1rem; grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .chp-step-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .chp-step-card, .chp-feature, .chp-product { padding: 1.15rem; }
   .chp-step-card span, .chp-kit small, .chp-product span, .chp-compare span { color: var(--chp-orange); display: block; font-size: 0.72rem; font-weight: 900; letter-spacing: 0.1em; margin-bottom: 0.8rem; text-transform: uppercase; }
@@ -298,6 +337,12 @@
   .chp-product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
   .chp-product { min-height: 184px; }
   .chp-product strong { color: var(--chp-navy); display: block; margin-top: 0.9rem; }
+  .chp-plan-ladder { background: #fff; }
+  .chp-plan-card { display: grid; gap: 0.65rem; padding: 1.05rem; }
+  .chp-plan-card small { color: var(--chp-orange); font-size: 0.7rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+  .chp-plan-card h3 { font-size: 1.2rem; }
+  .chp-plan-card p { font-size: 0.95rem; margin: 0; }
+  .chp-plan-ladder__actions { display: flex; justify-content: center; margin-top: 1rem; }
   .chp-final { background: var(--chp-orange); padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
   .chp-final__inner { align-items: center; display: grid; gap: 1.5rem; justify-items: center; max-width: 900px; text-align: center; }
   .chp-final .chp-eyebrow { color: rgba(7,29,51,0.72); }
@@ -305,13 +350,13 @@
   @media screen and (max-width: 980px) {
     .chp-hero__grid, .chp-platform__grid, .chp-smart-cards__grid { grid-template-columns: 1fr; }
     .chp-platform__copy { position: static; }
-    .chp-step-grid, .chp-kit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .chp-step-grid, .chp-kit-grid, .chp-plan-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media screen and (max-width: 720px) {
     .chp-hero { padding-top: 6.75rem; }
     .chp-hero h1 { font-size: clamp(2.55rem, 13vw, 3.75rem); }
-    .chp-step-grid, .chp-feature-grid, .chp-kit-grid, .chp-compare-grid { grid-template-columns: 1fr; }
+    .chp-step-grid, .chp-feature-grid, .chp-kit-grid, .chp-compare-grid, .chp-plan-grid { grid-template-columns: 1fr; }
     .chp-actions, .chp-actions .chp-btn { width: 100%; }
     .chp-actions .chp-btn { display: flex; }
   }

@@ -1,0 +1,211 @@
+<section class="clutch-connect-page" aria-labelledby="clutch-connect-page-title">
+  <div class="clutch-connect-page__inner">
+    <header class="clutch-connect-page__header">
+      <p class="clutch-connect-page__eyebrow">Clutch Connect</p>
+      <h1 id="clutch-connect-page-title">Your digital profile for NFC cards, QR codes, and social bios.</h1>
+      <p>
+        Start free with Clutch Connect Basic. Upgrade to Connect+ when you need advanced lead capture,
+        customization, and profile analytics.
+      </p>
+      <div class="clutch-connect-page__actions">
+        <a class="clutch-connect-page__btn clutch-connect-page__btn--primary" href="/login">Create free profile</a>
+        <a class="clutch-connect-page__btn clutch-connect-page__btn--secondary" href="/products/clutch-connect-plus">Upgrade to Connect+</a>
+      </div>
+    </header>
+
+    <section class="clutch-connect-page__compare" aria-label="Connect plan comparison">
+      <article class="clutch-connect-page__card">
+        <p class="clutch-connect-page__badge">Basic</p>
+        <h2>Clutch Connect Basic</h2>
+        <p class="clutch-connect-page__price">Free</p>
+        <p>A simple digital profile for NFC cards, QR codes, and social bios.</p>
+        <ul>
+          <li>Public digital profile</li>
+          <li>Contact buttons and social links</li>
+          <li>Save contact button</li>
+          <li>Basic request form</li>
+          <li>Basic Lead Inbox</li>
+          <li>Basic view/click tracking</li>
+          <li>Clutch Connect branding</li>
+        </ul>
+        <a class="clutch-connect-page__btn clutch-connect-page__btn--primary" href="/login">Create free profile</a>
+      </article>
+
+      <article class="clutch-connect-page__card clutch-connect-page__card--featured">
+        <p class="clutch-connect-page__badge">Connect+</p>
+        <h2>Clutch Connect+</h2>
+        <p class="clutch-connect-page__price">$9.99/mo</p>
+        <p>Advanced profile customization, forms, lead capture, and profile analytics.</p>
+        <ul>
+          <li>Everything in Basic</li>
+          <li>Advanced profile builder</li>
+          <li>Premium banner themes</li>
+          <li>Custom quote/request forms</li>
+          <li>Advanced Lead Inbox</li>
+          <li>Heatmap/profile analytics</li>
+          <li>Source tracking</li>
+          <li>Remove Clutch branding</li>
+        </ul>
+        <a class="clutch-connect-page__btn clutch-connect-page__btn--secondary" href="/products/clutch-connect-plus">Upgrade to Connect+</a>
+      </article>
+    </section>
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-connect-page {
+    background: #f6f8fb;
+    color: #0b1f35;
+    padding: clamp(3rem, 6vw, 5.5rem) 0;
+  }
+
+  .clutch-connect-page__inner {
+    margin-inline: auto;
+    max-width: 1120px;
+    padding-inline: clamp(1rem, 3vw, 2rem);
+  }
+
+  .clutch-connect-page__header {
+    margin: 0 auto clamp(1.5rem, 4vw, 2.5rem);
+    max-width: 840px;
+    text-align: center;
+  }
+
+  .clutch-connect-page__eyebrow,
+  .clutch-connect-page__badge {
+    color: #ffa665;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .clutch-connect-page h1,
+  .clutch-connect-page h2 {
+    color: #0b1f35;
+    font-family: 'Exo 2', sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .clutch-connect-page h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+
+  .clutch-connect-page h2 {
+    font-size: clamp(1.45rem, 3vw, 2rem);
+  }
+
+  .clutch-connect-page p {
+    color: #69758a;
+    line-height: 1.6;
+  }
+
+  .clutch-connect-page__actions,
+  .clutch-connect-page__compare {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .clutch-connect-page__actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 1rem;
+  }
+
+  .clutch-connect-page__compare {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .clutch-connect-page__card {
+    background: #fff;
+    border: 1px solid #dde5ef;
+    border-radius: 18px;
+    box-shadow: 0 14px 30px rgba(11, 31, 53, 0.08);
+    display: grid;
+    gap: 0.7rem;
+    min-width: 0;
+    padding: 1.1rem;
+  }
+
+  .clutch-connect-page__card--featured {
+    border-color: rgba(255, 166, 101, 0.65);
+    box-shadow: 0 20px 40px rgba(255, 166, 101, 0.17);
+  }
+
+  .clutch-connect-page__price {
+    color: #384862;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .clutch-connect-page ul {
+    display: grid;
+    gap: 0.45rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .clutch-connect-page li {
+    align-items: start;
+    color: #384862;
+    display: grid;
+    font-size: 0.88rem;
+    font-weight: 700;
+    gap: 0.45rem;
+    grid-template-columns: 14px 1fr;
+    line-height: 1.35;
+  }
+
+  .clutch-connect-page li::before {
+    color: #ffa665;
+    content: '+';
+    font-weight: 900;
+  }
+
+  .clutch-connect-page__btn {
+    align-items: center;
+    border-radius: 10px;
+    display: inline-flex;
+    font-weight: 900;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.72rem 0.95rem;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .clutch-connect-page__btn--primary {
+    background: #384862;
+    color: #fff;
+  }
+
+  .clutch-connect-page__btn--secondary {
+    background: #ffa665;
+    color: #0b1f35;
+  }
+
+  @media screen and (max-width: 749px) {
+    .clutch-connect-page__actions,
+    .clutch-connect-page__compare {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Clutch Connect Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Clutch Connect Page"
+    }
+  ]
+}
+{% endschema %}

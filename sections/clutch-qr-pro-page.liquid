@@ -28,9 +28,9 @@
 <main class="clutch-qr-page color-{{ section.settings.color_scheme }}">
   <section class="clutch-qr-page__hero">
     <div class="clutch-qr-page__wrap clutch-qr-page__hero-inner">
-      <p class="clutch-qr-page__eyebrow">CLUTCH QR</p>
-      <h1>QR Pro Hosting For Smart Print Marketing</h1>
-      <p>Hosting for dynamic QR codes, NFC smart cards, digital profiles, and scan/tap analytics.</p>
+      <p class="clutch-qr-page__eyebrow">QR Pro</p>
+      <h1>QR Pro: Trackable QR campaigns for print and marketing.</h1>
+      <p>Create up to 100 dynamic QR codes with editable destinations, QR customization, exports, scan analytics, and campaign performance tracking.</p>
       <div class="clutch-qr-page__actions">
         {% if qr_pro_variant_id != blank %}
           <form method="post" action="{{ routes.cart_add_url }}" class="clutch-qr-page__button-form">
@@ -38,24 +38,24 @@
             {% if qr_pro_selling_plan_id != blank %}
               <input type="hidden" name="selling_plan" value="{{ qr_pro_selling_plan_id }}">
             {% endif %}
-            <button type="submit" class="button clutch-qr-page__button">Start With QR Pro</button>
+            <button type="submit" class="button clutch-qr-page__button">Start QR Pro for $14.99/mo</button>
           </form>
         {% else %}
-          <a class="button clutch-qr-page__button" href="/products/qr-pro">Start With QR Pro</a>
+          <a class="button clutch-qr-page__button" href="/products/qr-pro">Start QR Pro for $14.99/mo</a>
         {% endif %}
-        <a class="button-secondary clutch-qr-page__button" href="#how-it-works">See How It Works</a>
+        <a class="button-secondary clutch-qr-page__button" href="/pages/clutch-connect">Explore Clutch Connect</a>
       </div>
     </div>
   </section>
 
   <section class="clutch-qr-trust">
     <div class="clutch-qr-page__wrap">
-      <h2>Powered By QR Pro Hosting</h2>
+      <h2>Built for print campaign performance</h2>
       <div class="clutch-qr-trust__grid">
-        <span>Dynamic QR Technology</span>
-        <span>Change Your Link Anytime</span>
-        <span>NFC Tap Tracking</span>
-        <span>Single Dashboard Access</span>
+        <span>100 Dynamic QR Codes</span>
+        <span>Editable Destinations</span>
+        <span>Campaign Analytics</span>
+        <span>Export-Ready QR Files</span>
       </div>
     </div>
   </section>
@@ -172,43 +172,40 @@
   <section id="qr-pro-pricing" class="clutch-qr-page__section clutch-qr-page__section--soft">
     <div class="clutch-qr-page__wrap">
       <div class="clutch-qr-page__section-heading">
-        <h2>QR Pro Hosting</h2>
+        <h2>QR Pro includes</h2>
       </div>
 
       <div class="clutch-qr-page__pricing-grid clutch-qr-page__pricing-grid--single">
         <article class="clutch-qr-price-card">
           <div>
-            <h3>What QR Pro Powers</h3>
-            <p class="clutch-qr-price-card__price">Dynamic QR, NFC cards, profiles, exports, and analytics</p>
+            <h3>Clutch Connect Basic</h3>
+            <p class="clutch-qr-price-card__price">Free digital profile included</p>
           </div>
           <ul>
-            <li>Smart business card hosting</li>
-            <li>NFC tap destination and tracking</li>
-            <li>Editable QR destinations</li>
-            <li>Editable digital profile</li>
-            <li>Lead capture form</li>
-            <li>Apple Wallet contact card</li>
+            <li>Public digital profile</li>
+            <li>Contact buttons and social links</li>
+            <li>Save contact + basic request form</li>
+            <li>Basic Lead Inbox</li>
+            <li>Basic view/click tracking</li>
           </ul>
-          <a class="button clutch-qr-page__button" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+          <a class="button clutch-qr-page__button" href="/pages/clutch-connect">Explore Clutch Connect</a>
         </article>
 
         <article class="clutch-qr-price-card clutch-qr-price-card--featured">
           <div>
-            <h3>QR Pro Hosting</h3>
+            <h3>QR Pro</h3>
             <p class="clutch-qr-price-card__price">$14.99/month</p>
-            <p class="clutch-qr-price-card__best">Required for editable smart card and QR features</p>
+            <p class="clutch-qr-price-card__best">Best for print tracking and campaign performance</p>
           </div>
           <ul>
-            <li>Up to 10 dynamic QR codes</li>
-            <li>Smart business card hosting</li>
-            <li>NFC tap tracking</li>
+            <li>100 dynamic QR codes</li>
             <li>Editable QR destinations</li>
-            <li>Editable digital profile</li>
-            <li>Apple Wallet contact card</li>
-            <li>Lead capture form</li>
-            <li>Scan/tap tracking</li>
-            <li>Basic analytics dashboard</li>
+            <li>QR color customization</li>
+            <li>Logo upload</li>
             <li>QR exports: PNG, SVG, JPEG, PDF</li>
+            <li>Scan analytics</li>
+            <li>Device and location analytics</li>
+            <li>Campaign performance</li>
           </ul>
           {% if qr_pro_variant_id != blank %}
             <form method="post" action="{{ routes.cart_add_url }}" class="clutch-qr-page__button-form">
@@ -216,17 +213,17 @@
               {% if qr_pro_selling_plan_id != blank %}
                 <input type="hidden" name="selling_plan" value="{{ qr_pro_selling_plan_id }}">
               {% endif %}
-              <button type="submit" class="button clutch-qr-page__button">Start QR Pro</button>
+              <button type="submit" class="button clutch-qr-page__button">Start QR Pro for $14.99/mo</button>
             </form>
           {% else %}
-            <a class="button clutch-qr-page__button" href="/products/qr-pro">Start QR Pro</a>
+            <a class="button clutch-qr-page__button" href="/products/qr-pro">Start QR Pro for $14.99/mo</a>
           {% endif %}
         </article>
 
       </div>
 
       <p class="clutch-qr-page__subscription-note">
-        QR Pro Hosting ($14.99/month) provides dashboard access, editable QR destinations, profile hosting, scan/tap analytics, lead capture, and QR exports.
+        QR Pro ($14.99/month) includes 100 dynamic QR codes, editable destinations, QR customization, exports, scan analytics, and campaign reporting.
       </p>
     </div>
   </section>
@@ -247,8 +244,8 @@
           <p>You can link to websites, booking pages, Google reviews, menus, quote forms, promotions, landing pages, contact pages, or event pages.</p>
         </details>
         <details class="clutch-qr-faq">
-          <summary>Why is QR Pro used with Business Kits?</summary>
-          <p>QR Pro powers the dynamic QR technology included with your kit. It provides hosting, destination editing, dashboard access, and scan analytics so your printed marketing stays connected and measurable.</p>
+          <summary>Why is Clutch Connect used with Business Kits?</summary>
+          <p>Every kit includes Clutch Connect Basic for your digital profile. Add QR Pro when you want multi-campaign dynamic QR tracking, exports, and campaign performance analytics.</p>
         </details>
         <details class="clutch-qr-faq">
           <summary>Can I see how many people scanned?</summary>
@@ -264,10 +261,10 @@
 
   <section class="clutch-qr-page__final">
     <div class="clutch-qr-page__wrap clutch-qr-page__final-inner">
-      <h2>Ready To Make Your Print Trackable?</h2>
-      <p>Build campaigns with editable QR destinations, digital profiles, scan/tap analytics, and exports powered by QR Pro Hosting.</p>
+      <h2>Ready to track your print campaigns?</h2>
+      <p>Start QR Pro for dynamic campaign tracking, exports, scan analytics, and campaign performance.</p>
       <div class="clutch-qr-page__actions">
-        <a class="button clutch-qr-page__button" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+        <a class="button clutch-qr-page__button" href="/products/qr-pro">Start QR Pro for $14.99/mo</a>
       </div>
     </div>
   </section>
@@ -636,7 +633,7 @@
 
 {% schema %}
 {
-  "name": "QR Pro landing page",
+  "name": "QR Pro landing",
   "settings": [
     {
       "type": "color_scheme",
@@ -663,7 +660,7 @@
   ],
   "presets": [
     {
-      "name": "QR Pro landing page"
+      "name": "QR Pro landing"
     }
   ]
 }

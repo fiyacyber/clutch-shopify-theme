@@ -367,7 +367,7 @@
       document.querySelectorAll('product-card').forEach((card) => {
         const cardText = card.textContent || '';
         const hasSmartCardLink = card.querySelector('a[href*="/products/clutch-connect-card"]');
-        if (hasSmartCardLink || cardText.includes('Clutch Smart Business Card')) replaceSmartCardPriceText(card);
+        if (hasSmartCardLink || cardText.includes('Smart Clutch Card')) replaceSmartCardPriceText(card);
       });
     }
 
@@ -394,8 +394,8 @@
       artwork.innerHTML = isSmartCardProduct ? `
         <div class="clutch-artwork-upload__head">
           <span class="clutch-artwork-upload__eyebrow">Smart card setup</span>
-          <strong>Choose card color + engraving</strong>
-          <p>Smart Business Cards are $49.99. Optional custom engraving is +$19.99 and collects your logo plus engraving details.</p>
+          <strong>Choose card color + setup details</strong>
+          <p>Smart Clutch Card orders include Clutch Profile setup guidance after checkout. Optional engraving details can be collected here only when backed by a real paid add-on or variant.</p>
         </div>
         <label class="clutch-artwork-upload__field">
           <span>Card color</span>
@@ -414,10 +414,10 @@
           </select>
         </label>
         <label class="clutch-artwork-upload__checkbox">
-          <input type="checkbox" name="properties[Engraving Add-on]" value="Yes - $19.99" data-clutch-engraving-toggle>
+          <input type="checkbox" name="properties[Engraving Request]" value="Requested - confirm availability" data-clutch-engraving-toggle>
           <span>
-            <strong>Add custom engraving +$19.99</strong>
-            <small>Includes logo upload and engraving fields for the front of the metal card.</small>
+            <strong>Request custom engraving</strong>
+            <small>Use only when engraving is backed by a real paid Shopify variant or add-on.</small>
           </span>
         </label>
         <div class="clutch-engraving-fields" data-clutch-engraving-fields hidden>
@@ -435,12 +435,12 @@
           </div>
         </div>
         <div class="clutch-price-summary" aria-live="polite">
-          <p><span>Smart Business Card</span><strong>$49.99</strong></p>
-          <p data-clutch-engraving-price hidden><span>Custom engraving</span><strong>+$19.99</strong></p>
-          <p><span>Displayed total</span><strong data-clutch-smart-card-total>$49.99</strong></p>
+          <p><span>Smart Clutch Card</span><strong>Product price shown by Shopify</strong></p>
+          <p data-clutch-engraving-price hidden><span>Custom engraving</span><strong>Confirm paid add-on before launch</strong></p>
+          <p><span>Clutch Profile</span><strong data-clutch-smart-card-total>Setup after checkout</strong></p>
         </div>
         <input type="hidden" name="properties[Free Shipping]" value="Included">
-        <p class="clutch-artwork-upload__fineprint">Logo upload accepts PNG, SVG, or PDF. Engraving details are submitted with your order as line-item properties.</p>
+        <p class="clutch-artwork-upload__fineprint">Logo upload accepts PNG, SVG, or PDF. Engraving details are submitted with your order as line-item properties only.</p>
       ` : `
         <div class="clutch-artwork-upload__head">
           <span class="clutch-artwork-upload__eyebrow">Artwork upload</span>
@@ -471,7 +471,7 @@
           const enabled = Boolean(toggle && toggle.checked);
           if (fields) fields.hidden = !enabled;
           if (engravingPrice) engravingPrice.hidden = !enabled;
-          if (total) total.textContent = enabled ? '$69.98' : '$49.99';
+          if (total) total.textContent = enabled ? 'Engraving request captured' : 'Setup after checkout';
           fields?.querySelectorAll('input, select, textarea').forEach((input) => {
             input.disabled = !enabled;
           });

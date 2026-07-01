@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "clutch-connect-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

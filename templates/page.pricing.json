@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "clutch-pricing-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

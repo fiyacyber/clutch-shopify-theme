@@ -31,11 +31,11 @@
   assign support_items = 'File review included|Proof before production when required|Standard turnaround varies by product|Professional support available' | split: '|'
 
   if is_connect_card
-    assign summary_title = 'Clutch Smart Business Card'
-    assign summary_text = 'A premium metal NFC business card that opens your editable digital profile by tap or QR scan.'
-    assign included_items = 'Premium metal NFC business card|Editable digital profile|Dynamic QR code|NFC tap destination|Lead capture form|Apple Wallet contact card|Clutch Connect Hosting and analytics' | split: '|'
+    assign summary_title = 'Smart Clutch Card'
+    assign summary_text = 'A premium metal NFC card that opens your Clutch Profile by tap or QR scan.'
+    assign included_items = 'Premium metal NFC card|Editable Clutch Profile|Dynamic QR code|NFC tap destination|Lead capture form|Contact save options where available|Clutch Connect analytics' | split: '|'
     assign best_for_items = 'Contractors|Realtors|Sales reps|Barbers|Creators|Local businesses' | split: '|'
-    assign support_items = '$49.99 Smart Business Card|$49.99 Additional Smart Cards|+$19.99 Optional Engraving|$14.99/month Clutch Connect Hosting|Update links anytime|Track scans and engagement' | split: '|'
+    assign support_items = 'Free Clutch Profile included|NFC tap + QR fallback|Profile setup after checkout|Optional upgrades inside Clutch Connect|Update links anytime|Track scans and engagement' | split: '|'
   elsif is_business_kit
     assign summary_title = 'Business Kit'
     assign summary_text = 'Print bundles with campaign-level QR tracking so you can compare which materials generate scans, engagement, and leads.'
@@ -63,7 +63,7 @@
     <p class="clutch-product-overview__eyebrow">{{ summary_title }}</p>
     <h2>
       {% if is_connect_card %}
-        Premium Metal Card. Smart Digital Profile.
+        Premium Metal Card. Clutch Profile.
       {% elsif is_qr_product %}
         Turn Printed Marketing Into Trackable Marketing
       {% elsif is_business_kit %}
