@@ -1,0 +1,537 @@
+<style>
+  body.clutch-product-page,
+  body.clutch-cart-page {
+    background: #F4F7FA;
+  }
+
+  body.clutch-product-page main,
+  body.clutch-cart-page main {
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255, 166, 101, 0.12), transparent 28%),
+      #F4F7FA;
+  }
+
+  body.clutch-product-page .shopify-section:has(form[action*="/cart/add"]),
+  body.clutch-cart-page .shopify-section:has(form[action*="/cart"]) {
+    --clutch-card-radius: 22px;
+  }
+
+  body.clutch-product-page form[action*="/cart/add"] {
+    background: #fff;
+    border: 1px solid #DDE6EF;
+    border-radius: var(--clutch-card-radius, 22px);
+    box-shadow: 0 18px 44px rgba(7, 29, 51, 0.08);
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1rem, 2vw, 1.25rem);
+  }
+
+  body.clutch-product-page form[action*="/cart/add"] button[type="submit"],
+  body.clutch-product-page form[action*="/cart/add"] button[name="add"],
+  body.clutch-cart-page button[name="checkout"],
+  body.clutch-cart-page a[href="/checkout"] {
+    background: #FFA665 !important;
+    border-color: #FFA665 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 16px 34px rgba(255, 166, 101, 0.3) !important;
+    color: #071D33 !important;
+    font-weight: 900 !important;
+    min-height: 52px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+  }
+
+  body.clutch-product-page form[action*="/cart/add"] button[type="submit"]:hover,
+  body.clutch-product-page form[action*="/cart/add"] button[name="add"]:hover,
+  body.clutch-cart-page button[name="checkout"]:hover,
+  body.clutch-cart-page a[href="/checkout"]:hover {
+    box-shadow: 0 22px 44px rgba(255, 166, 101, 0.38) !important;
+    transform: translateY(-2px);
+  }
+
+  .clutch-product-trust-row,
+  .clutch-cart-shipping-banner {
+    background:
+      radial-gradient(circle at 92% 10%, rgba(255, 166, 101, 0.2), transparent 32%),
+      linear-gradient(135deg, #071D33, #384862);
+    border: 1px solid rgba(255, 166, 101, 0.22);
+    border-radius: 18px;
+    box-shadow: 0 18px 44px rgba(7, 29, 51, 0.12);
+    color: #fff;
+    display: grid;
+    gap: 0.35rem;
+    margin: 0 0 1rem;
+    padding: 1rem;
+  }
+
+  .clutch-product-trust-row span,
+  .clutch-cart-shipping-banner span,
+  .clutch-artwork-upload__eyebrow {
+    color: #FFA665;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .clutch-product-trust-row strong,
+  .clutch-cart-shipping-banner strong {
+    color: #fff;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.1;
+  }
+
+  .clutch-product-trust-row p,
+  .clutch-cart-shipping-banner p {
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .clutch-artwork-upload {
+    background: #F8FAFC;
+    border: 1px solid #DDE6EF;
+    border-radius: 18px;
+    display: grid;
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+
+  .clutch-artwork-upload__head {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .clutch-artwork-upload__head strong {
+    color: #071D33;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.1;
+  }
+
+  .clutch-artwork-upload__head p {
+    color: #66758C;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .clutch-artwork-upload__field,
+  .clutch-artwork-upload__checkbox,
+  .clutch-artwork-upload__notes {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .clutch-artwork-upload__field span,
+  .clutch-artwork-upload__checkbox span,
+  .clutch-artwork-upload__notes span {
+    color: #384862;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .clutch-artwork-upload input[type="file"],
+  .clutch-artwork-upload select,
+  .clutch-artwork-upload textarea {
+    background: #fff;
+    border: 1px solid #DDE6EF;
+    border-radius: 12px;
+    color: #384862;
+    font: inherit;
+    padding: 0.8rem;
+    width: 100%;
+  }
+
+  .clutch-artwork-upload textarea {
+    min-height: 88px;
+    resize: vertical;
+  }
+
+  .clutch-artwork-upload__fineprint {
+    color: #66758C;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .clutch-artwork-upload__checkbox {
+    align-items: start;
+    background: #fff;
+    border: 1px solid #DDE6EF;
+    border-radius: 14px;
+    cursor: pointer;
+    grid-template-columns: auto 1fr;
+    padding: 0.85rem;
+  }
+
+  .clutch-artwork-upload__checkbox input {
+    accent-color: #FFA665;
+    height: 18px;
+    margin-top: 2px;
+    width: 18px;
+  }
+
+  .clutch-artwork-upload__checkbox strong {
+    color: #071D33;
+    display: block;
+    font-size: 0.95rem;
+    line-height: 1.2;
+  }
+
+  .clutch-artwork-upload__checkbox small {
+    color: #66758C;
+    display: block;
+    line-height: 1.45;
+    margin-top: 0.25rem;
+  }
+
+  .clutch-engraving-fields {
+    border-top: 1px solid #DDE6EF;
+    display: grid;
+    gap: 0.85rem;
+    padding-top: 0.85rem;
+  }
+
+  .clutch-engraving-fields[hidden] {
+    display: none;
+  }
+
+  .clutch-engraving-grid {
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .clutch-price-summary {
+    background: #071D33;
+    border-radius: 14px;
+    color: #fff;
+    display: grid;
+    gap: 0.45rem;
+    padding: 0.9rem;
+  }
+
+  .clutch-price-summary p {
+    align-items: center;
+    color: rgba(255, 255, 255, 0.78);
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+  }
+
+  .clutch-price-summary strong {
+    color: #FFA665;
+    font-size: 1.05rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .clutch-engraving-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  body.clutch-cart-page .cart,
+  body.clutch-cart-page cart-items,
+  body.clutch-cart-page .cart-items,
+  body.clutch-cart-page .cart__items,
+  body.clutch-cart-page .cart__summary,
+  body.clutch-cart-page .cart-summary {
+    background: #fff;
+    border: 1px solid #DDE6EF;
+    border-radius: 22px;
+    box-shadow: 0 18px 44px rgba(7, 29, 51, 0.08);
+  }
+
+  body.clutch-cart-page .cart-summary,
+  body.clutch-cart-page .cart-summary__inner,
+  body.clutch-cart-page .cart-discount,
+  body.clutch-cart-page .cart-discount * {
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  body.clutch-cart-page .cart-discount form,
+  body.clutch-cart-page .cart-discount .field,
+  body.clutch-cart-page .cart-discount__form {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .clutch-smart-card-nav-link {
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 749px) {
+    .clutch-product-trust-row,
+    .clutch-cart-shipping-banner,
+    .clutch-artwork-upload {
+      border-radius: 16px;
+      padding: 0.9rem;
+    }
+
+    body.clutch-product-page form[action*="/cart/add"] {
+      border-radius: 18px;
+      padding: 0.85rem;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const path = window.location.pathname;
+    const isProduct = path.includes('/products/');
+    const isCart = path === '/cart' || path.startsWith('/cart/');
+
+    if (path === '/collections') {
+      window.location.replace('/collections/business-kits');
+      return;
+    }
+
+    if (isProduct) document.body.classList.add('clutch-product-page');
+    if (isCart) document.body.classList.add('clutch-cart-page');
+
+    function fixBusinessKitsLinks() {
+      document.querySelectorAll('a').forEach((link) => {
+        const label = (link.textContent || '').trim().toLowerCase();
+        const href = link.getAttribute('href') || '';
+        const isCollectionsIndex = href === '/collections' || href.endsWith('/collections');
+        if (label === 'business kits' && isCollectionsIndex) link.setAttribute('href', '/collections/business-kits');
+      });
+    }
+
+    function fixContractorKitLinks() {
+      document.querySelectorAll('a[href*="/products/contractor-kit"]').forEach((link) => {
+        if (link.getAttribute('href') !== '/pages/contact') link.setAttribute('href', '/pages/contact');
+        const label = (link.textContent || '').trim();
+        if (/contractor kit/i.test(label) || /^agency kit$/i.test(label)) link.textContent = 'Request Custom Order';
+        if (link.getAttribute('aria-label') !== 'Request a custom business kit') link.setAttribute('aria-label', 'Request a custom business kit');
+      });
+
+      if (path.includes('/products/contractor-kit')) {
+        window.location.replace('/pages/contact');
+      }
+    }
+
+    function addSmartCardNavLink() {
+      const navs = document.querySelectorAll('nav, .header__menu, .header-menu, header');
+      navs.forEach((nav) => {
+        const existingSmartLink = nav.querySelector('.clutch-smart-card-nav-link');
+        if (existingSmartLink) {
+          if (existingSmartLink.getAttribute('href') !== '/pages/smart-business-card') existingSmartLink.setAttribute('href', '/pages/smart-business-card');
+          if ((existingSmartLink.textContent || '').trim() !== 'Smart Cards') existingSmartLink.textContent = 'Smart Cards';
+          return;
+        }
+        const businessLink = Array.from(nav.querySelectorAll('a')).find((link) => (link.textContent || '').trim().toLowerCase() === 'business kits');
+        if (!businessLink) return;
+
+        const smartLink = businessLink.cloneNode(true);
+        smartLink.classList.add('clutch-smart-card-nav-link');
+        smartLink.setAttribute('href', '/pages/smart-business-card');
+        smartLink.textContent = 'Smart Cards';
+        smartLink.querySelectorAll('*').forEach((child) => child.remove());
+        smartLink.textContent = 'Smart Cards';
+
+        const listItem = businessLink.closest('li');
+        if (listItem && listItem.parentElement) {
+          const smartItem = listItem.cloneNode(false);
+          smartItem.appendChild(smartLink);
+          listItem.insertAdjacentElement('afterend', smartItem);
+        } else {
+          businessLink.insertAdjacentElement('afterend', smartLink);
+        }
+      });
+    }
+
+    function replaceSmartCardPriceText(root) {
+      if (!root) return;
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach((node) => {
+        node.nodeValue = node.nodeValue
+          .replace(/\$149(?:\.00)?/g, '$49.99')
+          .replace(/\$99(?:\.00)?/g, '$49.99');
+      });
+    }
+
+    function rewriteSmartCardPrices() {
+      if (path.includes('/products/clutch-connect-card') || path.includes('/pages/smart-business-card')) {
+        replaceSmartCardPriceText(document.querySelector('main') || document.body);
+      }
+
+      document.querySelectorAll('product-card').forEach((card) => {
+        const cardText = card.textContent || '';
+        const hasSmartCardLink = card.querySelector('a[href*="/products/clutch-connect-card"]');
+        if (hasSmartCardLink || cardText.includes('Clutch Smart Business Card')) replaceSmartCardPriceText(card);
+      });
+    }
+
+    function enhanceProductForm() {
+      if (!isProduct) return;
+
+      const form = document.querySelector('form[action*="/cart/add"]');
+      if (!form || form.dataset.clutchEnhanced === 'true' || form.querySelector('.clutch-artwork-upload')) return;
+      form.dataset.clutchEnhanced = 'true';
+      const isSmartCardProduct = path.includes('/products/clutch-connect-card');
+
+      form.setAttribute('enctype', 'multipart/form-data');
+
+      const trust = document.createElement('div');
+      trust.className = 'clutch-product-trust-row';
+      trust.innerHTML = `
+        <span>Included with every order</span>
+        <strong>Free shipping + artwork review</strong>
+        <p>Upload print-ready artwork now, or send notes and Clutch will review your files before production.</p>
+      `;
+
+      const artwork = document.createElement('div');
+      artwork.className = 'clutch-artwork-upload';
+      artwork.innerHTML = isSmartCardProduct ? `
+        <div class="clutch-artwork-upload__head">
+          <span class="clutch-artwork-upload__eyebrow">Smart card setup</span>
+          <strong>Choose card color + engraving</strong>
+          <p>Smart Business Cards are $49.99. Optional custom engraving is +$19.99 and collects your logo plus engraving details.</p>
+        </div>
+        <label class="clutch-artwork-upload__field">
+          <span>Card color</span>
+          <select name="properties[Card Color]">
+            <option>Matte Black Metal</option>
+            <option>Brushed Silver Metal</option>
+            <option>Brushed Gold Metal</option>
+          </select>
+        </label>
+        <label class="clutch-artwork-upload__field">
+          <span>QR placement</span>
+          <select name="properties[QR Placement]">
+            <option>Top Right</option>
+            <option>Bottom Right</option>
+            <option>None</option>
+          </select>
+        </label>
+        <label class="clutch-artwork-upload__checkbox">
+          <input type="checkbox" name="properties[Engraving Add-on]" value="Yes - $19.99" data-clutch-engraving-toggle>
+          <span>
+            <strong>Add custom engraving +$19.99</strong>
+            <small>Includes logo upload and engraving fields for the front of the metal card.</small>
+          </span>
+        </label>
+        <div class="clutch-engraving-fields" data-clutch-engraving-fields hidden>
+          <label class="clutch-artwork-upload__field">
+            <span>Logo upload</span>
+            <input type="file" name="properties[Engraving Logo Upload]" accept=".png,.svg,.pdf,image/png,image/svg+xml,application/pdf" disabled>
+          </label>
+          <div class="clutch-engraving-grid">
+            <label class="clutch-artwork-upload__field"><span>Name</span><input type="text" name="properties[Engraving Name]" disabled></label>
+            <label class="clutch-artwork-upload__field"><span>Title</span><input type="text" name="properties[Engraving Title]" disabled></label>
+            <label class="clutch-artwork-upload__field"><span>Company</span><input type="text" name="properties[Engraving Company]" disabled></label>
+            <label class="clutch-artwork-upload__field"><span>Phone</span><input type="tel" name="properties[Engraving Phone]" disabled></label>
+            <label class="clutch-artwork-upload__field"><span>Email</span><input type="email" name="properties[Engraving Email]" disabled></label>
+            <label class="clutch-artwork-upload__field"><span>Website</span><input type="text" name="properties[Engraving Website]" disabled></label>
+          </div>
+        </div>
+        <div class="clutch-price-summary" aria-live="polite">
+          <p><span>Smart Business Card</span><strong>$49.99</strong></p>
+          <p data-clutch-engraving-price hidden><span>Custom engraving</span><strong>+$19.99</strong></p>
+          <p><span>Displayed total</span><strong data-clutch-smart-card-total>$49.99</strong></p>
+        </div>
+        <input type="hidden" name="properties[Free Shipping]" value="Included">
+        <p class="clutch-artwork-upload__fineprint">Logo upload accepts PNG, SVG, or PDF. Engraving details are submitted with your order as line-item properties.</p>
+      ` : `
+        <div class="clutch-artwork-upload__head">
+          <span class="clutch-artwork-upload__eyebrow">Artwork upload</span>
+          <strong>Upload your artwork</strong>
+          <p>Attach your design file for this product. You can also add notes for sizing, placement, finish, or QR destination.</p>
+        </div>
+        <label class="clutch-artwork-upload__field">
+          <span>Artwork file</span>
+          <input type="file" name="properties[Artwork File]" accept=".pdf,.ai,.eps,.svg,.png,.jpg,.jpeg,.tif,.tiff,image/*,application/pdf">
+        </label>
+        <label class="clutch-artwork-upload__notes">
+          <span>Artwork / campaign notes</span>
+          <textarea name="properties[Artwork Notes]" placeholder="Tell us about placement, sizing, QR destination, deadline, or design help needed."></textarea>
+        </label>
+        <input type="hidden" name="properties[Free Shipping]" value="Included">
+        <p class="clutch-artwork-upload__fineprint">Accepted formats: PDF, AI, EPS, SVG, PNG, JPG, and TIFF. You can also complete checkout and send artwork later.</p>
+      `;
+
+      form.prepend(artwork);
+      form.prepend(trust);
+
+      if (isSmartCardProduct) {
+        const toggle = form.querySelector('[data-clutch-engraving-toggle]');
+        const fields = form.querySelector('[data-clutch-engraving-fields]');
+        const engravingPrice = form.querySelector('[data-clutch-engraving-price]');
+        const total = form.querySelector('[data-clutch-smart-card-total]');
+        const syncEngraving = () => {
+          const enabled = Boolean(toggle && toggle.checked);
+          if (fields) fields.hidden = !enabled;
+          if (engravingPrice) engravingPrice.hidden = !enabled;
+          if (total) total.textContent = enabled ? '$69.98' : '$49.99';
+          fields?.querySelectorAll('input, select, textarea').forEach((input) => {
+            input.disabled = !enabled;
+          });
+        };
+        toggle?.addEventListener('change', syncEngraving);
+        syncEngraving();
+      }
+    }
+
+    function enhanceCart() {
+      if (!isCart || document.querySelector('.clutch-cart-shipping-banner')) return;
+
+      const target = document.querySelector('main') || document.body;
+      const banner = document.createElement('div');
+      banner.className = 'clutch-cart-shipping-banner';
+      banner.innerHTML = `
+        <span>Included with every order</span>
+        <strong>Free shipping on Clutch print orders</strong>
+        <p>Your Clutch order includes free shipping. Upload artwork on product pages or send files after checkout.</p>
+      `;
+      target.prepend(banner);
+    }
+
+    fixBusinessKitsLinks();
+    fixContractorKitLinks();
+    addSmartCardNavLink();
+    rewriteSmartCardPrices();
+
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest ? event.target.closest('a') : null;
+      if (!link) return;
+      const label = (link.textContent || '').trim().toLowerCase();
+      const href = link.getAttribute('href') || '';
+      if (href.includes('/products/contractor-kit')) {
+        event.preventDefault();
+        window.location.href = '/pages/contact';
+        return;
+      }
+      if (label === 'business kits' && (href === '/collections' || href.endsWith('/collections'))) {
+        event.preventDefault();
+        window.location.href = '/collections/business-kits';
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fixBusinessKitsLinks();
+      fixContractorKitLinks();
+      addSmartCardNavLink();
+      rewriteSmartCardPrices();
+      enhanceProductForm();
+      enhanceCart();
+    });
+
+    document.addEventListener('shopify:section:load', () => {
+      fixBusinessKitsLinks();
+      fixContractorKitLinks();
+      addSmartCardNavLink();
+      rewriteSmartCardPrices();
+      enhanceProductForm();
+      enhanceCart();
+    });
+  })();
+</script>

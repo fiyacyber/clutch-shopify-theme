@@ -1,0 +1,215 @@
+<section class="clutch-shop-hero color-{{ section.settings.color_scheme }}" aria-labelledby="clutch-shop-title">
+  <div class="clutch-shop-hero__inner">
+    <div class="clutch-shop-hero__copy">
+      {% if collection.handle == 'business-kits' %}
+        <p class="clutch-shop-hero__eyebrow">Business Kits</p>
+        <h1 id="clutch-shop-title">Print campaigns with analytics included.</h1>
+        <p>
+          Choose a launch-ready kit built around premium print, QR campaign tracking, Clutch Connect access,
+          artwork review, and free shipping.
+        </p>
+      {% else %}
+        <p class="clutch-shop-hero__eyebrow">Premium Print Products</p>
+        <h1 id="clutch-shop-title">Shop trackable print campaigns.</h1>
+        <p>
+          Business cards, flyers, door hangers, signs, banners, smart cards, and business kits built to connect
+          your print marketing to Clutch Connect analytics.
+        </p>
+      {% endif %}
+      <div class="clutch-shop-hero__actions">
+        <a href="/collections/business-kits" class="clutch-shop-hero__button clutch-shop-hero__button--primary">Shop Business Kits</a>
+        <a href="/products/clutch-connect-card" class="clutch-shop-hero__button clutch-shop-hero__button--secondary">Smart Business Cards</a>
+      </div>
+    </div>
+
+    <div class="clutch-shop-hero__panel" aria-label="Shop highlights">
+      <article>
+        <span>{% if collection.handle == 'business-kits' %}Included{% else %}Campaign-ready{% endif %}</span>
+        <strong>{% if collection.handle == 'business-kits' %}QR tracking{% else %}Business Kits{% endif %}</strong>
+        <p>{% if collection.handle == 'business-kits' %}Trackable QR campaign destinations for kit materials.{% else %}Print bundles with QR tracking and Clutch Connect reporting.{% endif %}</p>
+      </article>
+      <article>
+        <span>{% if collection.handle == 'business-kits' %}Included{% else %}Tap + scan{% endif %}</span>
+        <strong>{% if collection.handle == 'business-kits' %}Artwork review{% else %}Smart Cards{% endif %}</strong>
+        <p>{% if collection.handle == 'business-kits' %}Upload artwork during checkout or send it after ordering.{% else %}Metal NFC cards connected to your live digital profile.{% endif %}</p>
+      </article>
+      <article>
+        <span>{% if collection.handle == 'business-kits' %}Included{% else %}Local reach{% endif %}</span>
+        <strong>{% if collection.handle == 'business-kits' %}Free shipping{% else %}Flyers, signs, mailers{% endif %}</strong>
+        <p>{% if collection.handle == 'business-kits' %}Free shipping is messaged across Business Kit ordering.{% else %}Materials designed for measurable outreach campaigns.{% endif %}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .clutch-shop-hero {
+    background:
+      radial-gradient(circle at 14% 18%, rgba(255, 166, 101, 0.2), transparent 28%),
+      linear-gradient(135deg, #071D33 0%, #384862 100%);
+    color: #fff;
+    padding: clamp(5rem, 8vw, 7rem) var(--page-margin) clamp(3rem, 6vw, 5rem);
+  }
+
+  .clutch-shop-hero__inner {
+    align-items: center;
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.72fr);
+    margin-inline: auto;
+    max-width: 1180px;
+  }
+
+  .clutch-shop-hero__eyebrow {
+    color: #FFA665;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    margin: 0 0 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .clutch-shop-hero h1 {
+    color: #fff;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(2.7rem, 7vw, 5.6rem);
+    letter-spacing: -0.03em;
+    line-height: 0.96;
+    margin: 0;
+    max-width: 840px;
+    text-wrap: balance;
+  }
+
+  .clutch-shop-hero__copy > p:not(.clutch-shop-hero__eyebrow) {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.7;
+    margin: 1.2rem 0 0;
+    max-width: 720px;
+  }
+
+  .clutch-shop-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.8rem;
+  }
+
+  .clutch-shop-hero__button {
+    align-items: center;
+    border-radius: 10px;
+    display: inline-flex;
+    font-weight: 900;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.9rem 1.25rem;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+
+  .clutch-shop-hero__button:hover {
+    transform: translateY(-2px);
+  }
+
+  .clutch-shop-hero__button--primary {
+    background: #FFA665;
+    box-shadow: 0 16px 32px rgba(255, 166, 101, 0.28);
+    color: #071D33;
+  }
+
+  .clutch-shop-hero__button--secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #fff;
+  }
+
+  .clutch-shop-hero__panel {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .clutch-shop-hero__panel article {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 20px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.16);
+    padding: 1rem;
+  }
+
+  .clutch-shop-hero__panel span {
+    color: #FFA665;
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.45rem;
+    text-transform: uppercase;
+  }
+
+  .clutch-shop-hero__panel strong {
+    color: #fff;
+    display: block;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.08;
+  }
+
+  .clutch-shop-hero__panel p {
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.5;
+    margin: 0.55rem 0 0;
+  }
+
+  @media screen and (max-width: 820px) {
+    .clutch-shop-hero {
+      padding-block: 4.5rem 2.5rem;
+    }
+
+    .clutch-shop-hero__inner {
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+
+    .clutch-shop-hero h1 {
+      font-size: clamp(2.35rem, 12vw, 3.35rem);
+    }
+
+    .clutch-shop-hero__actions,
+    .clutch-shop-hero__button {
+      width: 100%;
+    }
+
+    .clutch-shop-hero__panel {
+      gap: 0.65rem;
+    }
+
+    .clutch-shop-hero__panel article {
+      border-radius: 16px;
+      padding: 0.85rem;
+    }
+
+    .clutch-shop-hero__panel p {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Clutch shop hero",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clutch shop hero"
+    }
+  ]
+}
+{% endschema %}

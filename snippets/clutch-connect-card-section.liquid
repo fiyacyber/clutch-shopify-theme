@@ -8,36 +8,34 @@ Renders the Clutch Smart Business Card flagship homepage section.
   <div class="ch-inner ch-connect__inner">
     <div class="ch-connect__copy">
       <p class="ch-eyebrow">Smart Business Card</p>
-      <h2 id="ch-connect-title">Smart Business Cards Powered by QR Pro</h2>
+      <h2 id="ch-connect-title">Metal NFC + QR cards connected to your live Clutch Connect profile.</h2>
       <p class="ch-connect__subtitle">
-        Premium metal NFC business cards that connect customers to a live digital profile, dynamic QR code,
-        lead form, and scan/tap analytics.
+        A premium smart business card that opens your digital profile, captures leads, saves contacts,
+        and reports engagement through Clutch Connect.
       </p>
       <p class="ch-connect__body">
-        Share your contact info, website, socials, portfolio, or lead form with a tap or scan. QR Pro Hosting keeps
-        your card editable, trackable, and ready for every follow-up.
+        Share your contact info, website, socials, portfolio, or lead form with a tap or scan. Clutch Connect keeps
+        your profile editable, trackable, and ready for every follow-up.
       </p>
       <ul class="ch-connect__features" aria-label="Clutch Smart Business Card features">
         <li>Premium metal NFC business card</li>
         <li>NFC tap destination + dynamic QR code</li>
         <li>Editable Clutch digital profile</li>
-        <li>Lead capture and Apple Wallet contact card</li>
-        <li>Scan/tap tracking with QR Pro analytics</li>
+        <li>Contact saves and Apple Wallet contact card</li>
+        <li>Leads and scan/tap analytics</li>
       </ul>
       <div class="ch-connect__pricing" aria-label="Clutch Smart Business Card pricing">
-        <span><strong>$149</strong> Smart Business Card</span>
-        <span><strong>$99</strong> additional cards</span>
-        <span><strong>$14.99/month</strong> QR Pro Hosting</span>
+        <span><strong>$49.99</strong> Smart Business Card</span>
+        <span><strong>$49.99</strong> additional cards</span>
+        <span><strong>+$19.99</strong> optional engraving</span>
+        <span><strong>$14.99/month</strong> Clutch Connect hosting</span>
       </div>
       <div class="ch-connect__actions">
         <a class="ch-btn ch-btn--primary" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
-        <a class="ch-btn ch-btn--ghost-dark" href="/pages/qr-pro">See QR Pro Hosting</a>
+        <a class="ch-btn ch-btn--ghost-dark" href="/pages/qr-pro">See Clutch Connect</a>
       </div>
     </div>
 
-    <div class="ch-connect__visual" data-mockup-version="two-card-metal" aria-hidden="true">
-      {% render 'clutch-connect-card-mockup' %}
-    </div>
   </div>
 </section>
 
@@ -51,19 +49,24 @@ Renders the Clutch Smart Business Card flagship homepage section.
 }
 
 .ch-connect__inner {
-  align-items: center;
+  display: block;
+  margin-inline: auto;
+  max-width: 980px;
+}
+
+.ch-connect__copy {
   display: grid;
-  gap: clamp(2rem, 6vw, 4.5rem);
-  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  justify-items: center;
+  text-align: center;
 }
 
 .ch-connect__copy h2 {
   color: #384862;
-  font-size: clamp(2rem, 5vw, 4.4rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   letter-spacing: -0.035em;
   line-height: 0.98;
-  margin: 0 0 1rem;
-  max-width: 760px;
+  margin: 0 auto 1rem;
+  max-width: 850px;
   text-wrap: balance;
 }
 
@@ -72,7 +75,7 @@ Renders the Clutch Smart Business Card flagship homepage section.
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   font-weight: 700;
   line-height: 1.55;
-  margin: 0 0 1rem;
+  margin: 0 auto 1rem;
   max-width: 720px;
 }
 
@@ -80,15 +83,20 @@ Renders the Clutch Smart Business Card flagship homepage section.
   color: rgba(56, 72, 98, 0.76);
   font-size: 1rem;
   line-height: 1.7;
-  margin: 0 0 1.5rem;
+  margin: 0 auto 1.5rem;
   max-width: 680px;
+}
+
+.ch-connect__features {
+  max-width: 760px;
 }
 
 .ch-connect__features {
   display: grid;
   gap: 0.7rem;
   list-style: none;
-  margin: 0 0 1.75rem;
+  margin: 0 auto 1.75rem;
+  width: min(100%, 760px);
   padding: 0;
 }
 
@@ -124,13 +132,15 @@ Renders the Clutch Smart Business Card flagship homepage section.
   display: flex;
   flex-wrap: wrap;
   gap: 0.85rem;
+  justify-content: center;
 }
 
 .ch-connect__pricing {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin: -0.6rem 0 1.75rem;
+  justify-content: center;
+  margin: -0.6rem auto 1.75rem;
 }
 
 .ch-connect__pricing span {
@@ -146,24 +156,6 @@ Renders the Clutch Smart Business Card flagship homepage section.
 
 .ch-connect__pricing strong {
   color: #384862;
-}
-
-.ch-connect__visual {
-  min-height: 0;
-  perspective: 1200px;
-  position: relative;
-}
-
-.ch-connect__visual::before {
-  background: radial-gradient(circle, rgba(255, 166, 101, 0.26), transparent 66%);
-  border-radius: 999px;
-  content: '';
-  filter: blur(10px);
-  height: 360px;
-  position: absolute;
-  right: 2%;
-  top: 8%;
-  width: 360px;
 }
 
 .ch-connect__card {

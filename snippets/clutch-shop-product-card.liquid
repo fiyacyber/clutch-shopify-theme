@@ -33,7 +33,7 @@
   elsif product_title_downcase contains 'growth kit'
     assign product_description = 'Cards, flyers, and door hangers with campaign-level QR tracking.'
   elsif product_title_downcase contains 'contractor kit'
-    assign product_description = 'Cards, door hangers, and yard signs with QR Pro dashboard tracking.'
+    assign product_description = 'Custom quantities, signs, banners, and Clutch Connect reporting for larger campaigns.'
   endif
 
   case product.handle
@@ -44,7 +44,7 @@
     when 'growth-kit'
       assign kit_display_price = 74900
     when 'contractor-kit'
-      assign kit_display_price = 109900
+      assign kit_display_price = blank
   endcase
 
   assign starting_price = product.price_min
@@ -72,10 +72,10 @@
       assign kit_button = 'View Kit Details &rarr;'
       assign kit_features = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Door Hangers + QR Tracking|Compare Scans by Material|QR Pro Dashboard Access' | split: '|'
     elsif product.handle == 'contractor-kit'
-      assign kit_label = 'CONTRACTOR'
-      assign kit_title = 'Contractor Kit'
-      assign kit_button = 'View Kit Details &rarr;'
-      assign kit_features = 'Professional Design Free|Business Cards + QR Tracking|Door Hangers + QR Tracking|Yard Signs + QR Tracking|Compare Scans by Material|Lead Tracking & Review Links' | split: '|'
+      assign kit_label = 'AGENCY / CUSTOM'
+      assign kit_title = 'Need a larger kit?'
+      assign kit_button = 'Request Custom Order &rarr;'
+      assign kit_features = 'Custom print quantities|Multi-location campaigns|Yard signs, banners, and mailers|Campaign reporting setup|Custom quote before production' | split: '|'
     endif
   endif
 %}
@@ -93,7 +93,7 @@
           <li{% if feature contains 'Clutch QR™ Code' %} class="clutch-shop-card--kit-feature-row-highlight"{% endif %}>{{ feature }}</li>
         {% endfor %}
       </ul>
-      <a class="button clutch-shop-card--kit-button" href="{{ product.url }}">{{ kit_button }}</a>
+      <a class="button clutch-shop-card--kit-button" href="{% if product.handle == 'contractor-kit' %}/pages/contact{% else %}{{ product.url }}{% endif %}">{{ kit_button }}</a>
     </div>
   </article>
 {% else %}
