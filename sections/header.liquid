@@ -298,9 +298,7 @@
 
 <aside class="clutch-shipping-banner" aria-label="Shipping banner">
   <div class="clutch-shipping-banner__track" role="presentation">
-    {% for i in (1..8) %}
-      <span>FREE SHIPPING ON ALL ORDERS</span>
-    {% endfor %}
+    <span>BUSINESS PRINTING WITH BUILT-IN QR ANALYTICS, LEAD TRACKING, AND SMARTER FOLLOW-UP - FREE</span>
   </div>
 </aside>
 
@@ -419,18 +417,15 @@
   .clutch-shipping-banner {
     background: #384862;
     color: #ffffff;
-    overflow: hidden;
     padding: 0.6rem 0;
   }
 
   .clutch-shipping-banner__track {
     align-items: center;
-    animation: clutch-banner-scroll 28s linear infinite;
     display: flex;
-    gap: 2.5rem;
-    min-width: max-content;
+    justify-content: center;
     white-space: nowrap;
-    will-change: transform;
+    width: 100%;
   }
 
   .clutch-shipping-banner__track span {
@@ -438,24 +433,7 @@
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-  }
-
-  @keyframes clutch-banner-scroll {
-    from {
-      transform: translateX(0);
-    }
-
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .clutch-shipping-banner__track {
-      animation: none;
-      justify-content: center;
-      min-width: 100%;
-    }
+    text-align: center;
   }
 
   body {
