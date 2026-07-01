@@ -308,13 +308,59 @@
       document.querySelectorAll('a[href*="/products/contractor-kit"]').forEach((link) => {
         if (link.getAttribute('href') !== '/pages/contact') link.setAttribute('href', '/pages/contact');
         const label = (link.textContent || '').trim();
-        if (/contractor kit/i.test(label) || /^agency kit$/i.test(label)) link.textContent = 'Request Custom Order';
+        if (/contractor kit/i.test(label) || /^agency kit$/i.test(label)) link.textContent = 'Request Custom Quote';
         if (link.getAttribute('aria-label') !== 'Request a custom business kit') link.setAttribute('aria-label', 'Request a custom business kit');
       });
 
       if (path.includes('/products/contractor-kit')) {
         window.location.replace('/pages/contact');
       }
+    }
+
+    function simplifyLaunchNavigation() {
+      const hiddenLabels = new Set(['pricing', 'clutch connect', 'qr pro']);
+      const navMaps = [
+        { match: 'shop', href: '/collections/all', label: 'Shop' },
+        { match: 'business kits', href: '/collections/business-kits', label: 'Business Kits' },
+        { match: 'smart cards', href: '/pages/smart-business-card', label: 'Smart Business Card' },
+        { match: 'smart business card', href: '/pages/smart-business-card', label: 'Smart Business Card' },
+        { match: 'custom order', href: '/pages/contact', label: 'Request Custom Quote' },
+        { match: 'request custom order', href: '/pages/contact', label: 'Request Custom Quote' },
+        { match: 'reach out', href: '/pages/contact', label: 'Request Custom Quote' }
+      ];
+
+      const navs = document.querySelectorAll('header nav, .header nav, .menu-drawer, .header-menu, .header__menu');
+      navs.forEach((nav) => {
+        nav.querySelectorAll('a[href]').forEach((link) => {
+          const label = (link.textContent || '').trim().toLowerCase();
+          if (hiddenLabels.has(label)) {
+            const li = link.closest('li');
+            if (li) li.style.display = 'none';
+            link.style.display = 'none';
+            return;
+          }
+
+          const rule = navMaps.find((item) => label === item.match);
+          if (!rule) return;
+          if (link.getAttribute('href') !== rule.href) link.setAttribute('href', rule.href);
+          if ((link.textContent || '').trim() !== rule.label) link.textContent = rule.label;
+        });
+      });
+    }
+
+    function normalizeCustomQuoteLabels() {
+      document.querySelectorAll('a[href]').forEach((link) => {
+        const href = link.getAttribute('href') || '';
+        const label = (link.textContent || '').trim().toLowerCase();
+        if (label === 'custom order' || label === 'request custom order' || label === 'reach out' || label === 'contact clutch') {
+          link.setAttribute('href', '/pages/contact');
+          link.textContent = 'Request Custom Quote';
+        }
+
+        if (href === '/pages/contact' && label === 'request custom order') {
+          link.textContent = 'Request Custom Quote';
+        }
+      });
     }
 
     function addSmartCardNavLink() {
@@ -499,6 +545,8 @@
     fixContractorKitLinks();
     addSmartCardNavLink();
     rewriteSmartCardPrices();
+    simplifyLaunchNavigation();
+    normalizeCustomQuoteLabels();
 
     document.addEventListener('click', (event) => {
       const link = event.target.closest ? event.target.closest('a') : null;
@@ -521,6 +569,8 @@
       fixContractorKitLinks();
       addSmartCardNavLink();
       rewriteSmartCardPrices();
+      simplifyLaunchNavigation();
+      normalizeCustomQuoteLabels();
       enhanceProductForm();
       enhanceCart();
     });
@@ -530,6 +580,8 @@
       fixContractorKitLinks();
       addSmartCardNavLink();
       rewriteSmartCardPrices();
+      simplifyLaunchNavigation();
+      normalizeCustomQuoteLabels();
       enhanceProductForm();
       enhanceCart();
     });

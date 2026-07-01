@@ -8,19 +8,18 @@
     <div class="chp-shell chp-hero__grid">
       <div class="chp-hero__copy">
         <span class="chp-badge">Premium print powered by Clutch Connect</span>
-        <h1 id="chp-hero-title">Print Smarter. Track Everything.</h1>
+        <h1 id="chp-hero-title">Print Smarter. Connect Faster.</h1>
         <p>
-          Premium print products and Smart Clutch Cards powered by Clutch Connect - track QR scans, NFC taps, leads,
-          contact saves, profile views, and campaign performance from one dashboard.
+          Premium print products, smart business cards, and digital profiles built for growing businesses.
         </p>
         <div class="chp-actions">
-          <a class="chp-btn chp-btn--primary" href="/collections/business-kits">Shop Business Kits</a>
-          <a class="chp-btn chp-btn--secondary" href="/products/clutch-connect-card">Shop Smart Clutch Card</a>
+          <a class="chp-btn chp-btn--primary" href="/collections/all">Shop Products</a>
+          <a class="chp-btn chp-btn--secondary" href="/pages/smart-business-card">View Smart Business Card</a>
         </div>
         <div class="chp-proof" aria-label="Platform highlights">
-          <span>QR scan tracking</span>
-          <span>NFC smart cards</span>
-          <span>30 days dashboard access with new orders</span>
+          <span>Smart Business Card</span>
+          <span>Business Kits</span>
+          <span>Clutch Connect Basic Included</span>
         </div>
       </div>
 
@@ -45,24 +44,22 @@
   <section class="chp-section chp-platform" id="clutch-connect" aria-labelledby="chp-platform-title">
     <div class="chp-shell chp-platform__grid">
       <div class="chp-platform__copy">
-        <span class="chp-eyebrow">Clutch Connect Platform</span>
-        <h2 id="chp-platform-title">Every print piece can become a trackable campaign.</h2>
+        <span class="chp-eyebrow">Launch Structure</span>
+        <h2 id="chp-platform-title">Simple launch paths that are easy to understand.</h2>
         <p>
-          Clutch Connect powers digital profiles, lead capture, and profile analytics.
-          QR Pro powers dynamic QR campaigns, scan reporting, and campaign performance tracking.
+          Start with premium print, business kits, and smart business cards.
+          Every eligible order includes Clutch Connect Basic free.
+          Connect+ and QR Pro are optional upgrades when you need deeper profile tools or campaign tracking.
         </p>
         <div class="chp-actions">
-          <a class="chp-btn chp-btn--primary" href="/pages/clutch-connect">Explore Clutch Connect</a>
-          <a class="chp-btn chp-btn--secondary" href="/pages/qr-pro">Explore QR Pro</a>
+          <a class="chp-btn chp-btn--primary" href="/collections/all">Shop Products</a>
+          <a class="chp-btn chp-btn--secondary" href="/pages/contact">Request Custom Quote</a>
         </div>
       </div>
       <div class="chp-feature-grid">
-        <article class="chp-card chp-feature"><h3>Dynamic QR Codes</h3><p>Update destinations after printing and measure campaign scans.</p></article>
-        <article class="chp-card chp-feature"><h3>NFC Smart Cards</h3><p>Metal cards connected to a live profile and tap analytics.</p></article>
-        <article class="chp-card chp-feature"><h3>Digital Business Card</h3><p>Share contact details, links, socials, reviews, and lead actions.</p></article>
-        <article class="chp-card chp-feature"><h3>Lead Capture</h3><p>Turn print engagement into follow-up opportunities.</p></article>
-        <article class="chp-card chp-feature"><h3>Campaign Analytics</h3><p>View scans, taps, profile views, links, leads, and performance.</p></article>
-        <article class="chp-card chp-feature"><h3>Heatmap Visibility</h3><p>Understand where your printed marketing is creating engagement.</p></article>
+        <article class="chp-card chp-feature"><h3>Smart Business Card</h3><p>One physical card with NFC tap + QR scan to your live profile.</p></article>
+        <article class="chp-card chp-feature"><h3>Business Kits</h3><p>Launch-ready print bundles for local campaigns and outreach.</p></article>
+        <article class="chp-card chp-feature"><h3>Clutch Connect Basic Included</h3><p>Free profile with contact buttons, links, request form, and save-contact options.</p></article>
       </div>
     </div>
   </section>
@@ -91,8 +88,6 @@
       </div>
     </div>
   </section>
-
-  {% render 'clutch-connect-card-section' %}
 
   {%- liquid
     assign kits = 'starter-kit::STARTER::$399::Starter Kit::250 business cards, 250 flyers, QR campaign tracking, and artwork review.||growth-kit::GROWTH::$649::Growth Kit::500 business cards, 500 flyers, 500 door hangers, Clutch Connect reporting, and optional 100 yard signs.||custom-order::AGENCY / CUSTOM::Custom quote::Custom quantities, multi-location campaigns, yard signs, banners, and reporting setup.' | split: '||'
@@ -149,7 +144,7 @@
                 <li>Campaign reporting setup</li>
               {%- endif -%}
             </ul>
-            <strong>{% if handle == 'custom-order' %}Request custom order{% else %}View kit details{% endif %}</strong>
+            <strong>{% if handle == 'custom-order' %}Request Custom Quote{% else %}View kit details{% endif %}</strong>
           </a>
         {%- endfor -%}
       </div>
@@ -207,7 +202,7 @@
         </article>
       </div>
       <div class="chp-plan-ladder__actions">
-        <a class="chp-btn chp-btn--primary" href="/pages/pricing">View Full Pricing</a>
+        <a class="chp-btn chp-btn--primary" href="/pages/contact">Request Custom Quote</a>
       </div>
     </div>
   </section>
@@ -248,7 +243,7 @@
       <h2 id="chp-final-title">Launch print that looks premium and reports like software.</h2>
       <div class="chp-actions">
         <a class="chp-btn chp-btn--dark" href="/collections/business-kits">Shop Business Kits</a>
-        <a class="chp-btn chp-btn--secondary" href="/pages/contact">Contact Clutch</a>
+        <a class="chp-btn chp-btn--secondary" href="/pages/contact">Request Custom Quote</a>
       </div>
     </div>
   </section>

@@ -8,16 +8,16 @@
         lead capture, contact save options, and tap/scan analytics.
       </p>
       <div class="smart-card-page__price" aria-label="Smart Clutch Card highlights">
-        <span>Free Clutch Profile included</span>
-        <span>NFC tap + QR fallback</span>
-        <span>Profile setup after checkout</span>
+        <span>$79.99 one-time setup</span>
+        <span>Clutch Connect Basic included free</span>
+        <span>NFC tap + QR scan access</span>
       </div>
       <div class="smart-card-page__actions">
         <a class="smart-card-page__button smart-card-page__button--primary" href="/products/clutch-connect-card">
           Shop Smart Clutch Card
         </a>
-        <a class="smart-card-page__button smart-card-page__button--secondary" href="/pages/qr-pro">
-          See QR Pro
+        <a class="smart-card-page__button smart-card-page__button--secondary" href="/pages/contact">
+          Request Custom Quote
         </a>
       </div>
     </div>
@@ -35,10 +35,19 @@
         Every Smart Business Card includes a free Clutch Connect Basic profile, so customers can tap your card and instantly
         view your contact info, links, request form, and save-contact options.
       </p>
+      <ul class="smart-card-page__included-list" aria-label="Included with Smart Business Card">
+        <li>Metal Smart Business Card</li>
+        <li>Clutch Connect Basic profile</li>
+        <li>NFC tap + QR scan access</li>
+        <li>Contact buttons</li>
+        <li>Social links</li>
+        <li>Basic request form</li>
+        <li>Save contact option</li>
+      </ul>
       <p class="smart-card-page__upgrade-callout">
-        Upgrade to Clutch Connect+ for $9.99/mo to unlock advanced profile customization, custom forms,
+        Optional upgrades: Clutch Connect+ - $9.99/mo for advanced profile customization, custom forms,
         lead tools, profile analytics, and branding controls.
-        Upgrade to QR Pro for $14.99/mo when you need 100 dynamic QR codes and print campaign tracking.
+        QR Pro - $14.99/mo when you need 100 dynamic QR codes and print campaign tracking.
       </p>
     </div>
   </div>
@@ -167,8 +176,8 @@
       <h2>Smart Clutch Card basics, without the fog.</h2>
     </div>
     <details>
-      <summary>Do I need a paid plan?</summary>
-      <p>No for basic use. Smart Business Card includes Clutch Connect Basic free. Upgrade to Connect+ for $9.99/mo or QR Pro for $14.99/mo only when you need advanced features.</p>
+      <summary>Do I need a monthly plan?</summary>
+      <p>No. Every Smart Business Card includes Clutch Connect Basic free. You can upgrade to Connect+ for advanced profile tools or QR Pro for campaign tracking.</p>
     </details>
     <details>
       <summary>Can I update my links after the card is made?</summary>
@@ -331,6 +340,34 @@
     color: #384862 !important;
     font-weight: 800;
     margin-top: 1rem;
+
+  .smart-card-page__included-list {
+    display: grid;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+  }
+
+  .smart-card-page__included-list li {
+    align-items: center;
+    background: #fff;
+    border: 1px solid rgba(56, 72, 98, 0.12);
+    border-radius: 12px;
+    color: #384862;
+    display: grid;
+    gap: 0.55rem;
+    grid-template-columns: 14px 1fr;
+    line-height: 1.4;
+    padding: 0.58rem 0.72rem;
+  }
+
+  .smart-card-page__included-list li::before {
+    color: #FFA665;
+    content: '+';
+    font-weight: 900;
+    text-align: center;
+  }
     padding: 0.9rem;
   }
 
