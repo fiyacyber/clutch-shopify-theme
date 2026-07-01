@@ -543,10 +543,7 @@
 
     fixBusinessKitsLinks();
     fixContractorKitLinks();
-    addSmartCardNavLink();
     rewriteSmartCardPrices();
-    simplifyLaunchNavigation();
-    normalizeCustomQuoteLabels();
 
     document.addEventListener('click', (event) => {
       const link = event.target.closest ? event.target.closest('a') : null;
@@ -567,10 +564,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       fixBusinessKitsLinks();
       fixContractorKitLinks();
-      addSmartCardNavLink();
       rewriteSmartCardPrices();
-      simplifyLaunchNavigation();
-      normalizeCustomQuoteLabels();
       enhanceProductForm();
       enhanceCart();
     });
@@ -578,10 +572,7 @@
     document.addEventListener('shopify:section:load', () => {
       fixBusinessKitsLinks();
       fixContractorKitLinks();
-      addSmartCardNavLink();
       rewriteSmartCardPrices();
-      simplifyLaunchNavigation();
-      normalizeCustomQuoteLabels();
       enhanceProductForm();
       enhanceCart();
     });
