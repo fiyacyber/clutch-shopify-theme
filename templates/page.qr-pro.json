@@ -11,7 +11,7 @@
   "sections": {
     "qr_pro_page": {
       "type": "clutch-qr-pro-page",
-      "name": "QR Pro landing page",
+      "name": "Clutch Connect",
       "settings": {
         "color_scheme": "scheme-1"
       }

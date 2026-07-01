@@ -31,6 +31,10 @@
   assign qr_pro_variant = qr_pro_product.selected_or_first_available_variant
   assign professional_design_product = all_products['professional-design']
   assign professional_design_variant = professional_design_product.selected_or_first_available_variant
+  assign professional_design_variant_id = professional_design_variant.id | default: 44481017970730
+  assign growth_kit_yard_sign_product = all_products['growth-kit-yard-sign-add-on']
+  assign growth_kit_yard_sign_variant = growth_kit_yard_sign_product.selected_or_first_available_variant
+  assign growth_kit_yard_sign_variant_id = growth_kit_yard_sign_variant.id | default: 44493905559594
 %}
 
 <div class="clutch-print-options" id="clutch-artwork-upload" data-clutch-print-options>
@@ -39,18 +43,18 @@
       <p class="clutch-eyebrow">Premium metal NFC business card</p>
       <h3>Tap or scan to share your profile</h3>
       <p>
-        Clutch Smart Business Card includes a premium metal NFC card, editable digital profile, dynamic QR code,
+        Smart Clutch Card includes a premium metal NFC card, editable Clutch Profile, dynamic QR code,
         and Clutch Connect Hosting with scan/tap analytics.
       </p>
       <div class="clutch-addon-badges">
-        <span>$49.99 Smart Business Card</span>
-        <span>$49.99 additional cards</span>
-        <span>+$19.99 optional engraving</span>
-        <span>$14.99/month Clutch Connect Hosting</span>
+        <span>Free Clutch Profile included</span>
+        <span>NFC tap + QR fallback</span>
+        <span>Profile setup after checkout</span>
+        <span>Optional upgrades inside Clutch Connect</span>
         <span>QR + NFC sharing</span>
-        <span>Editable profile</span>
+        <span>Editable Clutch Profile</span>
         <span>Scan analytics</span>
-        <span>Apple Wallet contact card</span>
+        <span>Contact save options where available</span>
       </div>
     </div>
   {% elsif is_qr_product %}
@@ -99,6 +103,7 @@
           <span>Flyer scans</span>
           <span>Door hanger scans</span>
           <span>Yard sign scans</span>
+          <span>Optional: Add 100 1-color, 2-sided yard signs for $399.</span>
           <span>Editable destinations</span>
           <span>$14.99/month Clutch Connect hosting</span>
         </div>
@@ -129,16 +134,33 @@
         <p class="clutch-field-label">Professional Design Free</p>
         <p class="clutch-field-help">Professional Design is included with this kit.</p>
       </div>
+      {% if product_handle == 'growth-kit' %}
+        <div class="clutch-option-card">
+          <label class="clutch-checkbox-row" for="clutch-growth-yard-signs-{{ section_id }}">
+            <input
+              id="clutch-growth-yard-signs-{{ section_id }}"
+              type="checkbox"
+              data-clutch-addon-variant-id="{{ growth_kit_yard_sign_variant_id }}"
+              data-clutch-addon-title="Growth Kit Yard Sign Add-On"
+              data-clutch-addon-quantity="1"
+            >
+            <span>
+              <strong>Optional: Add 100 1-color, 2-sided yard signs for $399.</strong>
+              <small>Adds the real Shopify add-on variant to your cart. Artwork notes can still be submitted with your Growth Kit.</small>
+            </span>
+          </label>
+        </div>
+      {% endif %}
     {% else %}
       <div class="clutch-option-card">
         <label class="clutch-checkbox-row" for="clutch-professional-design-{{ section_id }}">
           <input
             id="clutch-professional-design-{{ section_id }}"
             type="checkbox"
-            name="properties[Professional Design]"
-            value="Requested - $200 flat rate"
-            data-clutch-professional-design-handle="professional-design"
-            data-clutch-professional-design-variant-id="{{ professional_design_variant.id }}"
+            data-clutch-addon-variant-id="{{ professional_design_variant_id }}"
+            data-clutch-addon-title="Professional Design"
+            data-clutch-addon-quantity="1"
+            data-clutch-addon-unique="true"
           >
           <span>
             <strong>Professional Design Add-On</strong>

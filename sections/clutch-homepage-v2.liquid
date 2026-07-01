@@ -10,12 +10,12 @@
         <span class="chp-badge">Premium print powered by Clutch Connect</span>
         <h1 id="chp-hero-title">Print Smarter. Track Everything.</h1>
         <p>
-          Premium print products and Smart Business Cards powered by Clutch Connect - track QR scans, NFC taps, leads,
+          Premium print products and Smart Clutch Cards powered by Clutch Connect - track QR scans, NFC taps, leads,
           contact saves, profile views, and campaign performance from one dashboard.
         </p>
         <div class="chp-actions">
           <a class="chp-btn chp-btn--primary" href="/collections/business-kits">Shop Business Kits</a>
-          <a class="chp-btn chp-btn--secondary" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+          <a class="chp-btn chp-btn--secondary" href="/products/clutch-connect-card">Shop Smart Clutch Card</a>
         </div>
         <div class="chp-proof" aria-label="Platform highlights">
           <span>QR scan tracking</span>
@@ -67,7 +67,7 @@
   <section class="chp-section chp-smart-cards" aria-labelledby="chp-smart-cards-title">
     <div class="chp-shell chp-smart-cards__grid">
       <div class="chp-smart-cards__copy">
-        <span class="chp-eyebrow">Smart Business Cards</span>
+        <span class="chp-eyebrow">Smart Clutch Card</span>
         <h2 id="chp-smart-cards-title">Blank metal NFC cards connected to your Clutch Connect profile.</h2>
         <p>
           Choose matte black, brushed silver, or brushed gold NTAG213 metal cards. Optional custom engraving is available,
@@ -79,7 +79,7 @@
           <span>NFC tap + dynamic QR setup</span>
         </div>
         <div class="chp-actions">
-          <a class="chp-btn chp-btn--primary" href="/products/clutch-connect-card">Shop Smart Business Cards</a>
+          <a class="chp-btn chp-btn--primary" href="/products/clutch-connect-card">Shop Smart Clutch Card</a>
           <a class="chp-btn chp-btn--secondary" href="/pages/smart-business-card">View Details</a>
         </div>
       </div>
@@ -92,7 +92,7 @@
   {% render 'clutch-connect-card-section' %}
 
   {%- liquid
-    assign kits = 'starter-kit::STARTER::$399::Starter Kit::250 business cards, 250 flyers, QR campaign tracking, and artwork review.||growth-kit::GROWTH::$649::Growth Kit::500 business cards, 500 flyers, 500 door hangers, Clutch Connect reporting, and optional yard signs.||custom-order::AGENCY / CUSTOM::Custom quote::Custom quantities, multi-location campaigns, yard signs, banners, and reporting setup.' | split: '||'
+    assign kits = 'starter-kit::STARTER::$399::Starter Kit::250 business cards, 250 flyers, QR campaign tracking, and artwork review.||growth-kit::GROWTH::$649::Growth Kit::500 business cards, 500 flyers, 500 door hangers, Clutch Connect reporting, and optional 100 yard signs.||custom-order::AGENCY / CUSTOM::Custom quote::Custom quantities, multi-location campaigns, yard signs, banners, and reporting setup.' | split: '||'
   -%}
 
   <section class="chp-section chp-kits" id="business-kits" aria-labelledby="chp-kits-title">
@@ -139,7 +139,7 @@
               {%- elsif handle == 'growth-kit' -%}
                 <li>500 business cards</li>
                 <li>500 flyers + 500 door hangers</li>
-                <li>Optional 50 yard signs +$299</li>
+                <li>Optional: Add 100 1-color, 2-sided yard signs for $399.</li>
               {%- else -%}
                 <li>Custom print quantities</li>
                 <li>Yard signs, banners, and mailers</li>

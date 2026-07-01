@@ -198,6 +198,9 @@ class ProductFormComponent extends Component {
   /** @type {boolean} */
   #variantChangeInProgress = false;
 
+  /** @type {boolean} */
+  #addToCartInProgress = false;
+
   /** @type {Array<{variantId: string, quantity: number}>} */
   #addToCartQueue = [];
 
@@ -283,6 +286,8 @@ class ProductFormComponent extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    if (this.#addToCartInProgress) return;
+
     if (this.#variantChangeInProgress) {
       const intendedVariantId = this.#getIntendedVariantId();
       const quantity = this.#getQuantity();
@@ -306,6 +311,115 @@ class ProductFormComponent extends Component {
   /** @returns {number} */
   #getQuantity() {
     return Number(this.refs.quantitySelector?.getValue?.()) || Number(this.dataset.quantityDefault) || 1;
+  }
+
+  /** @param {HTMLFormElement} form */
+  #getSelectedClutchAddonItems(form) {
+    return Array.from(form.querySelectorAll('input[data-clutch-addon-variant-id]:checked'))
+      .map((input) => {
+        if (!(input instanceof HTMLInputElement)) return null;
+        const variantId = input.dataset.clutchAddonVariantId;
+        if (!variantId) return null;
+
+        return {
+          variantId,
+          quantity: Number(input.dataset.clutchAddonQuantity) || 1,
+          title: input.dataset.clutchAddonTitle || 'Clutch add-on',
+          unique: input.dataset.clutchAddonUnique === 'true',
+        };
+      })
+      .filter(Boolean);
+  }
+
+  /**
+   * @param {Array<{variantId: string, quantity: number, title: string, unique?: boolean}>} items
+   * @param {string[]} sectionIds
+   */
+  async #addClutchAddonItems(items, sectionIds) {
+    if (!items.length) return null;
+
+    const normalizedItems = [];
+    const seenUniqueVariantIds = new Set();
+    for (const item of items) {
+      const id = Number(item.variantId);
+      if (!id) continue;
+      if (item.unique) {
+        if (seenUniqueVariantIds.has(id)) continue;
+        seenUniqueVariantIds.add(id);
+      }
+      normalizedItems.push({ ...item, id });
+    }
+
+    if (!normalizedItems.length) return null;
+
+    let addableItems = normalizedItems;
+    const uniqueVariantIds = normalizedItems.filter((item) => item.unique).map((item) => item.id);
+    if (uniqueVariantIds.length) {
+      try {
+        const cartResponse = await fetch('/cart.js');
+        const cart = await cartResponse.json();
+        const existingVariantIds = new Set(
+          (cart?.items || []).map((item) => Number(item.variant_id || item.id)).filter(Boolean)
+        );
+
+        addableItems = normalizedItems.filter((item) => !item.unique || !existingVariantIds.has(item.id));
+      } catch (error) {
+        console.warn('Could not check cart for existing Clutch add-ons:', error);
+      }
+    }
+
+    if (!addableItems.length) return null;
+
+    const payload = {
+      items: addableItems.map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+        properties: {
+          '_Clutch add-on': item.title,
+        },
+      })),
+      sections: sectionIds.join(','),
+    };
+
+    const response = await fetch(Theme.routes.cart_add_url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+    const result = await response.json();
+
+    if (!response.ok || result.status) {
+      throw new Error(result.description || result.message || 'The add-on could not be added to cart.');
+    }
+
+    result._clutchAddedQuantity = addableItems.reduce((sum, item) => sum + item.quantity, 0);
+
+    return result;
+  }
+
+  /**
+   * @param {HTMLElement | undefined} addToCartTextError
+   * @param {string} message
+   */
+  #showAddToCartError(addToCartTextError, message) {
+    if (!addToCartTextError) return;
+
+    addToCartTextError.classList.remove('hidden');
+    const textNode = addToCartTextError.childNodes[2];
+    if (textNode) {
+      textNode.textContent = message;
+    } else {
+      addToCartTextError.appendChild(document.createTextNode(message));
+    }
+    this.#setLiveRegionText(message);
+
+    this.#timeout = setTimeout(() => {
+      addToCartTextError.classList.add('hidden');
+      this.#clearLiveRegionText();
+    }, ERROR_MESSAGE_DISPLAY_DURATION);
   }
 
   /**
@@ -374,6 +488,7 @@ class ProductFormComponent extends Component {
     }
 
     const formData = new FormData(form);
+    const clutchAddonItems = overrideVariantId ? [] : this.#getSelectedClutchAddonItems(form);
 
     if (overrideVariantId) {
       formData.set('id', overrideVariantId);
@@ -392,6 +507,7 @@ class ProductFormComponent extends Component {
     });
 
     const fetchCfg = fetchConfig('javascript', { body: formData });
+    this.#addToCartInProgress = true;
 
     fetch(Theme.routes.cart_add_url, {
       ...fetchCfg,
@@ -467,14 +583,33 @@ class ProductFormComponent extends Component {
           }
 
           // Fetch the updated cart to get the actual total quantity for this variant
+          let responseSections = response.sections;
+          let addedAddonQuantity = 0;
+          if (clutchAddonItems.length) {
+            try {
+              const addOnResponse = await this.#addClutchAddonItems(clutchAddonItems, cartItemComponentsSectionIds);
+              responseSections = addOnResponse?.sections || responseSections;
+              addedAddonQuantity = addOnResponse?._clutchAddedQuantity || 0;
+            } catch (error) {
+              const message = error instanceof Error ? error.message : 'The add-on could not be added to cart.';
+              this.#showAddToCartError(addToCartTextError, message);
+              this.dispatchEvent(
+                new CartErrorEvent(form.getAttribute('id') || '', message, message, {})
+              );
+              return;
+            }
+          }
+
           const cart = await this.#fetchAndUpdateCartQuantity();
 
           this.dispatchEvent(
             new CartAddEvent(cart ?? undefined, id.toString(), {
               source: 'product-form-component',
-              itemCount: Number(formData.get('quantity')) || Number(this.dataset.quantityDefault),
+              itemCount:
+                (Number(formData.get('quantity')) || Number(this.dataset.quantityDefault)) +
+                addedAddonQuantity,
               productId: this.dataset.productId,
-              sections: response.sections,
+              sections: responseSections,
             })
           );
         }
@@ -483,6 +618,7 @@ class ProductFormComponent extends Component {
         console.error(error);
       })
       .finally(() => {
+        this.#addToCartInProgress = false;
         if (event) {
           cartPerformance.measureFromEvent('add:user-action', event);
         }
