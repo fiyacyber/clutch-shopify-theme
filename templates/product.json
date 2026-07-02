@@ -274,14 +274,8 @@
         "padding-block-end": 0
       }
     },
-    "clutch_product_clarity": {
-      "type": "clutch-product-trust-clarity",
-      "settings": {
-        "color_scheme": "scheme-1"
-      }
-    },
     "clutch_smart_card_product": {
-      "type": "clutch-connect-card-product",
+      "type": "clutch-smart-business-card-page",
       "settings": {}
     },
     "product_recommendations_qggXJq": {
@@ -429,7 +423,6 @@
   "order": [
     "main",
     "clutch_smart_card_product",
-    "clutch_product_clarity",
     "product_recommendations_qggXJq"
   ]
 }
