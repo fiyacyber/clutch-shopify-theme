@@ -333,13 +333,40 @@ class ProductFormComponent extends Component {
           quantity: Number(input.dataset.clutchAddonQuantity) || 1,
           title: input.dataset.clutchAddonTitle || 'Clutch add-on',
           unique: input.dataset.clutchAddonUnique === 'true',
+          isSmartCardEngravingAddon: input.hasAttribute('data-smart-card-engraving-addon'),
         };
       })
       .filter(Boolean);
   }
 
+  /** @param {FormData} formData */
+  #getSmartCardEngravingProperties(formData) {
+    const fields = [
+      'Business Name',
+      'Title',
+      'Business Phone Number',
+      'Business Email',
+      'Custom details',
+    ];
+
+    const properties = {};
+
+    for (const fieldName of fields) {
+      const key = `properties[${fieldName}]`;
+      const value = String(formData.get(key) || '').trim();
+      if (!value) continue;
+      properties[fieldName] = value;
+    }
+
+    if (Object.keys(properties).length) {
+      properties['Engraving Requested'] = 'Yes';
+    }
+
+    return properties;
+  }
+
   /**
-   * @param {Array<{variantId: string, quantity: number, title: string, unique?: boolean}>} items
+   * @param {Array<{variantId: string, quantity: number, title: string, unique?: boolean, isSmartCardEngravingAddon?: boolean, properties?: Record<string, string>}>} items
    * @param {string[]} sectionIds
    */
   async #addClutchAddonItems(items, sectionIds) {
@@ -383,6 +410,7 @@ class ProductFormComponent extends Component {
         quantity: item.quantity,
         properties: {
           '_Clutch add-on': item.title,
+          ...(item.properties || {}),
         },
       })),
       sections: sectionIds.join(','),
@@ -496,6 +524,7 @@ class ProductFormComponent extends Component {
 
     const formData = new FormData(form);
     const clutchAddonItems = overrideVariantId ? [] : this.#getSelectedClutchAddonItems(form);
+    const engravingProperties = this.#getSmartCardEngravingProperties(formData);
 
     if (!overrideVariantId) {
       const engravingAddonInput = document.querySelector(
@@ -509,8 +538,19 @@ class ProductFormComponent extends Component {
             quantity: Number(engravingAddonInput.dataset.clutchAddonQuantity) || 1,
             title: engravingAddonInput.dataset.clutchAddonTitle || 'Smart Card Custom Engraving',
             unique: engravingAddonInput.dataset.clutchAddonUnique === 'true',
+            isSmartCardEngravingAddon: true,
           });
         }
+      }
+    }
+
+    if (clutchAddonItems.length && Object.keys(engravingProperties).length) {
+      for (const item of clutchAddonItems) {
+        if (!item?.isSmartCardEngravingAddon) continue;
+        item.properties = {
+          ...(item.properties || {}),
+          ...engravingProperties,
+        };
       }
     }
 
