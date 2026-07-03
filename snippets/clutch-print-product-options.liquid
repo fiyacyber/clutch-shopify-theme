@@ -35,28 +35,237 @@
   assign growth_kit_yard_sign_product = all_products['growth-kit-yard-sign-add-on']
   assign growth_kit_yard_sign_variant = growth_kit_yard_sign_product.selected_or_first_available_variant
   assign growth_kit_yard_sign_variant_id = growth_kit_yard_sign_variant.id | default: 44493905559594
+  assign smart_card_engraving_addon_product = all_products['smart-card-engraving-add-on']
+  assign smart_card_engraving_addon_variant = smart_card_engraving_addon_product.selected_or_first_available_variant
+  assign smart_card_engraving_addon_variant_id = smart_card_engraving_addon_variant.id
+
+  assign no_engraving_variant_id = blank
+  assign add_engraving_variant_id = blank
+  for product_variant in product.variants
+    if product_variant.options contains 'No Engraving' and no_engraving_variant_id == blank
+      assign no_engraving_variant_id = product_variant.id
+    endif
+    if product_variant.options contains 'Add Engraving' and add_engraving_variant_id == blank
+      assign add_engraving_variant_id = product_variant.id
+    endif
+  endfor
+
 %}
 
 <div class="clutch-print-options" id="clutch-artwork-upload" data-clutch-print-options>
   {% if is_connect_card %}
-    <div class="clutch-addon-callout clutch-addon-callout--qr">
-      <p class="clutch-eyebrow">Premium metal NFC business card</p>
-      <h3>Tap or scan to share your profile</h3>
-      <p>
-        Smart Clutch Card includes a premium metal NFC card, editable Clutch Profile, dynamic QR code,
-        and Clutch Connect Basic free with scan/tap analytics.
-      </p>
-      <div class="clutch-addon-badges">
-        <span>Clutch Connect Basic included free</span>
-        <span>NFC tap + QR scan access</span>
-        <span>Profile setup after checkout</span>
-        <span>Optional Connect+ and QR Pro upgrades</span>
-        <span>QR + NFC sharing</span>
-        <span>Editable Clutch Profile</span>
-        <span>Scan analytics</span>
-        <span>Contact save options where available</span>
+    <div
+      class="smart-card-engraving"
+      data-smart-card-engraving
+      data-no-engraving-variant-id="{{ no_engraving_variant_id }}"
+      data-add-engraving-variant-id="{{ add_engraving_variant_id }}"
+    >
+      <button
+        class="smart-card-engraving__trigger"
+        type="button"
+        data-smart-card-engraving-trigger
+        aria-expanded="false"
+      >
+        <span>ADD CUSTOM ENGRAVING (+ $10)</span>
+      </button>
+
+      <div class="smart-card-engraving__content" data-smart-card-engraving-content hidden>
+        <input
+          id="smart-card-engraving-toggle-{{ section_id }}"
+          type="checkbox"
+          data-smart-card-engraving-toggle
+          hidden
+        >
+
+        <input
+          id="smart-card-engraving-addon-{{ section_id }}"
+          type="checkbox"
+          form="BuyButtons-ProductForm-{{ section_id }}"
+          data-smart-card-engraving-addon
+          data-clutch-addon-variant-id="{{ smart_card_engraving_addon_variant_id }}"
+          data-clutch-addon-title="Smart Card Custom Engraving"
+          data-clutch-addon-quantity="1"
+          data-clutch-addon-unique="true"
+          {% if smart_card_engraving_addon_variant_id == blank %}disabled{% endif %}
+          hidden
+        >
+
+        <div class="smart-card-engraving__fields" data-smart-card-engraving-fields hidden>
+          <label>
+            <span>Business Name</span>
+            <input type="text" name="properties[Business Name]" data-smart-card-engraving-field disabled>
+          </label>
+          <label>
+            <span>Title</span>
+            <input type="text" name="properties[Title]" data-smart-card-engraving-field disabled>
+          </label>
+          <label>
+            <span>Business Phone Number</span>
+            <input type="tel" name="properties[Business Phone Number]" data-smart-card-engraving-field disabled>
+          </label>
+          <label>
+            <span>Business Email</span>
+            <input type="email" name="properties[Business Email]" data-smart-card-engraving-field disabled>
+          </label>
+          <label>
+            <span>Custom Details (Optional)</span>
+            <textarea name="properties[Custom details]" rows="4" placeholder="Want to add a logo or branding? No problem. Tell us what you need!" data-smart-card-engraving-field data-smart-card-engraving-optional disabled></textarea>
+          </label>
+        </div>
+
+        <p class="smart-card-engraving__error" data-smart-card-engraving-error hidden>
+          Please complete your engraving details before adding the card to cart.
+        </p>
       </div>
     </div>
+
+    <script>
+      (function () {
+        const container = document.querySelector('[data-smart-card-engraving]');
+        if (!container || container.dataset.bound === 'true') return;
+        container.dataset.bound = 'true';
+
+        const form = container.closest('form');
+        if (!form) return;
+
+        const trigger = container.querySelector('[data-smart-card-engraving-trigger]');
+        const content = container.querySelector('[data-smart-card-engraving-content]');
+        const toggle = container.querySelector('[data-smart-card-engraving-toggle]');
+        const fieldsWrap = container.querySelector('[data-smart-card-engraving-fields]');
+        const engravingAddon = container.querySelector('[data-smart-card-engraving-addon]');
+        const fields = Array.from(container.querySelectorAll('[data-smart-card-engraving-field]'));
+        const error = container.querySelector('[data-smart-card-engraving-error]');
+
+        const getAddToCartButton = () => form.querySelector('[name="add"], .add-to-cart-button');
+
+        const noEngravingVariantId = container.getAttribute('data-no-engraving-variant-id');
+        const addEngravingVariantId = container.getAttribute('data-add-engraving-variant-id');
+        const hasEngravingVariantMapping = !!(noEngravingVariantId && addEngravingVariantId);
+        const variantPicker = document.querySelector('variant-picker[data-product-id="{{ product.id }}"]');
+
+        const setVariantByValue = (value, fallbackVariantId) => {
+          if (variantPicker) {
+            const radio = variantPicker.querySelector(`input[type="radio"][value="${value}"]`);
+            if (radio) {
+              radio.checked = true;
+              radio.dispatchEvent(new Event('change', { bubbles: true }));
+              radio.dispatchEvent(new Event('click', { bubbles: true }));
+              return;
+            }
+
+            const option = Array.from(variantPicker.querySelectorAll('option')).find((opt) => (opt.value || '').toLowerCase() === value.toLowerCase());
+            if (option) {
+              option.selected = true;
+              option.parentElement.dispatchEvent(new Event('change', { bubbles: true }));
+              return;
+            }
+          }
+
+          if (fallbackVariantId) {
+            const variantInput = form.querySelector('input[name="id"]');
+            if (variantInput) {
+              variantInput.value = fallbackVariantId;
+              variantInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          }
+        };
+
+        const syncEngravingState = () => {
+          const enabled = !!(toggle && toggle.checked);
+          if (trigger) trigger.setAttribute('aria-expanded', enabled ? 'true' : 'false');
+          if (content) content.hidden = !enabled;
+          if (fieldsWrap) fieldsWrap.hidden = !enabled;
+          if (engravingAddon) {
+            engravingAddon.checked = enabled;
+          }
+          fields.forEach((field) => {
+            field.disabled = !enabled;
+            if (!enabled) field.value = '';
+          });
+
+          if (hasEngravingVariantMapping) {
+            if (enabled) {
+              setVariantByValue('Add Engraving', addEngravingVariantId);
+            } else {
+              setVariantByValue('No Engraving', noEngravingVariantId);
+            }
+          }
+
+          syncValidationUi();
+        };
+
+        const hasMissingRequiredEngraving = () => {
+          if (!(toggle && toggle.checked)) return false;
+          return fields.some((field) => {
+            if (field.hasAttribute('data-smart-card-engraving-optional')) return false;
+            return !(field.value || '').trim();
+          });
+        };
+
+        const syncValidationUi = () => {
+          const missingRequired = hasMissingRequiredEngraving();
+          const addToCartButton = getAddToCartButton();
+
+          if (error) {
+            error.hidden = !missingRequired;
+          }
+
+          if (addToCartButton) {
+            addToCartButton.disabled = missingRequired;
+            addToCartButton.setAttribute('aria-disabled', missingRequired ? 'true' : 'false');
+          }
+        };
+
+        const blockWithErrorIfNeeded = (event) => {
+          if (!hasMissingRequiredEngraving()) {
+            syncValidationUi();
+            return false;
+          }
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          if (error) error.hidden = false;
+          if (content && content.hidden) {
+            trigger?.setAttribute('aria-expanded', 'true');
+            content.hidden = false;
+          }
+          fields.find((field) => !(field.value || '').trim())?.focus();
+          return true;
+        };
+
+        if (trigger && content) {
+          trigger.addEventListener('click', () => {
+            if (!toggle) return;
+            toggle.checked = !toggle.checked;
+            toggle.dispatchEvent(new Event('change', { bubbles: true }));
+          });
+        }
+
+        toggle?.addEventListener('change', syncEngravingState);
+
+        fields.forEach((field) => {
+          field.addEventListener('input', syncValidationUi);
+          field.addEventListener('change', syncValidationUi);
+          field.addEventListener('blur', syncValidationUi);
+        });
+
+        form.addEventListener('submit', (event) => {
+          blockWithErrorIfNeeded(event);
+        }, true);
+
+        getAddToCartButton()?.addEventListener('click', (event) => {
+          blockWithErrorIfNeeded(event);
+        }, true);
+
+        form.addEventListener('click', (event) => {
+          const target = event.target && event.target.closest ? event.target.closest('[name="add"], .add-to-cart-button') : null;
+          if (!target) return;
+          blockWithErrorIfNeeded(event);
+        }, true);
+
+        syncEngravingState();
+        syncValidationUi();
+      })();
+    </script>
   {% elsif is_qr_product %}
     <div class="clutch-addon-callout clutch-addon-callout--qr">
       <p class="clutch-eyebrow">Clutch QR™ Add-On</p>
@@ -208,6 +417,136 @@
     display: grid;
     gap: var(--gap-md);
     margin-block-start: var(--gap-md);
+  }
+
+  .smart-card-engraving {
+    border: 0;
+    border-radius: 0;
+    display: grid;
+    justify-items: center;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .smart-card-engraving__trigger {
+    align-items: center !important;
+    background: #f5a161;
+    border: 1px solid rgba(245, 161, 97, 0.95);
+    border-radius: 999px;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-flex !important;
+    justify-items: center;
+    justify-content: center;
+    margin: 0.55rem auto;
+    min-height: 44px;
+    padding: 0.72rem 1.15rem;
+    text-align: center !important;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .smart-card-engraving__trigger span {
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .smart-card-engraving__trigger small {
+    color: #ffffff;
+    font-size: 0.88rem;
+    text-align: center;
+  }
+
+  .smart-card-engraving__content {
+    border-top: 1px solid rgba(56, 72, 98, 0.12);
+    display: grid;
+    gap: 0.8rem;
+    padding: 0.95rem 1rem 1rem;
+  }
+
+  .smart-card-engraving__content[hidden] {
+    display: none !important;
+  }
+
+  .smart-card-engraving [data-smart-card-engraving-toggle] {
+    appearance: none !important;
+    border: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    opacity: 0 !important;
+    padding: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    visibility: hidden !important;
+    width: 0 !important;
+  }
+
+  .smart-card-engraving__toggle {
+    align-items: center;
+    color: #384862;
+    display: flex;
+    font-weight: 700;
+    gap: 0.55rem;
+  }
+
+  .smart-card-engraving__fields {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .smart-card-engraving__fields[hidden] {
+    display: none !important;
+  }
+
+  .smart-card-engraving__fields label {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .smart-card-engraving__fields span {
+    color: #384862;
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+
+  .smart-card-engraving__fields input {
+    background: #fff;
+    border: 1px solid rgba(56, 72, 98, 0.2);
+    border-radius: 10px;
+    color: #384862;
+    min-height: 44px;
+    padding: 0.58rem 0.7rem;
+    width: 100%;
+  }
+
+  .smart-card-engraving__fields textarea {
+    background: #fff;
+    border: 1px solid rgba(56, 72, 98, 0.2);
+    border-radius: 10px;
+    color: #384862;
+    min-height: 96px;
+    padding: 0.58rem 0.7rem;
+    resize: vertical;
+    width: 100%;
+  }
+
+  .smart-card-engraving__fields textarea[name='properties[Custom details]']:hover {
+    background: #fff;
+    border-color: rgba(56, 72, 98, 0.2);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .smart-card-engraving__error {
+    background: rgba(255, 166, 101, 0.14);
+    border: 1px solid rgba(255, 166, 101, 0.55);
+    border-radius: 10px;
+    color: #384862;
+    font-size: 0.86rem;
+    font-weight: 700;
+    margin: 0;
+    padding: 0.62rem 0.72rem;
   }
 
   .clutch-supporting-copy {

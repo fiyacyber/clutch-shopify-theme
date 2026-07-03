@@ -166,36 +166,70 @@
       </div>
     </section>
 
-    <section class="sbc-section sbc-section--soft" aria-labelledby="sbc-audience-title">
-      <div class="sbc-section__head sbc-reveal">
-        <h2 id="sbc-audience-title">Built for everyone</h2>
-      </div>
-      <div class="sbc-highlights sbc-reveal sbc-reveal-delay-1" role="list" aria-label="Who uses Clutch Smart Business Card">
-        <article class="sbc-highlight" role="listitem">
-          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 20h17M6 18V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9M9 7V5h6v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span>Contractors</span>
-        </article>
-        <article class="sbc-highlight" role="listitem">
-          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4.8 7-11a7 7 0 1 0-14 0c0 6.2 7 11 7 11z" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 10.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-          <span>Realtors</span>
-        </article>
-        <article class="sbc-highlight" role="listitem">
-          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-          <span>Sales Reps</span>
-        </article>
-        <article class="sbc-highlight" role="listitem">
-          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19h14M7 19V9h10v10M10 9V6h4v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span>Barbers / Cosmetologists</span>
-        </article>
-        <article class="sbc-highlight" role="listitem">
-          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M5 20a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-          <span>Coaches</span>
-        </article>
-      </div>
-    </section>
-
     <section class="sbc-section" id="connect-plans" aria-labelledby="sbc-plans-title">
+      <section class="sbc-section sbc-section--soft" aria-labelledby="sbc-audience-title">
+        <div class="sbc-section__head sbc-reveal">
+          <h2 id="sbc-audience-title">Built for everyone</h2>
+        </div>
+        <div class="sbc-highlights sbc-reveal sbc-reveal-delay-1" role="list" aria-label="Who uses Clutch Smart Business Card">
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 20h17M6 18V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9M9 7V5h6v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span>Contractors</span>
+          </article>
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4.8 7-11a7 7 0 1 0-14 0c0 6.2 7 11 7 11z" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 10.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span>Realtors</span>
+          </article>
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span>Sales Reps</span>
+          </article>
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19h14M7 19V9h10v10M10 9V6h4v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span>Barbers / Cosmetologists</span>
+          </article>
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M5 20a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span>Coaches</span>
+          </article>
+        </div>
+      </section>
+
       <div class="sbc-section__head sbc-reveal">
+      </section>
+
+      <section class="sbc-section" id="connect-plans" aria-labelledby="sbc-plans-title">
+      <section class="sbc-section sbc-section--soft" aria-labelledby="sbc-audience-title">
+        <div class="sbc-section__head sbc-reveal">
+          <h2 id="sbc-audience-title">Built for everyone</h2>
+        </div>
+        <div class="sbc-highlights sbc-reveal sbc-reveal-delay-1" role="list" aria-label="Who uses Clutch Smart Business Card">
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 20h17M6 18V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9M9 7V5h6v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span>Contractors</span>
+          </article>
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4.8 7-11a7 7 0 1 0-14 0c0 6.2 7 11 7 11z" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 10.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span>Realtors</span>
+          </article>
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span>Sales Reps</span>
+          </article>
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19h14M7 19V9h10v10M10 9V6h4v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span>Barbers / Cosmetologists</span>
+          </article>
+          <article class="sbc-highlight" role="listitem">
+            <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M5 20a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span>Coaches</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="sbc-section" id="connect-plans" aria-labelledby="sbc-plans-title">
+        <div class="sbc-section__head sbc-reveal">
+        <div class="sbc-section__head sbc-reveal">
         <h2 id="sbc-plans-title" class="sbc-plans-title">Clutch Connect</h2>
       </div>
 
@@ -337,9 +371,39 @@
       </div>
     </section>
 
-    <section class="sbc-section sbc-section--soft" aria-labelledby="sbc-faq-title">
+    <section class="sbc-section sbc-section--soft" aria-labelledby="sbc-audience-title">
       <div class="sbc-section__head sbc-reveal">
-        <h2 id="sbc-faq-title">F.A.Q</h2>
+        <h2 id="sbc-audience-title">Built for everyone</h2>
+      </div>
+      <div class="sbc-highlights sbc-reveal sbc-reveal-delay-1" role="list" aria-label="Who uses Clutch Smart Business Card">
+        <article class="sbc-highlight" role="listitem">
+          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 20h17M6 18V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9M9 7V5h6v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Contractors</span>
+        </article>
+        <article class="sbc-highlight" role="listitem">
+          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4.8 7-11a7 7 0 1 0-14 0c0 6.2 7 11 7 11z" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 10.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <span>Realtors</span>
+        </article>
+        <article class="sbc-highlight" role="listitem">
+          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <span>Sales Reps</span>
+        </article>
+        <article class="sbc-highlight" role="listitem">
+          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19h14M7 19V9h10v10M10 9V6h4v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Barbers / Cosmetologists</span>
+        </article>
+        <article class="sbc-highlight" role="listitem">
+          <span class="sbc-highlight__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M5 20a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <span>Coaches</span>
+        </article>
+      </div>
+    </section>
+
+      <section class="sbc-section sbc-section--soft" aria-labelledby="sbc-faq-title">
+
+      <section class="sbc-section sbc-section--soft" aria-labelledby="sbc-faq-title">
+      <div class="sbc-section__head sbc-reveal">
+        <h2 id="sbc-faq-title">Frequently asked questions</h2>
       </div>
         <div class="sbc-faq sbc-reveal sbc-reveal-delay-1">
           <details><summary>Do I need Connect+ to use the card?</summary><p>No. Every Smart Business Card includes Clutch Connect Free. Connect+ is optional if you want advanced profile features, themes, lead capture, follow ups, heatmap, and advanced analytics.</p></details>
@@ -1276,23 +1340,14 @@
     border: 1px solid var(--sbc-border);
     border-radius: 12px;
     box-shadow: 0 10px 22px rgba(7, 29, 51, 0.05);
-    display: grid;
-    padding: 0;
-    place-items: center;
+    padding: 0.85rem;
     text-align: center;
   }
 
   .sbc-faq summary {
-    align-items: center !important;
     cursor: pointer;
-    display: grid !important;
     font-weight: 800;
-    justify-items: center;
     list-style: none;
-    min-height: 84px !important;
-    padding: 0.85rem 1rem;
-    text-align: center;
-    width: 100%;
   }
 
   .sbc-faq summary::-webkit-details-marker {
@@ -1300,8 +1355,7 @@
   }
 
   .sbc-faq p {
-    margin: 0;
-    padding: 0 1rem 0.85rem;
+    margin-top: 0.55rem;
     text-align: center;
   }
 
