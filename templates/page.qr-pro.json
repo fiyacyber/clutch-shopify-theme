@@ -11,7 +11,7 @@
   "sections": {
     "qr_pro_page": {
       "type": "clutch-qr-pro-page",
-      "name": "Clutch Codes",
+      "name": "QR Pro landing page",
       "settings": {
         "color_scheme": "scheme-1"
       }
