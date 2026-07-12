@@ -154,10 +154,19 @@ class MarqueeComponent extends Component {
 
   #handleResize = debounce(async () => {
     const { marqueeItems } = this.refs;
-    const { newNumberOfCopies, isHorizontalResize } = await this.#queryNumberOfCopies();
+    const {
+      numberOfCopies: newNumberOfCopies,
+      isHorizontalResize,
+    } = await this.#queryNumberOfCopies();
 
     // opt out of marquee manipulation on vertical resizes
-    if (!isHorizontalResize) return;
+    if (
+      !isHorizontalResize ||
+      !Number.isFinite(newNumberOfCopies) ||
+      newNumberOfCopies < 1
+    ) {
+      return;
+    }
 
     const currentNumberOfCopies = marqueeItems.length;
     const speed = this.#calculateSpeed(newNumberOfCopies);
