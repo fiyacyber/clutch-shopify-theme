@@ -41,7 +41,11 @@
   marquee-component {
     display: block;
     width: 100%;
-    overflow: hidden;
+    max-width: 100%;
+    overflow-x: clip;
+    overflow-y: visible;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
   }
 
   .marquee__wrapper {
