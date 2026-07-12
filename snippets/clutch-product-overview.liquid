@@ -35,26 +35,26 @@
     assign summary_text = 'A premium metal NFC card that opens your Clutch Profile by tap or QR scan.'
     assign included_items = 'Premium metal NFC card|Editable Clutch Profile|Dynamic QR code|NFC tap destination|Lead capture form|Contact save options where available|Clutch Connect analytics' | split: '|'
     assign best_for_items = 'Contractors|Realtors|Sales reps|Barbers|Creators|Local businesses' | split: '|'
-    assign support_items = 'Clutch Connect Basic included free|NFC tap + QR scan access|Profile setup after checkout|Optional Connect+ and QR Pro upgrades|Update links anytime|Track scans and engagement' | split: '|'
+    assign support_items = 'Clutch Connect Basic included free|NFC tap + QR scan access|Profile setup after checkout|Optional Connect+ profile upgrade|Update links anytime|Track scans and engagement' | split: '|'
   elsif is_business_kit
     assign summary_title = 'Business Kit'
-    assign summary_text = 'Print bundles with campaign-level QR tracking so you can compare which materials generate scans, engagement, and leads.'
+    assign summary_text = 'Print bundles with included Clutch Codes so you can compare which materials generate scans, engagement, and leads.'
     assign best_for_items = 'Local Businesses|Contractors|Events|Promotions|New Business Launches|Campaign Tracking' | split: '|'
-    assign support_items = 'Clutch Connect dashboard access|Editable QR destinations|Track scans by material type|Update links without reprinting' | split: '|'
+    assign support_items = 'One included Clutch Code per eligible print material type|Dynamic destinations|Scan analytics|Update links without reprinting' | split: '|'
 
     if is_startup_kit
-      assign summary_text = 'Perfect for businesses launching their brand with business cards and flyers that can be tracked separately.'
-      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Editable QR Destinations|Clutch Connect Dashboard Access' | split: '|'
+      assign summary_text = 'Perfect for businesses launching their brand with business cards and flyers that can be tracked separately with included Clutch Codes.'
+      assign included_items = 'Professional Design Free|Business Cards + included Clutch Code|Flyers + included Clutch Code|Dynamic destinations|Scan analytics' | split: '|'
     elsif is_growth_kit
-      assign summary_text = 'Designed for businesses focused on generating leads and comparing performance across cards, flyers, and door hangers.'
-      assign included_items = 'Professional Design Free|Business Cards + QR Tracking|Flyers + QR Tracking|Door Hangers + QR Tracking|Compare Scans by Material|Clutch Connect Dashboard Access' | split: '|'
+      assign summary_text = 'Designed for businesses focused on generating leads and comparing performance across cards, flyers, and door hangers with included Clutch Codes.'
+      assign included_items = 'Professional Design Free|Business Cards + included Clutch Code|Flyers + included Clutch Code|Door Hangers + included Clutch Code|Compare scans by material|Dynamic destinations' | split: '|'
     endif
   elsif is_qr_product
-    assign summary_title = 'Clutch QR™ Add-On'
-    assign summary_text = 'Add a dynamic Clutch QR™ Code and track customer engagement beyond the mailbox, flyer, sign, or business card.'
-    assign included_items = 'Editable destination links|Scan tracking|QR analytics|Review links|Booking links|Website traffic tracking|Promotions and offers' | split: '|'
+    assign summary_title = 'Clutch Codes™'
+    assign summary_text = 'Dynamic QR destinations with scan analytics for additional active campaigns beyond the Clutch Codes already included with eligible print.'
+    assign included_items = 'Dynamic destinations|Scan analytics|Campaign organization|Editable Clutch Codes|Review or booking links|Additional active campaign capacity' | split: '|'
     assign best_for_items = 'Print campaigns|Local service businesses|Lead generation|Reorderable marketing' | split: '|'
-    assign support_items = 'Editable destinations included|Analytics available where applicable|Support from Clutch before launch|Works with existing print campaigns' | split: '|'
+    assign support_items = 'Works with included print campaigns|Manage active Clutch Codes without reprinting|Starter, Growth, and Pro plans|Clutch Connect+ remains separate' | split: '|'
   endif
 %}
 
@@ -65,9 +65,9 @@
       {% if is_connect_card %}
         Premium Metal Card. Clutch Profile.
       {% elsif is_qr_product %}
-        Turn Printed Marketing Into Trackable Marketing
+        Add More Trackable Campaigns Without Reprinting
       {% elsif is_business_kit %}
-        Campaign-level QR tracking for every printed material.
+        Campaign-level Clutch Codes for every eligible printed material.
       {% else %}
         Make your print order clear, premium, and ready to convert.
       {% endif %}
