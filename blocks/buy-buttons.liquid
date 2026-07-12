@@ -2,8 +2,13 @@
 {% liquid
   assign block_settings = block.settings
   assign product = closest.product
+  assign is_smart_card_product = false
   if request.visual_preview_mode and product == blank
     assign product = collections.all.products.first
+  endif
+
+  if product and product.handle == 'clutch-connect-card'
+    assign is_smart_card_product = true
   endif
 
   assign variant = closest.product.selected_or_first_available_variant
@@ -33,10 +38,14 @@
       assign add_to_cart_text = 'products.product.unavailable' | t
     endif
   endif
+
+  if is_smart_card_product
+    assign add_to_cart_text = 'Add to Cart'
+  endif
 %}
 
 <span
-  class="buy-buttons-block buy-buttons-block--{{ block.id }}"
+  class="buy-buttons-block buy-buttons-block--{{ block.id }}{% if is_smart_card_product %} smart-card-buy-buttons{% endif %}"
   {{ block.shopify_attributes }}
 >
   {%- if product != blank -%}
@@ -63,6 +72,48 @@
           ref="variantId"
           value="{{ product.selected_or_first_available_variant.id }}"
         >
+        {% if is_smart_card_product %}
+            <div class="smart-card-plus-cta">
+              <p class="smart-card-plus-label">Your Card Includes</p>
+            </div>
+            <div class="sbc-plus-carousel" aria-label="Clutch Connect Plus highlights">
+              <div class="sbc-plus-track">
+                <article class="sbc-plus-card">
+                  <h3>Add Your Socials</h3>
+                  <p>Create a cleaner digital profile with stronger layout, sections, buttons, and brand control.</p>
+                </article>
+                <article class="sbc-plus-card">
+                  <h3>Track Analytics</h3>
+                  <p>See more than basic views. Track taps, scans, clicks, and engagement patterns.</p>
+                </article>
+                <article class="sbc-plus-card">
+                  <h3>Capture Leads</h3>
+                  <p>Let visitors request quotes, ask questions, or send their contact info from your profile.</p>
+                </article>
+                <article class="sbc-plus-card">
+                  <h3>Guided Setup</h3>
+                  <p>Send your details and we help get you started quickly with your Smart Business Card profile.</p>
+                </article>
+
+                <article class="sbc-plus-card is-duplicate" aria-hidden="true">
+                  <h3>Add Your Socials</h3>
+                  <p>Create a cleaner digital profile with stronger layout, sections, buttons, and brand control.</p>
+                </article>
+                <article class="sbc-plus-card is-duplicate" aria-hidden="true">
+                  <h3>Track Analytics</h3>
+                  <p>See more than basic views. Track taps, scans, clicks, and engagement patterns.</p>
+                </article>
+                <article class="sbc-plus-card is-duplicate" aria-hidden="true">
+                  <h3>Capture Leads</h3>
+                  <p>Let visitors request quotes, ask questions, or send their contact info from your profile.</p>
+                </article>
+                <article class="sbc-plus-card is-duplicate" aria-hidden="true">
+                  <h3>Guided Setup</h3>
+                  <p>Send your details and we help get you started quickly with your Smart Business Card profile.</p>
+                </article>
+            </div>
+          </div>
+        {% endif %}
         {%- unless product.gift_card? -%}
           {%- render 'clutch-print-product-options', product: product, section_id: section.id -%}
         {%- endunless -%}
@@ -71,7 +122,7 @@
           <span class="buy-buttons-block__bar">
         {%- endif -%}
         <div
-          class="product-form-buttons spacing-style{% if block_settings.stacking %} product-form-buttons--stacked{% endif %}"
+          class="product-form-buttons spacing-style{% if block_settings.stacking %} product-form-buttons--stacked{% endif %}{% if is_smart_card_product %} product-form-buttons--smart-card{% endif %}"
           style="{% render 'spacing-style', settings: block_settings %}"
           ref="productFormButtons"
         >
@@ -227,12 +278,14 @@
             add_to_cart_text: add_to_cart_text
           %}
 
-          {% content_for 'block',
-            type: 'accelerated-checkout',
-            id: 'accelerated-checkout',
-            can_add_to_cart: can_add_to_cart,
-            form_obj: form
-          %}
+          {% unless is_smart_card_product %}
+            {% content_for 'block',
+              type: 'accelerated-checkout',
+              id: 'accelerated-checkout',
+              can_add_to_cart: can_add_to_cart,
+              form_obj: form
+            %}
+          {% endunless %}
         </div>
         {%- if block_settings.gift_card_form and product.gift_card? -%}
           </span>
@@ -366,6 +419,419 @@
     {% endif %}
   </local-pickup>
 {% endif %}
+
+{% if is_smart_card_product %}
+  <script>
+    (function () {
+      const form = document.getElementById('BuyButtons-ProductForm-{{ section.id }}');
+      if (!form || form.dataset.smartCardModuleBound === 'true') return;
+      form.dataset.smartCardModuleBound = 'true';
+
+      const billingToggle = form.querySelector('[data-sbc-billing-toggle]');
+      const monthlyTargets = form.querySelectorAll('[data-billing-monthly]');
+      const annualTargets = form.querySelectorAll('[data-billing-annual]');
+      const basePlanCards = form.querySelectorAll('[data-billing-base-card]');
+      const plusPlanCards = form.querySelectorAll('[data-billing-plus-card]');
+
+      if (!billingToggle || !monthlyTargets.length || !annualTargets.length) {
+        return;
+      }
+
+      const toggleButtons = billingToggle.querySelectorAll('button[data-billing]');
+
+      const setElementHidden = (el, hidden) => {
+        el.hidden = hidden;
+        if (hidden) {
+          el.style.setProperty('display', 'none', 'important');
+          return;
+        }
+        el.style.removeProperty('display');
+      };
+
+      const setBilling = (interval) => {
+        const isFree = interval === 'free';
+        const isAnnual = interval === 'annual';
+
+        toggleButtons.forEach((button) => {
+          const active = button.getAttribute('data-billing') === interval;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-selected', active ? 'true' : 'false');
+          button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+
+        monthlyTargets.forEach((el) => {
+          setElementHidden(el, isAnnual);
+        });
+
+        annualTargets.forEach((el) => {
+          setElementHidden(el, !isAnnual);
+        });
+
+        basePlanCards.forEach((el) => {
+          setElementHidden(el, !isFree);
+        });
+
+        plusPlanCards.forEach((el) => {
+          setElementHidden(el, isFree);
+        });
+      };
+
+      setBilling('free');
+
+      toggleButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const interval = button.getAttribute('data-billing');
+          if (!interval) return;
+          setBilling(interval);
+        });
+      });
+    })();
+  </script>
+{% endif %}
+
+{% stylesheet %}
+    .smart-card-buy-buttons .smart-card-plus-cta {
+      display: grid;
+      margin: 0.25rem 0 0.6rem;
+      place-items: center;
+      width: 100%;
+    }
+
+    .smart-card-buy-buttons .smart-card-plus-label {
+      color: #384862;
+      font-size: 0.98rem;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      margin: 0;
+      text-align: center;
+    }
+
+    .smart-card-buy-buttons .sbc-btn {
+      align-items: center;
+      border-radius: 12px;
+      display: inline-flex;
+      font-weight: 900;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0.7rem 0.95rem;
+      text-align: center;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .smart-card-buy-buttons .sbc-btn--primary {
+      background: #ffa665;
+      border: 1px solid #ffa665;
+      box-shadow: 0 12px 24px rgba(255, 166, 101, 0.26);
+      color: #384862;
+    }
+
+    .smart-card-buy-buttons .sbc-btn--muted {
+      background: rgba(56, 72, 98, 0.08);
+      border: 1px solid rgba(56, 72, 98, 0.16);
+      color: #384862;
+    }
+
+    .smart-card-buy-buttons .sbc-plus-carousel {
+      max-width: 100%;
+      overflow: hidden;
+      padding-bottom: 0.2rem;
+      scrollbar-width: none;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .smart-card-buy-buttons .sbc-plus-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .smart-card-buy-buttons .sbc-plus-track {
+      animation: sbc-plus-scroll 42s linear infinite;
+      display: flex;
+      gap: 0.8rem;
+      width: max-content;
+      will-change: transform;
+      min-width: 0;
+    }
+
+    .smart-card-buy-buttons .sbc-plus-carousel:hover .sbc-plus-track {
+      animation-play-state: paused;
+    }
+
+    .smart-card-buy-buttons .sbc-plus-card {
+      background: #fff;
+      border: 1px solid rgba(56, 72, 98, 0.14);
+      border-radius: 16px;
+      box-shadow: 0 12px 28px rgba(7, 29, 51, 0.06);
+      display: grid;
+      flex: 0 0 min(82vw, 280px);
+      gap: 0.45rem;
+      min-height: 220px;
+      padding: 1rem;
+      text-align: center;
+      width: min(82vw, 280px);
+    }
+
+    .smart-card-buy-buttons .sbc-plus-card h3 {
+      color: #384862;
+      font-size: 1.08rem;
+      margin: 0;
+    }
+
+    .smart-card-buy-buttons .sbc-plus-card p {
+      color: rgba(56, 72, 98, 0.8);
+      font-size: 0.9rem;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    @keyframes sbc-plus-scroll {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
+    }
+
+    .smart-card-buy-buttons .product-form-buttons--smart-card .add-to-cart-button {
+      background: #ffa665;
+      border: 1px solid #ffa665;
+      border-radius: 14px;
+      box-shadow: 0 16px 28px rgba(255, 166, 101, 0.3);
+      color: #384862;
+      font-weight: 900;
+      min-height: 58px;
+      transition: transform 0.16s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      width: 100%;
+    }
+
+    .smart-card-buy-buttons .product-form-buttons--smart-card .add-to-cart-button:hover {
+      background: #ffb177;
+      box-shadow: 0 18px 30px rgba(255, 166, 101, 0.38);
+      transform: translateY(-1px);
+    }
+
+    .smart-card-buy-buttons .product-form-buttons--smart-card .add-to-cart-button:active {
+      transform: translateY(0);
+    }
+
+    .smart-card-buy-buttons .product-form-buttons--smart-card .add-to-cart-button:disabled {
+      background: #f0d9c8;
+      border-color: #f0d9c8;
+      box-shadow: none;
+      color: rgba(56, 72, 98, 0.55);
+    }
+
+    .smart-card-buy-buttons .smart-card-secondary-links {
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 0.8rem;
+    }
+
+    .smart-card-buy-buttons .smart-card-secondary-links a {
+      border: 1px solid rgba(56, 72, 98, 0.2);
+      border-radius: 12px;
+      color: #384862;
+      font-weight: 700;
+      padding: 0.72rem 0.9rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .smart-card-buy-buttons .smart-card-secondary-links a:hover {
+      border-color: rgba(255, 166, 101, 0.72);
+      color: #384862;
+    }
+
+    .smart-card-buy-buttons .smart-card-connect-wrap {
+      background: #fff;
+      border: 1px solid rgba(56, 72, 98, 0.14);
+      border-radius: 22px;
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      text-align: center;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .smart-card-buy-buttons .sbc-plans-title {
+      color: #384862;
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    .smart-card-buy-buttons .sbc-billing-toggle {
+      align-items: center;
+      background: #eef2f6;
+      border: 1px solid rgba(56, 72, 98, 0.14);
+      border-radius: 999px;
+      display: inline-grid;
+      gap: 0.35rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 0 auto;
+      max-width: 640px;
+      padding: 0.28rem;
+      width: 100%;
+    }
+
+    .smart-card-buy-buttons .sbc-billing-toggle button {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: rgba(56, 72, 98, 0.74);
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 800;
+      min-height: 42px;
+      padding: 0.55rem 0.8rem;
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .smart-card-buy-buttons .sbc-billing-toggle button:not(.is-active) {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(56, 72, 98, 0.08);
+      box-shadow: none;
+      color: rgba(56, 72, 98, 0.74);
+    }
+
+    .smart-card-buy-buttons .sbc-billing-toggle button.is-active {
+      background: #ffa665;
+      border-color: rgba(255, 166, 101, 0.95);
+      box-shadow: 0 10px 20px rgba(255, 166, 101, 0.3);
+      color: #384862;
+    }
+
+    .smart-card-buy-buttons .sbc-pricing-grid {
+      display: grid;
+      gap: 0.7rem;
+      margin: 1rem auto 0;
+      max-width: 720px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .smart-card-buy-buttons .sbc-price-card {
+      background: #fff;
+      border: 1px solid rgba(56, 72, 98, 0.15);
+      border-radius: 16px;
+      display: grid;
+      gap: 0.6rem;
+      padding: 0.95rem;
+      text-align: center;
+      min-width: 0;
+    }
+
+    @media screen and (max-width: 749px) {
+      .smart-card-buy-buttons {
+        width: 100%;
+      }
+
+      .smart-card-buy-buttons .sbc-plus-card {
+        flex-basis: min(76vw, 250px);
+        min-height: 190px;
+        width: min(76vw, 250px);
+      }
+
+      .smart-card-buy-buttons .sbc-billing-toggle button {
+        font-size: 0.72rem;
+        min-height: 38px;
+        padding: 0.42rem 0.34rem;
+      }
+    }
+
+    .smart-card-buy-buttons .sbc-price-card--featured {
+      background: linear-gradient(180deg, #ffffff, #fffaf6);
+      border-color: rgba(255, 166, 101, 0.52);
+      box-shadow: 0 18px 34px rgba(255, 166, 101, 0.16);
+    }
+
+    .smart-card-buy-buttons .sbc-price-card h4,
+    .smart-card-buy-buttons .sbc-price,
+    .smart-card-buy-buttons .sbc-price-card__pill,
+    .smart-card-buy-buttons .sbc-price-card ul {
+      margin: 0;
+    }
+
+    .smart-card-buy-buttons .sbc-price {
+      color: #384862;
+      font-family: 'Exo 2', sans-serif;
+      font-size: clamp(1.62rem, 2.7vw, 2rem);
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .smart-card-buy-buttons .sbc-price span {
+      color: rgba(56, 72, 98, 0.78);
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-left: 0.2rem;
+    }
+
+    .smart-card-buy-buttons .sbc-price-card__badge,
+    .smart-card-buy-buttons .sbc-price-card__pill {
+      background: rgba(255, 166, 101, 0.18);
+      border: 1px solid rgba(255, 166, 101, 0.4);
+      border-radius: 999px;
+      color: #384862;
+      display: inline-flex;
+      font-size: 0.78rem;
+      font-weight: 800;
+      justify-self: center;
+      padding: 0.32rem 0.68rem;
+      width: fit-content;
+    }
+
+    .smart-card-buy-buttons .sbc-price-card ul {
+      color: rgba(56, 72, 98, 0.88);
+      list-style: none;
+      line-height: 1.5;
+      padding: 0;
+      text-align: left;
+    }
+
+    .smart-card-buy-buttons .sbc-price-card li {
+      align-items: start;
+      display: grid;
+      gap: 0.45rem;
+      grid-template-columns: 14px 1fr;
+    }
+
+    .smart-card-buy-buttons .sbc-price-card li::before {
+      color: #ffa665;
+      content: '+';
+      font-weight: 900;
+    }
+
+    @media screen and (min-width: 750px) {
+      .smart-card-buy-buttons .sbc-plus-card {
+        width: 250px;
+      }
+
+      .smart-card-buy-buttons .sbc-pricing-grid {
+        justify-items: center;
+      }
+
+      .smart-card-buy-buttons .sbc-price-card {
+        max-width: 620px;
+        width: 100%;
+      }
+
+      .smart-card-buy-buttons .smart-card-secondary-links {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .smart-card-buy-buttons .sbc-plus-track {
+        animation: none !important;
+        transform: none !important;
+        width: auto;
+      }
+
+      .smart-card-buy-buttons .sbc-plus-card.is-duplicate {
+        display: none;
+      }
+    }
+{% endstylesheet %}
 
 {% render 'buy-buttons-styles' %}
 

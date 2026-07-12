@@ -8,6 +8,9 @@
 
 {% liquid
   assign block_settings = block.settings
+  assign clutch_nav_titles = 'HOME|SHOP|BUSINESS KITS|CONNECT|CUSTOM ORDER' | split: '|'
+  assign clutch_nav_urls = '/|/collections/all|/collections/business-kits|/pages/smart-business-card|/pages/contact' | split: '|'
+  assign current_path = request.path
 %}
 
 {% case variant %}
@@ -38,17 +41,41 @@
             class="menu-list__list list-unstyled"
             role="list"
           >
-            {% for link in block_settings.menu.links %}
+            {% for title in clutch_nav_titles %}
+              {% assign nav_url = clutch_nav_urls[forloop.index0] %}
+              {% assign is_active = false %}
+              {% case forloop.index %}
+                {% when 1 %}
+                  {% if current_path == '/' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 2 %}
+                  {% if current_path contains '/collections/all' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 3 %}
+                  {% if current_path contains '/collections/business-kits' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 4 %}
+                  {% if current_path contains '/pages/smart-business-card' or current_path contains '/products/clutch-connect-card' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 5 %}
+                  {% if current_path contains '/pages/contact' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+              {% endcase %}
               <li>
                 <a
-                  href="{{ link.url }}"
-                  id="MenuItem-{{ link.handle }}"
+                  href="{{ nav_url }}"
+                  id="MenuItem-{{ title | handleize }}"
                   class="menu-list__item"
-                  {% if link.current %}
+                  {% if is_active %}
                     aria-current="page"
                   {% endif %}
                 >
-                  {{- link.title -}}
+                  {{- title -}}
                 </a>
               </li>
             {% endfor %}
@@ -82,81 +109,9 @@
       endif
     %}
 
-    {% capture children %}
-      {% for link in block_settings.menu.links %}
-        <li
-          role="presentation"
-          class="menu-list__list-item"
-          on:focus="/activate"
-          on:blur="/deactivate"
-          on:pointerenter="/activate"
-          on:pointerleave="/deactivate"
-        >
-          <a
-            href="{{ link.url }}"
-            data-skip-node-update="true"
-            class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
-            {%- if link.links != blank -%}
-              aria-controls="submenu-{{ forloop.index }}"
-              aria-haspopup="true"
-              aria-expanded="false"
-            {%- endif -%}
-            {% if link.current %}
-              aria-current="page"
-            {% endif %}
-            ref="menuitem"
-          >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
-          </a>
-          {%- if link.links != blank -%}
-            <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
-              <div
-                id="submenu-{{ forloop.index }}"
-                class="menu-list__submenu-inner"
-                style="{% render 'submenu-font-styles', settings: block_settings %}"
-              >
-                {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
-                <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
-                  <div
-                    class="mega-menu__grid"
-                    data-menu-grid-id="{{ list_id }}"
-                  >
-                    {% render 'mega-menu-list',
-                      parent_link: link,
-                      id: list_id,
-                      section: section,
-                      grid_columns_count: 6,
-                      grid_columns_count_tablet: 4,
-                      grid_columns_count_collection_images: 8,
-                      menu_content_type: menu_content_type,
-                      content_aspect_ratio: ratio,
-                      image_border_radius: image_border_radius
-                    %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          {%- endif -%}
-        </li>
-      {% endfor %}
-      <li
-        class="menu-list__list-item"
-        role="presentation"
-        slot="more"
-        on:focus="/activate"
-        on:blur="/deactivate"
-        on:pointerenter="/activate"
-        on:pointerleave="/deactivate"
-      >
-        <button role="listitem" class="menu-list__link button-unstyled">
-          <span class="menu-list__link-title">{{ 'actions.more' | t }}</span>
-        </button>
-      </li>
-    {% endcapture %}
-
-    <header-menu
-      ref="headerMenu"
+    <div
       class="header-menu"
+      ref="headerMenu"
       {{ block.shopify_attributes }}
       data-hydration-key="header-menu"
     >
@@ -166,24 +121,49 @@
           aria-label="{{ 'accessibility.header_navigation_label' | t }}"
           style="{% render 'menu-font-styles', settings: block_settings, menu_type: 'mega_menu' %}"
         >
-          {% assign class = 'overflow-menu' | append: color_scheme_classes %}
-          {% render 'overflow-list',
-            class: class,
-            ref: 'overflowMenu',
-            children: children,
-            minimum-items: 2,
-            data-testid: 'header-menu-overflow-list',
-            attributes: 'data-skip-node-update'
-          %}
+          <ul class="menu-list__list list-unstyled" role="list" data-skip-node-update>
+            {% for title in clutch_nav_titles %}
+              {% assign nav_url = clutch_nav_urls[forloop.index0] %}
+              {% assign is_active = false %}
+              {% case forloop.index %}
+                {% when 1 %}
+                  {% if current_path == '/' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 2 %}
+                  {% if current_path contains '/collections/all' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 3 %}
+                  {% if current_path contains '/collections/business-kits' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 4 %}
+                  {% if current_path contains '/pages/smart-business-card' or current_path contains '/products/clutch-connect-card' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 5 %}
+                  {% if current_path contains '/pages/contact' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+              {% endcase %}
+              <li role="presentation" class="menu-list__list-item">
+                <a
+                  href="{{ nav_url }}"
+                  data-skip-node-update="true"
+                  class="menu-list__link{% if is_active %} menu-list__link--active{% endif %}"
+                  {% if is_active %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  <span class="menu-list__link-title">{{- title -}}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
         </nav>
       </div>
-
-      <script
-        src="{{ 'header-menu.js' | asset_url }}"
-        type="module"
-        fetchpriority="low"
-      ></script>
-    </header-menu>
+    </div>
 {% endcase %}
 
 {% style %}

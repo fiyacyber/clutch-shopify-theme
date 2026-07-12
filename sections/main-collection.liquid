@@ -1,5 +1,3 @@
-
-
 <script
   src="{{ 'results-list.js' | asset_url }}"
   type="module"
@@ -22,6 +20,7 @@
   }
 {% endjavascript %}
 
+{% unless collection.handle == 'all' or collection.handle == 'print-products' %}
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <results-list
@@ -75,6 +74,7 @@
     {% endpaginate %}
   </div>
 </results-list>
+{% endunless %}
 
 {% stylesheet %}
   .clutch-shop-results {

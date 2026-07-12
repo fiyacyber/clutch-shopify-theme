@@ -1,8 +1,37 @@
 
 
-<script type="application/ld+json">
-  {{ closest.product | structured_data }}
-</script>
+{% liquid
+  assign is_smart_card_product = false
+  if closest.product and closest.product.handle == 'clutch-connect-card'
+    assign is_smart_card_product = true
+  endif
+%}
+
+{% if is_smart_card_product %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Product",
+      "name": "Smart Business Card",
+      "description": "A premium metal NFC business card with guided setup, contact saves, and basic analytics.",
+      "brand": {
+        "@type": "Brand",
+        "name": "Clutch Print Shop"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "{{ cart.currency.iso_code }}",
+        "price": "{{ closest.product.selected_or_first_available_variant.price | money_without_currency | replace: ',', '' }}",
+        "availability": "http://schema.org/{% if closest.product.selected_or_first_available_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "url": "{{ shop.url }}{{ closest.product.url }}"
+      }
+    }
+  </script>
+{% else %}
+  <script type="application/ld+json">
+    {{ closest.product | structured_data }}
+  </script>
+{% endif %}
 
 {% capture media_gallery %}
   {%- content_for 'block',
@@ -24,7 +53,7 @@
   {% content_for 'blocks' %}
 {% endcapture %}
 
-{% if section.settings.enable_sticky_add_to_cart %}
+{% if section.settings.enable_sticky_add_to_cart and is_smart_card_product == false %}
   {% liquid
     assign current_variant = product.selected_or_first_available_variant
     # Get the initial quantity based on quantity rules
@@ -171,6 +200,7 @@
   product_media_size: closest.product.media.size,
   section_id: section.id,
   settings: section.settings,
+  is_smart_card_product: is_smart_card_product,
   media_gallery: media_gallery,
   product_details: product_details,
   additional_blocks: additional_blocks

@@ -296,6 +296,12 @@
   }
 </script>
 
+<aside class="clutch-shipping-banner" aria-label="Shipping banner">
+  <div class="clutch-shipping-banner__track" role="presentation">
+    <span>FREE SHIPPING - ALL ORDERS</span>
+  </div>
+</aside>
+
 <header-component
   id="header-component"
   class="{{ class }}"
@@ -408,6 +414,28 @@
 ></script>
 
 {% stylesheet %}
+  .clutch-shipping-banner {
+    background: #384862;
+    color: #ffffff;
+    padding: 0.6rem 0;
+  }
+
+  .clutch-shipping-banner__track {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .clutch-shipping-banner__track span {
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
   body {
     --header-height: 60px;
     --header-group-height: var(--header-height);
@@ -553,7 +581,7 @@
   }
 
   .header-section:has(> #header-component[sticky='always']),
-  .header-section:has(> #header-component[sticky='scroll-up'][data-sticky-state='active']) {
+  .header-section:has(> #header-component[sticky='scroll-up']) {
     position: sticky;
 
     /* Use -1 instead of 0 so intersection observer can track sticky state */

@@ -1,0 +1,1681 @@
+{%- liquid
+  assign is_shop_collection = false
+  if collection.handle == 'all' or collection.handle == 'print-products'
+    assign is_shop_collection = true
+  endif
+
+  assign display_collection = section.settings.print_collection
+  if display_collection == blank
+    assign display_collection = collections['print-products']
+  endif
+  if display_collection == blank
+    assign display_collection = collection
+  endif
+
+  assign approved_print_tag = section.settings.approved_print_tag | default: 'print'
+  assign custom_order_page = section.settings.custom_order_page
+  if custom_order_page == blank
+    assign custom_order_url = '/pages/contact'
+  else
+    assign custom_order_url = custom_order_page.url
+  endif
+
+  assign qr_page = section.settings.qr_page
+  if qr_page == blank
+    assign qr_url = '/pages/qr-pro'
+  else
+    assign qr_url = qr_page.url
+  endif
+
+  assign smart_card_page = section.settings.smart_card_page
+  if smart_card_page == blank
+    assign smart_card_info_url = '/pages/smart-business-card'
+  else
+    assign smart_card_info_url = smart_card_page.url
+  endif
+
+  assign file_page = section.settings.file_requirements_page
+  if file_page == blank
+    assign file_requirements_url = '/pages/file-upload-requirements'
+  else
+    assign file_requirements_url = file_page.url
+  endif
+
+  assign business_cards_product = section.settings.business_cards_product
+  if business_cards_product == blank
+    assign business_cards_product = all_products['standard-business-cards']
+  endif
+
+  assign flyer_product = section.settings.flyer_product
+  if flyer_product == blank
+    assign flyer_product = all_products['premium-flyers']
+  endif
+
+  assign door_hanger_product = section.settings.door_hanger_product
+  if door_hanger_product == blank
+    assign door_hanger_product = all_products['door-hangers']
+  endif
+
+  assign postcard_product = section.settings.postcard_product
+  if postcard_product == blank
+    assign postcard_product = all_products['premium-postcards']
+  endif
+
+  assign brochure_product = section.settings.brochure_product
+  if brochure_product == blank
+    assign brochure_product = all_products['tri-fold-brochures']
+  endif
+
+  assign yard_sign_product = section.settings.yard_sign_product
+  if yard_sign_product == blank
+    assign yard_sign_product = all_products['yard-signs']
+  endif
+
+  assign banner_product = section.settings.banner_product
+  if banner_product == blank
+    assign banner_product = all_products['vinyl-banners']
+  endif
+
+  assign starter_kit_product = section.settings.starter_kit_product
+  if starter_kit_product == blank
+    assign starter_kit_product = all_products['startup-kit']
+  endif
+
+  assign growth_kit_product = section.settings.growth_kit_product
+  if growth_kit_product == blank
+    assign growth_kit_product = all_products['growth-kit']
+  endif
+
+  assign custom_kit_product = section.settings.custom_kit_product
+  if custom_kit_product == blank
+    assign custom_kit_product = all_products['contractor-kit']
+  endif
+
+  assign nfc_product = section.settings.nfc_product
+  if nfc_product == blank
+    assign nfc_product = all_products['clutch-connect-card']
+  endif
+-%}
+
+{%- if is_shop_collection -%}
+  <main class="csp-shop{% if display_collection.sort_by == blank %} csp-priority-order{% endif %} color-{{ section.settings.color_scheme }}" data-csp-shop>
+    <section class="csp-hero" aria-labelledby="csp-hero-title">
+      <div class="csp-shell csp-hero__grid">
+        <div class="csp-hero__copy csp-reveal">
+          <p class="csp-eyebrow">{{ section.settings.hero_eyebrow | default: 'PRINT PRODUCTS' }}</p>
+          <h1 id="csp-hero-title">{{ section.settings.hero_heading | default: 'Everything Your Business Needs in Print' }}</h1>
+          <p>{{ section.settings.hero_copy | default: 'Professional business cards, flyers, signs, mailers, banners, and marketing materials made to help your business look established and stay visible.' }}</p>
+          <div class="csp-actions">
+            <a class="csp-btn csp-btn--primary" href="#shop-products" data-csp-scroll>{{ section.settings.hero_primary_label | default: 'Shop All Products' }}<span aria-hidden="true">→</span></a>
+            <a class="csp-btn csp-btn--secondary" href="{{ custom_order_url }}">{{ section.settings.hero_secondary_label | default: 'Request a Custom Order' }}<span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="csp-hero__panel csp-reveal" aria-label="Shop benefits">
+          <div class="csp-trust-row">
+            <span>
+              <svg aria-hidden="true" viewBox="0 0 20 20">{% render 'icon', icon: 'truck' %}</svg>
+              Free Shipping
+            </span>
+            <span>
+              <svg aria-hidden="true" viewBox="0 0 20 20">{% render 'icon', icon: 'box' %}</svg>
+              Professional Production
+            </span>
+            <span>
+              <svg aria-hidden="true" viewBox="0 0 20 20">{% render 'icon', icon: 'clipboard' %}</svg>
+              Artwork Support
+            </span>
+            <span>
+              <svg aria-hidden="true" viewBox="0 0 20 20">{% render 'icon', icon: 'check_box' %}</svg>
+              Trackable QR Options
+            </span>
+          </div>
+          <div class="csp-print-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="csp-category-nav" aria-label="Print product categories">
+      <div class="csp-shell">
+        <div class="csp-category-nav__scroller" data-csp-category-nav>
+          <button class="csp-category-pill is-active" type="button" data-csp-category="all" aria-pressed="true">All Products</button>
+          <button class="csp-category-pill" type="button" data-csp-category="business-cards" aria-pressed="false">Business Cards</button>
+          <button class="csp-category-pill" type="button" data-csp-category="flyers" aria-pressed="false">Flyers</button>
+          <button class="csp-category-pill" type="button" data-csp-category="door-hangers" aria-pressed="false">Door Hangers</button>
+          <button class="csp-category-pill" type="button" data-csp-category="postcards" aria-pressed="false">Postcards</button>
+          <button class="csp-category-pill" type="button" data-csp-category="brochures" aria-pressed="false">Brochures</button>
+          <button class="csp-category-pill" type="button" data-csp-category="yard-signs" aria-pressed="false">Yard Signs</button>
+          <button class="csp-category-pill" type="button" data-csp-category="banners" aria-pressed="false">Banners</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="csp-section csp-categories" aria-labelledby="csp-categories-title">
+      <div class="csp-shell">
+        <div class="csp-section-head csp-reveal">
+          <p class="csp-eyebrow">SHOP BY PRODUCT</p>
+          <h2 id="csp-categories-title">Find the Right Print Product</h2>
+          <p>Choose a product based on how you plan to reach, inform, or connect with your customers.</p>
+        </div>
+        <div class="csp-category-grid">
+          <article class="csp-category-card csp-reveal">
+            <a class="csp-category-card__media" href="{% if business_cards_product != blank %}{{ business_cards_product.url }}{% else %}#shop-products{% endif %}" aria-label="Shop Business Cards">
+              {%- if business_cards_product.featured_image -%}
+                {{ business_cards_product.featured_image | image_url: width: 560 | image_tag: widths: '280, 420, 560', sizes: '(min-width: 1100px) 25vw, (min-width: 750px) 33vw, 50vw', loading: 'lazy' }}
+              {%- else -%}
+                <span class="csp-placeholder" aria-hidden="true"><svg viewBox="0 0 20 20">{% render 'icon', icon: 'clipboard' %}</svg></span>
+              {%- endif -%}
+            </a>
+            <div class="csp-category-card__body">
+              <h3>Business Cards</h3>
+              <p>Professional cards for networking, appointments, referrals, and everyday customer interactions.</p>
+              <a href="#shop-products" data-csp-filter-link="business-cards">Shop Business Cards<span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="csp-category-card csp-reveal">
+            <a class="csp-category-card__media" href="{% if flyer_product != blank %}{{ flyer_product.url }}{% else %}#shop-products{% endif %}" aria-label="Shop Flyers">
+              {%- if flyer_product.featured_image -%}
+                {{ flyer_product.featured_image | image_url: width: 560 | image_tag: widths: '280, 420, 560', sizes: '(min-width: 1100px) 25vw, (min-width: 750px) 33vw, 50vw', loading: 'lazy' }}
+              {%- else -%}
+                <span class="csp-placeholder" aria-hidden="true"><svg viewBox="0 0 20 20">{% render 'icon', icon: 'box' %}</svg></span>
+              {%- endif -%}
+            </a>
+            <div class="csp-category-card__body">
+              <h3>Flyers</h3>
+              <p>Promote services, offers, events, openings, and local campaigns.</p>
+              <a href="#shop-products" data-csp-filter-link="flyers">Shop Flyers<span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="csp-category-card csp-reveal">
+            <a class="csp-category-card__media" href="{% if door_hanger_product != blank %}{{ door_hanger_product.url }}{% else %}#shop-products{% endif %}" aria-label="Shop Door Hangers">
+              {%- if door_hanger_product.featured_image -%}
+                {{ door_hanger_product.featured_image | image_url: width: 560 | image_tag: widths: '280, 420, 560', sizes: '(min-width: 1100px) 25vw, (min-width: 750px) 33vw, 50vw', loading: 'lazy' }}
+              {%- else -%}
+                <span class="csp-placeholder" aria-hidden="true"><svg viewBox="0 0 20 20">{% render 'icon', icon: 'truck' %}</svg></span>
+              {%- endif -%}
+            </a>
+            <div class="csp-category-card__body">
+              <h3>Door Hangers</h3>
+              <p>Reach specific neighborhoods with direct, highly visible local marketing.</p>
+              <a href="#shop-products" data-csp-filter-link="door-hangers">Shop Door Hangers<span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="csp-category-card csp-reveal">
+            <a class="csp-category-card__media" href="{% if postcard_product != blank %}{{ postcard_product.url }}{% else %}#shop-products{% endif %}" aria-label="Shop Postcards">
+              {%- if postcard_product.featured_image -%}
+                {{ postcard_product.featured_image | image_url: width: 560 | image_tag: widths: '280, 420, 560', sizes: '(min-width: 1100px) 25vw, (min-width: 750px) 33vw, 50vw', loading: 'lazy' }}
+              {%- else -%}
+                <span class="csp-placeholder" aria-hidden="true"><svg viewBox="0 0 20 20">{% render 'icon', icon: 'clipboard' %}</svg></span>
+              {%- endif -%}
+            </a>
+            <div class="csp-category-card__body">
+              <h3>Postcards</h3>
+              <p>Create focused mail, handout, follow-up, and promotional campaigns.</p>
+              <a href="#shop-products" data-csp-filter-link="postcards">Shop Postcards<span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="csp-category-card csp-reveal">
+            <a class="csp-category-card__media" href="{% if brochure_product != blank %}{{ brochure_product.url }}{% else %}#shop-products{% endif %}" aria-label="Shop Brochures">
+              {%- if brochure_product.featured_image -%}
+                {{ brochure_product.featured_image | image_url: width: 560 | image_tag: widths: '280, 420, 560', sizes: '(min-width: 1100px) 25vw, (min-width: 750px) 33vw, 50vw', loading: 'lazy' }}
+              {%- else -%}
+                <span class="csp-placeholder" aria-hidden="true"><svg viewBox="0 0 20 20">{% render 'icon', icon: 'box' %}</svg></span>
+              {%- endif -%}
+            </a>
+            <div class="csp-category-card__body">
+              <h3>Brochures</h3>
+              <p>Present your services, packages, pricing, or company information in a polished format.</p>
+              <a href="#shop-products" data-csp-filter-link="brochures">Shop Brochures<span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="csp-category-card csp-reveal">
+            <a class="csp-category-card__media" href="{% if yard_sign_product != blank %}{{ yard_sign_product.url }}{% else %}#shop-products{% endif %}" aria-label="Shop Yard Signs">
+              {%- if yard_sign_product.featured_image -%}
+                {{ yard_sign_product.featured_image | image_url: width: 560 | image_tag: widths: '280, 420, 560', sizes: '(min-width: 1100px) 25vw, (min-width: 750px) 33vw, 50vw', loading: 'lazy' }}
+              {%- else -%}
+                <span class="csp-placeholder" aria-hidden="true"><svg viewBox="0 0 20 20">{% render 'icon', icon: 'truck' %}</svg></span>
+              {%- endif -%}
+            </a>
+            <div class="csp-category-card__body">
+              <h3>Yard Signs</h3>
+              <p>Build visibility for services, events, properties, locations, and promotions.</p>
+              <a href="#shop-products" data-csp-filter-link="yard-signs">Shop Yard Signs<span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="csp-category-card csp-reveal">
+            <a class="csp-category-card__media" href="{% if banner_product != blank %}{{ banner_product.url }}{% else %}#shop-products{% endif %}" aria-label="Shop Banners">
+              {%- if banner_product.featured_image -%}
+                {{ banner_product.featured_image | image_url: width: 560 | image_tag: widths: '280, 420, 560', sizes: '(min-width: 1100px) 25vw, (min-width: 750px) 33vw, 50vw', loading: 'lazy' }}
+              {%- else -%}
+                <span class="csp-placeholder" aria-hidden="true"><svg viewBox="0 0 20 20">{% render 'icon', icon: 'box' %}</svg></span>
+              {%- endif -%}
+            </a>
+            <div class="csp-category-card__body">
+              <h3>Banners</h3>
+              <p>Create high-impact messaging for storefronts, events, job sites, and temporary promotions.</p>
+              <a href="#shop-products" data-csp-filter-link="banners">Shop Banners<span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="csp-section csp-products" id="shop-products" aria-labelledby="csp-products-title">
+      <div class="csp-shell">
+        {%- paginate display_collection.products by section.settings.products_per_page -%}
+          {%- assign visible_product_count = 0 -%}
+          {%- capture print_product_cards -%}
+            {%- for product in display_collection.products -%}
+              {%- liquid
+                assign category_key = product.product_type | handleize
+                assign is_approved_print_product = false
+                assign display_price = product.price_min
+                assign product_description = ''
+                assign product_benefit = ''
+
+                if product.tags contains approved_print_tag
+                  assign is_approved_print_product = true
+                endif
+                if product.tags contains 'shop-print-product'
+                  assign is_approved_print_product = true
+                endif
+
+                case product.handle
+                  when 'standard-business-cards'
+                    assign is_approved_print_product = true
+                    assign category_key = 'business-cards'
+                    assign product_description = 'Professional cards for networking, appointments, referrals, and everyday customer interactions.'
+                  when 'premium-flyers'
+                    assign is_approved_print_product = true
+                    assign category_key = 'flyers'
+                    assign product_description = 'Promote services, offers, events, openings, and local campaigns.'
+                  when 'door-hangers'
+                    assign is_approved_print_product = true
+                    assign category_key = 'door-hangers'
+                    assign product_description = 'Reach specific neighborhoods with direct, highly visible local marketing.'
+                  when 'premium-postcards'
+                    assign is_approved_print_product = true
+                    assign category_key = 'postcards'
+                    assign product_description = 'Create focused mail, handout, follow-up, and promotional campaigns.'
+                  when 'tri-fold-brochures'
+                    assign is_approved_print_product = true
+                    assign category_key = 'brochures'
+                    assign product_description = 'Present services, packages, pricing, or company information in a polished format.'
+                  when 'yard-signs'
+                    assign is_approved_print_product = true
+                    assign category_key = 'yard-signs'
+                    assign product_description = 'Build visibility for services, events, properties, locations, and promotions.'
+                  when 'vinyl-banners'
+                    assign is_approved_print_product = true
+                    assign category_key = 'banners'
+                    assign product_description = 'Create high-impact messaging for storefronts, events, job sites, and temporary promotions.'
+                endcase
+
+                if product_description == blank
+                  assign product_description = product.description | strip_html | strip | truncate: 118
+                endif
+                if product_description == blank
+                  assign product_description = 'Select options to review current quantities, finishes, artwork requirements, and pricing.'
+                endif
+
+                if display_price <= 0
+                  for product_variant in product.variants
+                    if product_variant.price > 0
+                      assign display_price = product_variant.price
+                      break
+                    endif
+                  endfor
+                endif
+
+                if product.variants.size > 1
+                  assign product_benefit = 'Multiple quantities available'
+                endif
+                if product.handle == 'vinyl-banners'
+                  assign product_benefit = 'Multiple sizes available'
+                endif
+              -%}
+
+              {%- if is_approved_print_product and display_price > 0 -%}
+                {%- assign visible_product_count = visible_product_count | plus: 1 -%}
+                <article
+                  class="csp-product-card csp-reveal"
+                  data-csp-product-card
+                  data-csp-category="{{ category_key }}"
+                >
+                  <a class="csp-product-card__media" href="{{ product.url }}" aria-label="View {{ product.title | escape }}">
+                    {%- if product.featured_image -%}
+                      {{ product.featured_image | image_url: width: 700 | image_tag: widths: '320, 480, 700', sizes: '(min-width: 1200px) 25vw, (min-width: 900px) 33vw, 50vw', loading: 'lazy' }}
+                    {%- else -%}
+                      <span class="csp-placeholder csp-placeholder--product" aria-hidden="true">
+                        <svg viewBox="0 0 20 20">{% render 'icon', icon: 'box' %}</svg>
+                      </span>
+                    {%- endif -%}
+                  </a>
+                  <div class="csp-product-card__body">
+                    {%- if product.product_type != blank -%}
+                      <p class="csp-product-card__type">{{ product.product_type }}</p>
+                    {%- endif -%}
+                    <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+                    <p class="csp-product-card__desc">{{ product_description }}</p>
+                    {%- if product_benefit != blank -%}
+                      <p class="csp-product-card__benefit">{{ product_benefit }}</p>
+                    {%- endif -%}
+                    <div class="csp-product-card__footer">
+                      <p class="csp-product-card__price">
+                        {%- if product.price_varies or product.price_min <= 0 -%}
+                          From {{ display_price | money_without_trailing_zeros }}
+                        {%- else -%}
+                          {{ display_price | money_without_trailing_zeros }}
+                        {%- endif -%}
+                      </p>
+                      {%- if product.available -%}
+                        {%- if product.has_only_default_variant -%}
+                          <form method="post" action="{{ routes.cart_add_url }}">
+                            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                            <button class="csp-card-cta" type="submit">Add to Cart</button>
+                          </form>
+                        {%- else -%}
+                          <a class="csp-card-cta" href="{{ product.url }}">View Options</a>
+                        {%- endif -%}
+                      {%- else -%}
+                        <span class="csp-card-cta csp-card-cta--disabled">Sold Out</span>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </article>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+
+          <div class="csp-section-head csp-section-head--split csp-reveal">
+            <div>
+              <p class="csp-eyebrow">PRINT PRODUCTS</p>
+              <h2 id="csp-products-title">Shop All Print Products</h2>
+              <p>Select a product to review available sizes, quantities, finishes, artwork requirements, and current pricing.</p>
+            </div>
+          </div>
+
+          <div class="csp-toolbar csp-reveal">
+            <p data-csp-result-count data-csp-total="{{ visible_product_count }}">
+              Showing {{ visible_product_count }} print {% if visible_product_count == 1 %}product{% else %}products{% endif %}
+            </p>
+            <div class="csp-toolbar__controls">
+              <button class="csp-toolbar__button" type="button" data-csp-focus-categories>Filter</button>
+              <form class="csp-sort-form" method="get">
+                {%- assign sort_by = display_collection.sort_by | default: display_collection.default_sort_by -%}
+                <label for="CspSortBy">Sort</label>
+                <select id="CspSortBy" name="sort_by" aria-label="Sort products">
+                  {%- for option in display_collection.sort_options -%}
+                    <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>{{ option.name }}</option>
+                  {%- endfor -%}
+                </select>
+              </form>
+            </div>
+          </div>
+
+          <div class="csp-product-grid" data-csp-product-grid>
+            {{ print_product_cards }}
+          </div>
+
+          <div class="csp-empty" data-csp-empty hidden>
+            <h3>No print products found</h3>
+            <p>Choose another category or request a custom order for help finding the right product.</p>
+            <a class="csp-btn csp-btn--secondary" href="{{ custom_order_url }}">Request a Custom Order<span aria-hidden="true">→</span></a>
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <div class="csp-pagination">
+              {{ paginate | default_pagination }}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </section>
+
+    <section class="csp-section csp-trackable" aria-labelledby="csp-trackable-title">
+      <div class="csp-shell csp-trackable__grid">
+        <div class="csp-trackable__copy csp-reveal">
+          <p class="csp-eyebrow">PRINT SMARTER</p>
+          <h2 id="csp-trackable-title">Turn Printed Marketing Into a Measurable Next Step</h2>
+          <p>Eligible print products can connect customers to your website, quote form, promotion, booking page, review link, or Clutch Connect profile through a trackable QR experience.</p>
+          <ul class="csp-check-list">
+            <li>Dynamic destinations</li>
+            <li>Scan analytics</li>
+            <li>Lead capture options</li>
+            <li>Update links without reprinting where supported</li>
+          </ul>
+          <div class="csp-actions">
+            <a class="csp-btn csp-btn--primary" href="{{ qr_url }}">Explore Trackable Print<span aria-hidden="true">→</span></a>
+            <a class="csp-btn csp-btn--secondary" href="{{ custom_order_url }}">Request a Custom Campaign<span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="csp-steps csp-reveal" aria-label="Trackable print steps">
+          <span><strong>1</strong>Print</span>
+          <span><strong>2</strong>Scan</span>
+          <span><strong>3</strong>Connect</span>
+          <span><strong>4</strong>Measure</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="csp-section csp-kits" aria-labelledby="csp-kits-title">
+      <div class="csp-shell">
+        <div class="csp-section-head csp-reveal">
+          <p class="csp-eyebrow">READY-TO-GO PACKAGES</p>
+          <h2 id="csp-kits-title">Need More Than One Product?</h2>
+          <p>Business Kits combine coordinated print materials into one streamlined package for launches, local outreach, events, and growing businesses.</p>
+        </div>
+        <div class="csp-kit-grid">
+          <article class="csp-kit-card csp-reveal">
+            <h3>Starter Kit</h3>
+            <p>A practical print foundation for new businesses and smaller campaigns.</p>
+            {%- if starter_kit_product != blank and starter_kit_product.price_min > 0 -%}
+              <strong>{{ starter_kit_product.price_min | money_without_trailing_zeros }}</strong>
+              <a class="csp-card-cta" href="{{ starter_kit_product.url }}">View Starter Kit</a>
+            {%- else -%}
+              <strong>Current pricing</strong>
+              <a class="csp-card-cta" href="{{ routes.collections_url }}/business-kits">View Starter Kit</a>
+            {%- endif -%}
+          </article>
+          <article class="csp-kit-card csp-kit-card--featured csp-reveal">
+            <span>Most Popular</span>
+            <h3>Growth Kit</h3>
+            <p>A larger coordinated package for businesses ready to increase local visibility.</p>
+            {%- if growth_kit_product != blank and growth_kit_product.price_min > 0 -%}
+              <strong>{{ growth_kit_product.price_min | money_without_trailing_zeros }}</strong>
+              <a class="csp-card-cta" href="{{ growth_kit_product.url }}">View Growth Kit</a>
+            {%- else -%}
+              <strong>Current pricing</strong>
+              <a class="csp-card-cta" href="{{ routes.collections_url }}/business-kits">View Growth Kit</a>
+            {%- endif -%}
+          </article>
+          <article class="csp-kit-card csp-reveal">
+            <h3>Custom Business Kit</h3>
+            <p>Choose your own products, quantities, campaign goals, and production requirements.</p>
+            <strong>Custom Quote</strong>
+            <a class="csp-card-cta" href="{% if custom_kit_product != blank and custom_kit_product.price_min > 0 %}{{ custom_kit_product.url }}{% else %}{{ custom_order_url }}{% endif %}">Request a Custom Kit</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="csp-section csp-nfc" aria-labelledby="csp-nfc-title">
+      <div class="csp-shell csp-nfc__grid">
+        <div class="csp-nfc__visual csp-reveal" aria-label="Clutch NFC Card mockup">
+          {%- if section.settings.nfc_card_image != blank -%}
+            {{ section.settings.nfc_card_image | image_url: width: 860 | image_tag: widths: '360, 540, 720, 860', sizes: '(min-width: 990px) 42vw, 92vw', loading: 'lazy' }}
+          {%- else -%}
+            <img class="csp-nfc-card csp-nfc-card--back" src="{{ 'clutch-nfc-card-back.svg' | asset_url }}" alt="Clutch NFC Card back mockup" loading="lazy" width="900" height="540">
+            <img class="csp-nfc-card csp-nfc-card--front" src="{{ 'clutch-nfc-card-front.svg' | asset_url }}" alt="Matte-black Clutch NFC Card front mockup" loading="lazy" width="900" height="540">
+          {%- endif -%}
+        </div>
+        <div class="csp-nfc__copy csp-reveal">
+          <p class="csp-eyebrow">THE CLUTCH NFC CARD</p>
+          <h2 id="csp-nfc-title">One Reusable Card for Every Connection</h2>
+          <p>Tap or scan to share your Clutch Connect digital profile, contact information, services, social links, and next steps without handing out another paper card.</p>
+          <ul class="csp-check-list">
+            <li>Matte-black metal card</li>
+            <li>NFC tap sharing</li>
+            <li>QR backup</li>
+            <li>Clutch Connect profile</li>
+            <li>Guided setup included</li>
+            <li>No app required</li>
+          </ul>
+          <div class="csp-actions">
+            <a class="csp-btn csp-btn--primary" href="{% if nfc_product != blank %}{{ nfc_product.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Shop the Clutch NFC Card<span aria-hidden="true">→</span></a>
+            <a class="csp-btn csp-btn--secondary" href="{{ smart_card_info_url }}">See How It Works<span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="csp-final" aria-labelledby="csp-final-title">
+      <div class="csp-shell csp-final__grid">
+        <div class="csp-reveal">
+          <p class="csp-eyebrow">CUSTOM PRINTING</p>
+          <h2 id="csp-final-title">Do Not See Exactly What You Need?</h2>
+          <p>Tell us the product, size, quantity, artwork status, and deadline. We will help identify the right production option for your project.</p>
+          <div class="csp-actions">
+            <a class="csp-btn csp-btn--primary" href="{{ custom_order_url }}">Request a Custom Order<span aria-hidden="true">→</span></a>
+            <a class="csp-btn csp-btn--secondary csp-btn--on-dark" href="{{ file_requirements_url }}">Review File Requirements<span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <ul class="csp-info-row csp-reveal" aria-label="Custom order information needed">
+          <li>Product type</li>
+          <li>Finished size</li>
+          <li>Quantity</li>
+          <li>Artwork status</li>
+          <li>Needed-by date</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+{%- endif -%}
+
+{% stylesheet %}
+  .csp-shop {
+    --csp-navy: #384862;
+    --csp-deep: #071D33;
+    --csp-orange: #FFA665;
+    --csp-bg: #F4F7FA;
+    --csp-muted: #66758C;
+    --csp-border: #DDE6EF;
+    --csp-white: #FFFFFF;
+    background: var(--csp-bg);
+    color: var(--csp-navy);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: clip;
+  }
+
+  .csp-shop *,
+  .csp-shop *::before,
+  .csp-shop *::after {
+    box-sizing: border-box;
+  }
+
+  .csp-shell {
+    margin-inline: auto;
+    max-width: 1280px;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+    width: 100%;
+  }
+
+  .csp-hero {
+    background:
+      linear-gradient(90deg, rgba(221, 230, 239, 0.45) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(221, 230, 239, 0.45) 1px, transparent 1px),
+      var(--csp-white);
+    background-size: 38px 38px;
+    border-bottom: 1px solid var(--csp-border);
+    padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .csp-hero__grid,
+  .csp-trackable__grid,
+  .csp-nfc__grid,
+  .csp-final__grid {
+    align-items: center;
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    grid-template-columns: minmax(0, 1.04fr) minmax(280px, 0.72fr);
+  }
+
+  .csp-eyebrow {
+    color: var(--csp-orange);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1.2;
+    margin: 0 0 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .csp-shop h1,
+  .csp-shop h2,
+  .csp-shop h3 {
+    color: var(--csp-navy);
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1.04;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .csp-shop h1 {
+    font-size: clamp(2.25rem, 5.8vw, 5rem);
+    max-width: 820px;
+  }
+
+  .csp-shop h2 {
+    font-size: clamp(1.8rem, 4vw, 3.35rem);
+  }
+
+  .csp-shop h3 {
+    font-size: clamp(1.12rem, 2vw, 1.45rem);
+  }
+
+  .csp-hero__copy > p:not(.csp-eyebrow),
+  .csp-section-head > p,
+  .csp-trackable__copy > p,
+  .csp-nfc__copy > p,
+  .csp-final p {
+    color: var(--csp-muted);
+    font-size: clamp(1rem, 1.7vw, 1.12rem);
+    line-height: 1.55;
+    margin: 1rem 0 0;
+    max-width: 720px;
+  }
+
+  .csp-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.4rem;
+  }
+
+  .csp-btn,
+  .csp-card-cta {
+    align-items: center;
+    border-radius: 12px;
+    display: inline-flex;
+    font-size: 0.95rem;
+    font-weight: 900;
+    gap: 0.45rem;
+    justify-content: center;
+    line-height: 1.15;
+    min-height: 46px;
+    padding: 0.9rem 1.15rem;
+    text-decoration: none;
+    transition: border-color 200ms ease, box-shadow 200ms ease, color 200ms ease, transform 200ms ease;
+  }
+
+  .csp-btn:focus-visible,
+  .csp-card-cta:focus-visible,
+  .csp-category-pill:focus-visible,
+  .csp-toolbar__button:focus-visible,
+  .csp-sort-form select:focus-visible {
+    outline: 3px solid rgba(255, 166, 101, 0.55);
+    outline-offset: 3px;
+  }
+
+  .csp-btn--primary,
+  .csp-card-cta {
+    background: var(--csp-orange);
+    border: 1px solid var(--csp-orange);
+    color: var(--csp-deep);
+  }
+
+  .csp-btn--secondary {
+    background: var(--csp-white);
+    border: 1px solid var(--csp-border);
+    color: var(--csp-navy);
+  }
+
+  .csp-btn--on-dark {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.26);
+    color: var(--csp-white);
+  }
+
+  .csp-btn:hover,
+  .csp-card-cta:hover {
+    box-shadow: 0 18px 34px rgba(7, 29, 51, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .csp-hero__panel {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--csp-border);
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(7, 29, 51, 0.08);
+    padding: clamp(1rem, 3vw, 1.4rem);
+  }
+
+  .csp-trust-row {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .csp-trust-row span {
+    align-items: center;
+    background: var(--csp-bg);
+    border: 1px solid var(--csp-border);
+    border-radius: 14px;
+    color: var(--csp-navy);
+    display: flex;
+    font-size: 0.88rem;
+    font-weight: 900;
+    gap: 0.55rem;
+    min-height: 58px;
+    padding: 0.75rem;
+  }
+
+  .csp-trust-row svg {
+    color: var(--csp-orange);
+    flex: 0 0 22px;
+    height: 22px;
+    width: 22px;
+  }
+
+  .csp-print-mark {
+    display: grid;
+    gap: 0.55rem;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 1rem;
+  }
+
+  .csp-print-mark span {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, rgba(56, 72, 98, 0.08), rgba(255, 166, 101, 0.2));
+    border: 1px solid rgba(221, 230, 239, 0.9);
+    border-radius: 10px;
+  }
+
+  .csp-category-nav {
+    background: rgba(244, 247, 250, 0.94);
+    border-bottom: 1px solid var(--csp-border);
+    padding-block: 1rem;
+    position: sticky;
+    top: var(--header-height, 0);
+    z-index: 5;
+  }
+
+  .csp-category-nav__scroller {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .csp-category-pill,
+  .csp-toolbar__button,
+  .csp-sort-form select {
+    appearance: none;
+    background: var(--csp-white);
+    border: 1px solid var(--csp-border);
+    border-radius: 999px;
+    color: var(--csp-navy);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 900;
+    min-height: 44px;
+    padding: 0.72rem 1rem;
+    transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    white-space: nowrap;
+  }
+
+  .csp-category-pill.is-active {
+    background: var(--csp-navy);
+    border-color: var(--csp-orange);
+    color: var(--csp-white);
+  }
+
+  .csp-section {
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+
+  .csp-section-head {
+    margin-bottom: clamp(1.4rem, 4vw, 2.4rem);
+    max-width: 760px;
+  }
+
+  .csp-section-head--split {
+    align-items: end;
+    display: flex;
+    justify-content: space-between;
+    max-width: none;
+  }
+
+  .csp-category-grid,
+  .csp-product-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .csp-category-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .csp-category-card,
+  .csp-product-card,
+  .csp-kit-card {
+    background: var(--csp-white);
+    border: 1px solid var(--csp-border);
+    border-radius: 18px;
+    box-shadow: 0 14px 34px rgba(7, 29, 51, 0.07);
+    min-width: 0;
+    overflow: hidden;
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  }
+
+  .csp-category-card:hover,
+  .csp-product-card:hover,
+  .csp-kit-card:hover {
+    border-color: rgba(255, 166, 101, 0.7);
+    box-shadow: 0 22px 46px rgba(7, 29, 51, 0.11);
+    transform: translateY(-4px);
+  }
+
+  .csp-category-card__media,
+  .csp-product-card__media {
+    aspect-ratio: 1;
+    background: var(--csp-bg);
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  .csp-category-card__media img,
+  .csp-product-card__media img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 220ms ease;
+    width: 100%;
+  }
+
+  .csp-category-card:hover img,
+  .csp-product-card:hover img {
+    transform: scale(1.03);
+  }
+
+  .csp-placeholder {
+    align-items: center;
+    background:
+      linear-gradient(90deg, rgba(221, 230, 239, 0.55) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(221, 230, 239, 0.55) 1px, transparent 1px),
+      #F8FAFC;
+    background-size: 28px 28px;
+    color: var(--csp-orange);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .csp-placeholder svg {
+    height: 40px;
+    opacity: 0.9;
+    width: 40px;
+  }
+
+  .csp-category-card__body,
+  .csp-product-card__body,
+  .csp-kit-card {
+    padding: 1rem;
+  }
+
+  .csp-category-card__body p,
+  .csp-product-card__desc,
+  .csp-kit-card p {
+    color: var(--csp-muted);
+    font-size: 0.94rem;
+    line-height: 1.45;
+    margin: 0.65rem 0 0;
+  }
+
+  .csp-category-card__body a:not(.csp-category-card__media) {
+    color: var(--csp-navy);
+    display: inline-flex;
+    font-size: 0.88rem;
+    font-weight: 900;
+    gap: 0.35rem;
+    margin-top: 1rem;
+    text-decoration: none;
+  }
+
+  .csp-category-card__body a span {
+    color: var(--csp-orange);
+  }
+
+  .csp-products {
+    background: var(--csp-white);
+    border-block: 1px solid var(--csp-border);
+  }
+
+  .csp-toolbar {
+    align-items: center;
+    background: var(--csp-bg);
+    border: 1px solid var(--csp-border);
+    border-radius: 16px;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    padding: 0.85rem;
+  }
+
+  .csp-toolbar p {
+    color: var(--csp-navy);
+    font-weight: 900;
+    margin: 0;
+  }
+
+  .csp-toolbar__controls {
+    align-items: center;
+    display: flex;
+    gap: 0.7rem;
+  }
+
+  .csp-sort-form {
+    align-items: center;
+    display: flex;
+    gap: 0.55rem;
+  }
+
+  .csp-sort-form label {
+    color: var(--csp-muted);
+    font-size: 0.82rem;
+    font-weight: 900;
+  }
+
+  .csp-sort-form select {
+    border-radius: 12px;
+    padding-right: 2rem;
+  }
+
+  .csp-product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .csp-shop.csp-priority-order .csp-product-card[data-csp-category='business-cards'] {
+    order: 1;
+  }
+
+  .csp-shop.csp-priority-order .csp-product-card[data-csp-category='flyers'] {
+    order: 2;
+  }
+
+  .csp-shop.csp-priority-order .csp-product-card[data-csp-category='door-hangers'] {
+    order: 3;
+  }
+
+  .csp-shop.csp-priority-order .csp-product-card[data-csp-category='postcards'] {
+    order: 4;
+  }
+
+  .csp-shop.csp-priority-order .csp-product-card[data-csp-category='brochures'] {
+    order: 5;
+  }
+
+  .csp-shop.csp-priority-order .csp-product-card[data-csp-category='yard-signs'] {
+    order: 6;
+  }
+
+  .csp-shop.csp-priority-order .csp-product-card[data-csp-category='banners'] {
+    order: 7;
+  }
+
+  .csp-product-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .csp-product-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .csp-product-card__type {
+    color: var(--csp-orange);
+    font-size: 0.72rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin: 0 0 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .csp-product-card h3 a {
+    color: var(--csp-navy);
+    text-decoration: none;
+  }
+
+  .csp-product-card__benefit {
+    color: var(--csp-navy);
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1.35;
+    margin: 0.8rem 0 0;
+  }
+
+  .csp-product-card__footer {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .csp-product-card__price,
+  .csp-kit-card strong {
+    color: var(--csp-deep);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .csp-card-cta {
+    border-radius: 12px;
+    min-width: 100%;
+  }
+
+  .csp-card-cta--disabled {
+    background: var(--csp-bg);
+    border-color: var(--csp-border);
+    color: var(--csp-muted);
+    cursor: not-allowed;
+  }
+
+  .csp-empty {
+    background: var(--csp-bg);
+    border: 1px solid var(--csp-border);
+    border-radius: 18px;
+    margin-top: 1.2rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .csp-empty p {
+    color: var(--csp-muted);
+    margin: 0.65rem auto 0;
+    max-width: 520px;
+  }
+
+  .csp-pagination {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .csp-trackable {
+    background: var(--csp-bg);
+  }
+
+  .csp-trackable__grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.8fr);
+  }
+
+  .csp-steps {
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .csp-steps span {
+    align-items: center;
+    background: var(--csp-white);
+    border: 1px solid var(--csp-border);
+    border-radius: 18px;
+    color: var(--csp-navy);
+    display: flex;
+    font-family: 'Exo 2', sans-serif;
+    font-size: clamp(1.15rem, 2.8vw, 1.65rem);
+    font-weight: 900;
+    gap: 0.75rem;
+    min-height: 104px;
+    padding: 1rem;
+  }
+
+  .csp-steps strong {
+    align-items: center;
+    background: rgba(255, 166, 101, 0.18);
+    border-radius: 999px;
+    color: var(--csp-deep);
+    display: inline-flex;
+    height: 38px;
+    justify-content: center;
+    width: 38px;
+  }
+
+  .csp-check-list {
+    display: grid;
+    gap: 0.55rem;
+    list-style: none;
+    margin: 1.15rem 0 0;
+    padding: 0;
+  }
+
+  .csp-check-list li {
+    color: var(--csp-navy);
+    font-weight: 800;
+    line-height: 1.4;
+    padding-left: 1.55rem;
+    position: relative;
+  }
+
+  .csp-check-list li::before {
+    color: var(--csp-orange);
+    content: '✓';
+    font-weight: 900;
+    left: 0;
+    position: absolute;
+  }
+
+  .csp-kit-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .csp-kit-card {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .csp-kit-card p {
+    margin: 0;
+  }
+
+  .csp-kit-card span {
+    align-self: start;
+    background: rgba(255, 166, 101, 0.16);
+    border: 1px solid rgba(255, 166, 101, 0.45);
+    border-radius: 999px;
+    color: var(--csp-deep);
+    display: inline-flex;
+    font-size: 0.78rem;
+    font-weight: 900;
+    justify-self: start;
+    padding: 0.35rem 0.65rem;
+  }
+
+  .csp-kit-card--featured {
+    border-color: rgba(255, 166, 101, 0.8);
+  }
+
+  .csp-nfc {
+    background: var(--csp-white);
+    border-block: 1px solid var(--csp-border);
+  }
+
+  .csp-nfc__visual {
+    display: grid;
+    min-height: clamp(260px, 36vw, 420px);
+    place-items: center;
+    position: relative;
+  }
+
+  .csp-nfc-card {
+    filter: drop-shadow(0 28px 38px rgba(7, 29, 51, 0.18));
+    grid-area: 1 / 1;
+    height: auto;
+    max-width: min(86%, 520px);
+  }
+
+  .csp-nfc-card--back {
+    transform: translate(12%, -10%) rotate(7deg);
+  }
+
+  .csp-nfc-card--front {
+    transform: translate(-8%, 8%) rotate(-5deg);
+  }
+
+  .csp-final {
+    background: var(--csp-deep);
+    color: var(--csp-white);
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .csp-final h2,
+  .csp-final p {
+    color: var(--csp-white);
+  }
+
+  .csp-final p:not(.csp-eyebrow) {
+    opacity: 0.82;
+  }
+
+  .csp-info-row {
+    display: grid;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .csp-info-row li {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    color: var(--csp-white);
+    font-weight: 900;
+    padding: 0.85rem 1rem;
+  }
+
+  .csp-reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 420ms ease, transform 420ms ease;
+  }
+
+  .csp-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media screen and (max-width: 1180px) {
+    .csp-category-grid,
+    .csp-product-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .csp-hero__grid,
+    .csp-trackable__grid,
+    .csp-nfc__grid,
+    .csp-final__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .csp-category-grid,
+    .csp-product-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .csp-kit-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .csp-hero {
+      padding-block: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .csp-hero__copy > p:not(.csp-eyebrow),
+    .csp-section-head,
+    .csp-section-head > p,
+    .csp-trackable__copy > p,
+    .csp-nfc__copy > p,
+    .csp-final p {
+      margin-inline: auto;
+    }
+
+    .csp-actions,
+    .csp-btn {
+      width: 100%;
+    }
+
+    .csp-category-nav {
+      padding-block: 0.75rem;
+      position: relative;
+      top: auto;
+    }
+
+    .csp-category-nav__scroller {
+      flex-wrap: nowrap;
+      margin-inline: -1rem;
+      overflow-x: auto;
+      padding-inline: 1rem;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .csp-category-nav__scroller::-webkit-scrollbar {
+      display: none;
+    }
+
+    .csp-section {
+      padding-block: 3rem;
+    }
+
+    .csp-section-head {
+      text-align: center;
+    }
+
+    .csp-toolbar {
+      align-items: stretch;
+      display: grid;
+    }
+
+    .csp-toolbar__controls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .csp-sort-form {
+      display: block;
+      min-width: 0;
+      position: relative;
+    }
+
+    .csp-sort-form label {
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      width: 1px;
+    }
+
+    .csp-sort-form select,
+    .csp-toolbar__button {
+      border-radius: 12px;
+      height: 100%;
+      width: 100%;
+    }
+
+    .csp-product-grid {
+      gap: 0.85rem;
+    }
+
+    .csp-category-card__body,
+    .csp-product-card__body,
+    .csp-kit-card {
+      padding: 0.85rem;
+    }
+
+    .csp-product-card__desc {
+      font-size: 0.88rem;
+    }
+
+    .csp-product-card__price,
+    .csp-kit-card strong {
+      font-size: 1.15rem;
+    }
+
+    .csp-card-cta {
+      font-size: 0.86rem;
+      padding-inline: 0.7rem;
+    }
+  }
+
+  @media screen and (max-width: 520px) {
+    .csp-trust-row,
+    .csp-steps,
+    .csp-category-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .csp-product-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .csp-product-card__type {
+      font-size: 0.66rem;
+    }
+
+    .csp-product-card h3 {
+      font-size: 1rem;
+    }
+
+    .csp-product-card__benefit {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    .csp-product-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .csp-shop *,
+    .csp-shop *::before,
+    .csp-shop *::after {
+      animation-duration: 1ms !important;
+      scroll-behavior: auto !important;
+      transition-duration: 1ms !important;
+    }
+
+    .csp-reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  const shops = document.querySelectorAll('[data-csp-shop]');
+
+  shops.forEach((shop) => {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.get('sort_by')) {
+      shop.classList.add('csp-priority-order');
+    }
+
+    const buttons = shop.querySelectorAll('[data-csp-category]');
+    const cards = shop.querySelectorAll('[data-csp-product-card]');
+    const resultCount = shop.querySelector('[data-csp-result-count]');
+    const emptyState = shop.querySelector('[data-csp-empty]');
+    const categoryNav = shop.querySelector('[data-csp-category-nav]');
+
+    function applyCategory(category) {
+      let visibleCount = 0;
+
+      buttons.forEach((button) => {
+        const isActive = button.dataset.cspCategory === category;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      cards.forEach((card) => {
+        const shouldShow = category === 'all' || card.dataset.cspCategory === category;
+        card.hidden = !shouldShow;
+        if (shouldShow) visibleCount += 1;
+      });
+
+      if (resultCount) {
+        resultCount.textContent = `Showing ${visibleCount} print ${visibleCount === 1 ? 'product' : 'products'}`;
+      }
+
+      if (emptyState) {
+        emptyState.hidden = visibleCount !== 0;
+      }
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        applyCategory(button.dataset.cspCategory);
+      });
+    });
+
+    shop.querySelectorAll('[data-csp-filter-link]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        applyCategory(link.dataset.cspFilterLink);
+        shop.querySelector('#shop-products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    shop.querySelector('[data-csp-focus-categories]')?.addEventListener('click', () => {
+      categoryNav?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      categoryNav?.querySelector('[data-csp-category]')?.focus({ preventScroll: true });
+    });
+
+    shop.querySelectorAll('[data-csp-scroll]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const target = shop.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const reveals = shop.querySelectorAll('.csp-reveal');
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        },
+        { rootMargin: '0px 0px -10% 0px', threshold: 0.12 }
+      );
+
+      reveals.forEach((item, index) => {
+        item.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
+        observer.observe(item);
+      });
+    } else {
+      reveals.forEach((item) => item.classList.add('is-visible'));
+    }
+
+    shop.querySelector('.csp-sort-form select')?.addEventListener('change', (event) => {
+      event.currentTarget.form.submit();
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Clutch shop page",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Hero eyebrow",
+      "default": "PRINT PRODUCTS"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero heading",
+      "default": "Everything Your Business Needs in Print"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_copy",
+      "label": "Hero copy",
+      "default": "Professional business cards, flyers, signs, mailers, banners, and marketing materials made to help your business look established and stay visible."
+    },
+    {
+      "type": "text",
+      "id": "hero_primary_label",
+      "label": "Primary button label",
+      "default": "Shop All Products"
+    },
+    {
+      "type": "text",
+      "id": "hero_secondary_label",
+      "label": "Secondary button label",
+      "default": "Request a Custom Order"
+    },
+    {
+      "type": "header",
+      "content": "Filtering"
+    },
+    {
+      "type": "collection",
+      "id": "print_collection",
+      "label": "Approved print products collection"
+    },
+    {
+      "type": "text",
+      "id": "approved_print_tag",
+      "label": "Approved print product tag",
+      "default": "print"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Print product fallbacks"
+    },
+    {
+      "type": "product",
+      "id": "business_cards_product",
+      "label": "Business cards product"
+    },
+    {
+      "type": "product",
+      "id": "flyer_product",
+      "label": "Flyers product"
+    },
+    {
+      "type": "product",
+      "id": "door_hanger_product",
+      "label": "Door hangers product"
+    },
+    {
+      "type": "product",
+      "id": "postcard_product",
+      "label": "Postcards product"
+    },
+    {
+      "type": "product",
+      "id": "brochure_product",
+      "label": "Brochures product"
+    },
+    {
+      "type": "product",
+      "id": "yard_sign_product",
+      "label": "Yard signs product"
+    },
+    {
+      "type": "product",
+      "id": "banner_product",
+      "label": "Banners product"
+    },
+    {
+      "type": "header",
+      "content": "Related products and pages"
+    },
+    {
+      "type": "product",
+      "id": "starter_kit_product",
+      "label": "Starter Kit product"
+    },
+    {
+      "type": "product",
+      "id": "growth_kit_product",
+      "label": "Growth Kit product"
+    },
+    {
+      "type": "product",
+      "id": "custom_kit_product",
+      "label": "Custom Kit product"
+    },
+    {
+      "type": "product",
+      "id": "nfc_product",
+      "label": "Clutch NFC Card product"
+    },
+    {
+      "type": "image_picker",
+      "id": "nfc_card_image",
+      "label": "Optional NFC card image override"
+    },
+    {
+      "type": "page",
+      "id": "custom_order_page",
+      "label": "Custom order page"
+    },
+    {
+      "type": "page",
+      "id": "qr_page",
+      "label": "Trackable print page"
+    },
+    {
+      "type": "page",
+      "id": "smart_card_page",
+      "label": "Smart card information page"
+    },
+    {
+      "type": "page",
+      "id": "file_requirements_page",
+      "label": "File requirements page"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clutch shop page"
+    }
+  ]
+}
+{% endschema %}

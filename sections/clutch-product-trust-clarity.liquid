@@ -1,11 +1,19 @@
+{% liquid
+  assign current_product = product
+  if current_product == blank
+    assign current_product = closest.product
+  endif
+%}
+
+{% unless current_product and current_product.handle == 'clutch-connect-card' %}
 <section class="clutch-product-clarity color-{{ section.settings.color_scheme }}">
   <div class="clutch-product-clarity__inner">
     <div class="clutch-product-clarity__heading">
       <p class="clutch-eyebrow">What Happens Next</p>
       <h2>Clear steps from checkout to campaign launch.</h2>
       <p>
-        Clutch combines premium print, included Clutch Codes, and practical support so your materials are easy to order,
-        approve, and track.
+        Clutch combines premium print, Clutch Connect setup, and practical support so your materials are easy to
+        order, approve, and track.
       </p>
     </div>
 
@@ -19,11 +27,10 @@
       </article>
 
       <article class="clutch-product-clarity__card">
-        <h3>How Clutch Codes Work</h3>
+        <h3>How Clutch Plans Work</h3>
         <p>
-          One Clutch Code is included with each eligible print campaign or material type. The same dynamic code is
-          printed across the ordered quantity so you can update the destination and review scan analytics without
-          reprinting.
+          Every customer can start with Clutch Connect Basic included free. Add Connect+ for advanced profile tools
+          or QR Pro when you need dynamic campaign tracking and QR analytics.
         </p>
       </article>
 
@@ -52,16 +59,16 @@
       </article>
 
       <article class="clutch-product-clarity__card">
-        <h3>Clutch Codes &amp; Support</h3>
+        <h3>Billing &amp; Support</h3>
         <p>
-          Included print Clutch Codes cover eligible campaigns. Starter, Growth, and Pro are separate monthly Clutch
-          Codes subscriptions, while Clutch Connect features remain separate. Support is available by email and text
-          for order, artwork, and QR setup questions.
+          Optional paid upgrades are billed monthly and can be cancelled going forward. Support is available by email
+          and text for order, artwork, profile setup, and QR setup questions.
         </p>
       </article>
     </div>
   </div>
 </section>
+{% endunless %}
 
 {% stylesheet %}
   .clutch-product-clarity {
