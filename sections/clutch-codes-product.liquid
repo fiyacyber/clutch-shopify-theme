@@ -1,0 +1,391 @@
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign selling_plan_group = product.selling_plan_groups | first
+  assign selling_plan = selling_plan_group.selling_plans | first
+  assign selling_plan_display = selling_plan.name
+  if selling_plan_group.name != blank and selling_plan.name != blank
+    assign selling_plan_display = selling_plan_group.name | append: ' - ' | append: selling_plan.name
+  elsif selling_plan_group.name != blank
+    assign selling_plan_display = selling_plan_group.name
+  endif
+  assign product_form_id = 'ClutchCodesProductForm-' | append: section.id
+  assign description_html = product.description | replace: product.title, ''
+  assign description_plain = description_html | strip_html | strip
+  assign short_description = description_plain | split: '.' | first | strip
+
+  if short_description != blank
+    assign short_description = short_description | append: '.'
+  else
+    assign short_description = product.description | strip_html | truncate: 180
+  endif
+
+  assign allowance_text = ''
+  if description_plain contains 'active Clutch Codes'
+    assign allowance_source = description_plain | split: 'active Clutch Codes' | first | strip
+    assign allowance_parts = allowance_source | split: '.'
+    assign allowance_count = allowance_parts | last | strip
+
+    if allowance_count != blank and allowance_count.size <= 8
+      assign allowance_text = allowance_count | append: ' active Clutch Codes'
+    endif
+  endif
+
+  if allowance_text == blank
+    assign allowance_text = 'Active Clutch Code allowance included'
+  endif
+
+  assign can_subscribe = false
+  if selected_variant != blank and selling_plan != blank
+    assign can_subscribe = true
+  endif
+%}
+
+<section class="ccp-page color-{{ section.settings.color_scheme }}">
+  <div class="ccp-shell">
+    <article class="ccp-card" aria-labelledby="ccp-title-{{ section.id }}">
+      <div class="ccp-header">
+        <p class="ccp-eyebrow">Clutch Codes subscription</p>
+        <h1 id="ccp-title-{{ section.id }}" class="ccp-title">{{ product.title | escape }}</h1>
+
+        <div class="ccp-price" aria-label="Monthly price">
+          <span class="ccp-price__amount">{{ selected_variant.price | money }}</span>
+          <span class="ccp-price__interval">/ month</span>
+        </div>
+
+        {% if short_description != blank %}
+          <p class="ccp-summary">{{ short_description }}</p>
+        {% endif %}
+      </div>
+
+      <div class="ccp-allowance">
+        <span class="ccp-allowance__label">Included allowance</span>
+        <strong>{{ allowance_text | escape }}</strong>
+      </div>
+
+      {% if description_html != blank %}
+        <div class="ccp-features">
+          <h2>What's included</h2>
+          <div class="ccp-rte rte">
+            {{ description_html }}
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="ccp-purchase">
+        {% form 'product',
+          product,
+          id: product_form_id,
+          class: 'ccp-form',
+          data-type: 'add-to-cart-form',
+          data-clutch-enhanced: 'true'
+        %}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <input type="hidden" name="return_to" value="/checkout">
+          {% if selling_plan != blank %}
+            <input type="hidden" name="selling_plan" value="{{ selling_plan.id }}">
+          {% endif %}
+
+          {% if selling_plan != blank %}
+            <div class="ccp-plan" aria-label="Selected subscription plan">
+              <span>Monthly subscription</span>
+              <strong>{{ selling_plan_display | escape }}</strong>
+            </div>
+          {% endif %}
+
+          <button class="ccp-button" type="submit" {% unless can_subscribe %}disabled{% endunless %}>
+            {% if can_subscribe %}
+              Subscribe Now
+            {% else %}
+              Subscription unavailable
+            {% endif %}
+          </button>
+        {% endform %}
+
+        <div class="ccp-supporting" aria-label="Subscription details">
+          <p>Manage your codes at <a href="https://qr.clutchprintshop.com">qr.clutchprintshop.com</a>.</p>
+          <p>Cancel anytime.</p>
+          <a class="ccp-compare" href="/pages/qr-pro">Compare plans</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+{% stylesheet %}
+  .ccp-page {
+    --ccp-navy: #384862;
+    --ccp-orange: #FFA665;
+    --ccp-ink: #111827;
+    --ccp-soft: #F5F7FA;
+    --ccp-line: #DDE6EF;
+    background: var(--ccp-soft);
+    color: var(--ccp-navy);
+    overflow-x: clip;
+    overflow-y: visible;
+    width: 100%;
+  }
+
+  .ccp-page,
+  .ccp-page * {
+    box-sizing: border-box;
+  }
+
+  .ccp-shell {
+    display: grid;
+    min-width: 0;
+    width: min(100%, 980px);
+    margin: 0 auto;
+    padding: clamp(2rem, 7vw, 5.5rem) 1rem clamp(2.5rem, 7vw, 6rem);
+  }
+
+  .ccp-card {
+    width: min(100%, 760px);
+    min-width: 0;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 3rem);
+    border: 1px solid rgba(221, 230, 239, 0.95);
+    border-radius: 28px;
+    background: #FFFFFF;
+    box-shadow: 0 24px 70px rgba(56, 72, 98, 0.12);
+    text-align: center;
+  }
+
+  .ccp-header {
+    display: grid;
+    gap: 0.85rem;
+    justify-items: center;
+  }
+
+  .ccp-eyebrow {
+    margin: 0;
+    color: var(--ccp-orange);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .ccp-title {
+    max-width: 12ch;
+    margin: 0;
+    color: var(--ccp-navy);
+    font-family: var(--font-primary--family);
+    font-size: clamp(2.25rem, 8vw, 4.35rem);
+    font-weight: 900;
+    line-height: 0.94;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  .ccp-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.35rem;
+  }
+
+  .ccp-price__amount {
+    color: var(--ccp-ink);
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .ccp-price__interval {
+    color: rgba(56, 72, 98, 0.78);
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    font-weight: 800;
+  }
+
+  .ccp-summary {
+    width: min(100%, 620px);
+    margin: 0;
+    color: rgba(56, 72, 98, 0.82);
+    font-size: clamp(1rem, 2vw, 1.22rem);
+    line-height: 1.42;
+  }
+
+  .ccp-allowance {
+    display: grid;
+    gap: 0.35rem;
+    width: 100%;
+    margin: clamp(1.2rem, 4vw, 1.85rem) auto 0;
+    padding: 1rem;
+    border: 1px solid rgba(255, 166, 101, 0.48);
+    border-radius: 18px;
+    background: rgba(255, 166, 101, 0.09);
+  }
+
+  .ccp-allowance__label {
+    color: rgba(56, 72, 98, 0.7);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .ccp-allowance strong {
+    color: var(--ccp-navy);
+    font-size: clamp(1.25rem, 4vw, 1.85rem);
+    line-height: 1.15;
+  }
+
+  .ccp-features {
+    margin-top: clamp(1.3rem, 4vw, 2rem);
+    text-align: left;
+  }
+
+  .ccp-features h2 {
+    margin: 0 0 0.85rem;
+    color: var(--ccp-navy);
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    font-weight: 900;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  .ccp-rte {
+    display: grid;
+    gap: 0.7rem;
+    width: 100%;
+    min-width: 0;
+    color: rgba(56, 72, 98, 0.86);
+    font-size: clamp(0.98rem, 2vw, 1.12rem);
+    line-height: 1.45;
+  }
+
+  .ccp-rte > * {
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .ccp-rte ul,
+  .ccp-rte ol {
+    display: grid;
+    gap: 0.65rem;
+    padding-left: 1.35rem;
+  }
+
+  .ccp-rte li::marker {
+    color: var(--ccp-orange);
+  }
+
+  .ccp-purchase {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(1.35rem, 4vw, 2rem);
+  }
+
+  .ccp-form {
+    display: grid;
+    gap: 0.85rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ccp-plan {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 52px;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--ccp-line);
+    border-radius: 16px;
+    background: #F8FAFC;
+    color: rgba(56, 72, 98, 0.74);
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-align: left;
+  }
+
+  .ccp-plan strong {
+    color: var(--ccp-navy);
+  }
+
+  .ccp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    width: 100%;
+    border: 0;
+    border-radius: 16px;
+    background: var(--ccp-orange);
+    color: var(--ccp-navy);
+    box-shadow: 0 16px 30px rgba(255, 166, 101, 0.26);
+    cursor: pointer;
+    font: inherit;
+    font-size: 1.08rem;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  .ccp-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .ccp-supporting {
+    display: grid;
+    gap: 0.35rem;
+    justify-items: center;
+    color: rgba(56, 72, 98, 0.76);
+    font-size: 0.96rem;
+    line-height: 1.4;
+  }
+
+  .ccp-supporting p {
+    margin: 0;
+  }
+
+  .ccp-supporting a {
+    color: var(--ccp-navy);
+    font-weight: 900;
+    text-underline-offset: 0.18em;
+  }
+
+  .ccp-compare {
+    margin-top: 0.2rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ccp-shell {
+      padding-inline: 0.85rem;
+    }
+
+    .ccp-card {
+      border-radius: 24px;
+    }
+
+    .ccp-summary {
+      width: 92%;
+      font-size: 1rem;
+      line-height: 1.36;
+    }
+
+    .ccp-plan {
+      display: grid;
+      justify-items: center;
+      text-align: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Clutch Codes product",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}
