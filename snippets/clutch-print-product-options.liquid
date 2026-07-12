@@ -12,7 +12,6 @@
 {% liquid
   assign product_handle = product.handle | downcase
   assign is_business_kit = false
-  assign is_qr_product = false
   assign is_connect_card = false
 
   if product_handle == 'starter-kit' or product_handle == 'startup-kit' or product_handle == 'growth-kit'
@@ -22,13 +21,6 @@
   if product_handle == 'clutch-connect-card'
     assign is_connect_card = true
   endif
-
-  if product_handle contains 'qr-pro'
-    assign is_qr_product = true
-  endif
-
-  assign qr_pro_product = all_products['qr-pro']
-  assign qr_pro_variant = qr_pro_product.selected_or_first_available_variant
   assign professional_design_product = all_products['professional-design']
   assign professional_design_variant = professional_design_product.selected_or_first_available_variant
   assign professional_design_variant_id = professional_design_variant.id | default: 44481017970730
@@ -43,8 +35,8 @@
       <p class="clutch-eyebrow">Premium metal NFC business card</p>
       <h3>Tap or scan to share your profile</h3>
       <p>
-        Smart Clutch Card includes a premium metal NFC card, editable Clutch Profile, dynamic QR code,
-        and Clutch Connect Hosting with scan/tap analytics.
+        Smart Clutch Card includes a premium metal NFC card, Clutch Connect Basic, an editable Clutch Profile,
+        a dynamic QR code, and scan/tap analytics.
       </p>
       <div class="clutch-addon-badges">
         <span>Free Clutch Profile included</span>
@@ -57,46 +49,15 @@
         <span>Contact save options where available</span>
       </div>
     </div>
-  {% elsif is_qr_product %}
-    <div class="clutch-addon-callout clutch-addon-callout--qr">
-      <p class="clutch-eyebrow">Clutch QR™ Add-On</p>
-      <h3>Turn printed marketing into trackable marketing</h3>
-      <p>
-        Add a dynamic Clutch QR™ Code and track customer engagement beyond the mailbox, flyer, sign, or business card.
-      </p>
-      <div class="clutch-addon-badges">
-        <span>Editable destination links</span>
-        <span>Scan tracking</span>
-        <span>QR analytics</span>
-        <span>Review links</span>
-        <span>Booking links</span>
-        <span>Website traffic tracking</span>
-        <span>Promotions and offers</span>
-      </div>
-    </div>
-
-      <div class="clutch-info-grid">
-        <div class="clutch-info-panel">
-          <h3>Plan options</h3>
-          <ul>
-          <li>Clutch Connect Hosting - $14.99/month, up to 10 dynamic QR codes</li>
-          <li>Business Kits can track scans by printed material from one dashboard</li>
-        </ul>
-      </div>
-      <div class="clutch-info-panel">
-        <h3>Support</h3>
-        <p>Choose the plan that fits your campaign, then keep your destination link editable as your offers change.</p>
-      </div>
-    </div>
   {% else %}
     <p class="clutch-eyebrow">Premium print products with built-in marketing tools.</p>
     {% if is_business_kit %}
       <div class="clutch-addon-callout clutch-addon-callout--qr">
-        <p class="clutch-eyebrow">Campaign-Level QR Tracking Included</p>
-        <h3>Track each printed material separately</h3>
+        <p class="clutch-eyebrow">Campaign-Level Clutch Codes Included</p>
+        <h3>Track each eligible printed material separately</h3>
         <p>
-          Each printed material in your Business Kit can receive its own dynamic Clutch QR Code. Track business cards,
-          flyers, door hangers, yard signs, postcards, and more from one Clutch Connect dashboard.
+          Each eligible printed material in your Business Kit can receive its own included Clutch Code. Track business
+          cards, flyers, door hangers, yard signs, postcards, and more with dynamic destinations and scan analytics.
         </p>
         <div class="clutch-addon-badges">
           <span>Business card scans</span>
@@ -104,8 +65,8 @@
           <span>Door hanger scans</span>
           <span>Yard sign scans</span>
           <span>Optional: Add 100 1-color, 2-sided yard signs for $399.</span>
-          <span>Editable destinations</span>
-          <span>$14.99/month Clutch Connect hosting</span>
+          <span>Dynamic destinations</span>
+          <span>One code per eligible print material type</span>
         </div>
       </div>
     {% endif %}
@@ -175,27 +136,29 @@
       <p class="clutch-field-help">Free shipping is included on all orders across the shop.</p>
     </div>
 
+    {% if is_business_kit %}
+      <div class="clutch-info-grid clutch-info-grid--top">
+        <div class="clutch-info-panel">
+          <h3>Included Clutch Codes</h3>
+          <ul>
+            <li>One Clutch Code included per eligible print material type</li>
+            <li>The same code is printed across the ordered quantity for that campaign</li>
+          </ul>
+        </div>
+        <div class="clutch-info-panel">
+          <h3>Need more active campaigns?</h3>
+          <p>Compare Starter, Growth, and Pro if you need additional active Clutch Codes beyond the ones included with print.</p>
+        </div>
+      </div>
+    {% endif %}
+
     <div class="clutch-option-card clutch-option-card--qr">
-      <label class="clutch-field-label" for="clutch-qr-package-{{ section_id }}">Clutch QR™ Add-On</label>
-      <select
-        id="clutch-qr-package-{{ section_id }}"
-        class="clutch-select field__input"
-        name="properties[QR Package]"
-      >
-        <option value="QR Tracking Available - Add Clutch Connect hosting">
-          QR Tracking Available — Add Clutch Connect hosting
-        </option>
-        <option
-          value="Clutch Connect - $14.99/month, up to 10 dynamic QR codes"
-          data-clutch-qr-addon-handle="qr-pro"
-          data-clutch-qr-addon-variant-id="{{ qr_pro_variant.id }}"
-        >
-          Clutch Connect — $14.99/month, up to 10 dynamic QR codes
-        </option>
-      </select>
+      <p class="clutch-field-label">Clutch Codes™</p>
       <p class="clutch-field-help">
-        Add Clutch Connect hosting for editable destinations, scan analytics, and dashboard access.
+        One Clutch Code is included with eligible print campaigns. The same code is printed across the ordered quantity
+        for that campaign or material type.
       </p>
+      <a class="clutch-option-link" href="/pages/qr-pro">Explore Clutch Codes Plans</a>
     </div>
   {% endif %}
 
@@ -250,6 +213,13 @@
     background:
       linear-gradient(180deg, rgb(var(--color-background-rgb) / 0.98), rgb(var(--color-background-rgb) / 1)),
       linear-gradient(135deg, rgb(255 166 101 / 0.08), rgb(56 72 98 / 0.04));
+  }
+
+  .clutch-option-link {
+    color: #384862;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
   }
 
   .clutch-info-panel h3,
