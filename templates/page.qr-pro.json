@@ -11,7 +11,7 @@
   "sections": {
     "qr_pro_page": {
       "type": "clutch-qr-pro-page",
-      "name": "Clutch Connect",
+      "name": "Clutch Codes",
       "settings": {
         "color_scheme": "scheme-1"
       }
