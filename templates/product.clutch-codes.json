@@ -9,15 +9,14 @@
  */
 {
   "sections": {
-    "qr_pro_page": {
-      "type": "clutch-qr-pro-page",
-      "name": "QR Pro landing page",
+    "main": {
+      "type": "clutch-codes-product",
       "settings": {
         "color_scheme": "scheme-1"
       }
     }
   },
   "order": [
-    "qr_pro_page"
+    "main"
   ]
 }
