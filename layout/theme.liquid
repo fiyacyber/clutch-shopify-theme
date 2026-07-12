@@ -134,6 +134,8 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
-    {% render 'clutch-storefront-enhancements' %}
+    {% unless request.path contains '/products/clutch-connect-card' %}
+      {% render 'clutch-storefront-enhancements' %}
+    {% endunless %}
   </body>
 </html>

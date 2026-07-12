@@ -10,7 +10,7 @@
 {
   "sections": {
     "main": {
-      "type": "clutch-smart-business-card-page",
+      "type": "clutch-connect-page",
       "settings": {}
     }
   },

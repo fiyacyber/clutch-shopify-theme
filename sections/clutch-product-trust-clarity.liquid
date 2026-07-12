@@ -1,11 +1,19 @@
+{% liquid
+  assign current_product = product
+  if current_product == blank
+    assign current_product = closest.product
+  endif
+%}
+
+{% unless current_product and current_product.handle == 'clutch-connect-card' %}
 <section class="clutch-product-clarity color-{{ section.settings.color_scheme }}">
   <div class="clutch-product-clarity__inner">
     <div class="clutch-product-clarity__heading">
       <p class="clutch-eyebrow">What Happens Next</p>
       <h2>Clear steps from checkout to campaign launch.</h2>
       <p>
-        Clutch combines premium print, included Clutch Codes, and practical support so your materials are easy to order,
-        approve, and track.
+        Clutch combines premium print, included Clutch Codes, and practical support so your materials are easy to
+        order, approve, and track.
       </p>
     </div>
 
@@ -62,6 +70,7 @@
     </div>
   </div>
 </section>
+{% endunless %}
 
 {% stylesheet %}
   .clutch-product-clarity {

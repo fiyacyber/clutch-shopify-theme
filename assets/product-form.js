@@ -315,7 +315,14 @@ class ProductFormComponent extends Component {
 
   /** @param {HTMLFormElement} form */
   #getSelectedClutchAddonItems(form) {
-    return Array.from(form.querySelectorAll('input[data-clutch-addon-variant-id]:checked'))
+    const inForm = Array.from(form.querySelectorAll('input[data-clutch-addon-variant-id]:checked'));
+    const associatedExternal = form.id
+      ? Array.from(document.querySelectorAll(`input[data-clutch-addon-variant-id][form="${form.id}"]:checked`))
+      : [];
+
+    const selectedInputs = Array.from(new Set([...inForm, ...associatedExternal]));
+
+    return selectedInputs
       .map((input) => {
         if (!(input instanceof HTMLInputElement)) return null;
         const variantId = input.dataset.clutchAddonVariantId;
@@ -489,6 +496,23 @@ class ProductFormComponent extends Component {
 
     const formData = new FormData(form);
     const clutchAddonItems = overrideVariantId ? [] : this.#getSelectedClutchAddonItems(form);
+
+    if (!overrideVariantId) {
+      const engravingAddonInput = document.querySelector(
+        'input[data-smart-card-engraving-addon][checked], input[data-smart-card-engraving-addon]:checked'
+      );
+      if (engravingAddonInput instanceof HTMLInputElement) {
+        const engravingVariantId = engravingAddonInput.dataset.clutchAddonVariantId;
+        if (engravingVariantId && !clutchAddonItems.some((item) => item.variantId === engravingVariantId)) {
+          clutchAddonItems.push({
+            variantId: engravingVariantId,
+            quantity: Number(engravingAddonInput.dataset.clutchAddonQuantity) || 1,
+            title: engravingAddonInput.dataset.clutchAddonTitle || 'Smart Card Custom Engraving',
+            unique: engravingAddonInput.dataset.clutchAddonUnique === 'true',
+          });
+        }
+      }
+    }
 
     if (overrideVariantId) {
       formData.set('id', overrideVariantId);

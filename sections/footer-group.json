@@ -11,6 +11,12 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
+    "clutch_footer": {
+      "type": "clutch-footer",
+      "settings": {
+        "color_scheme": "scheme-7"
+      }
+    },
     "footer_utilities": {
       "type": "footer-utilities",
       "blocks": {
@@ -67,6 +73,7 @@
     }
   },
   "order": [
+    "clutch_footer",
     "footer_utilities"
   ]
 }

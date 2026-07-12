@@ -1,6 +1,10 @@
 
 
 {%- assign block_settings = block.settings -%}
+{%- assign is_smart_card_product = false -%}
+{%- if closest.product and closest.product.handle == 'clutch-connect-card' -%}
+  {%- assign is_smart_card_product = true -%}
+{%- endif -%}
 <div
   id="ProductInformation-{{ section.id }}"
   class="
@@ -29,6 +33,56 @@
   {% render 'group', children: children, settings: block_settings, shopify_attributes: block.shopify_attributes %}
 </div>
 
+  {% if is_smart_card_product %}
+    <script>
+      (function () {
+        const root = document.getElementById('ProductInformation-{{ section.id }}');
+        if (!root || root.dataset.smartCardEnhanced === 'true') return;
+        root.dataset.smartCardEnhanced = 'true';
+        root.classList.add('smart-card-product-shell');
+
+        const heading = root.querySelector('h1');
+        if (heading && !root.querySelector('[data-smart-card-placeholder]')) {
+          heading.insertAdjacentHTML(
+            'afterend',
+            '<div class="smart-card-image-placeholder" data-smart-card-placeholder><span>Coming Soon</span></div>'
+          );
+        }
+
+        const priceBlock = root.querySelector('[data-block-id$="__price_tVjtKg"]');
+        if (priceBlock && !root.querySelector('[data-smart-card-guided-pill]')) {
+          priceBlock.insertAdjacentHTML('afterend', '<p class="smart-card-guided-pill" data-smart-card-guided-pill>Includes Guided Setup</p>');
+        }
+
+        const guidedPill = root.querySelector('[data-smart-card-guided-pill]');
+        const engravingBlock = root.querySelector('[data-smart-card-engraving]');
+        if (guidedPill && engravingBlock && guidedPill.nextElementSibling !== engravingBlock) {
+          guidedPill.insertAdjacentElement('afterend', engravingBlock);
+        }
+
+        const oldDescription = root.querySelector('[class*="__text_aEtTtq"]');
+        if (oldDescription) oldDescription.style.display = 'none';
+
+        const divider = root.querySelector('[data-block-id$="__divider_VJhene"]');
+        if (divider) divider.style.display = 'none';
+
+        const variantPicker = root.querySelector('[data-block-id$="__variant_picker_R3rGDr"]');
+        if (variantPicker) variantPicker.style.display = 'none';
+
+        root.querySelectorAll('variant-picker, .variant-picker, .variant-option').forEach((node) => {
+          node.style.display = 'none';
+        });
+
+        root.querySelectorAll('*').forEach((node) => {
+          const text = (node.textContent || '').trim();
+          if (text === 'Black Metal' || text === 'Pearl White Metal') {
+            node.style.display = 'none';
+          }
+        });
+      })();
+    </script>
+  {% endif %}
+
 {% stylesheet %}
   /* Clear padding on mobile, if not full-width */
   @media screen and (max-width: 749px) {
@@ -39,6 +93,131 @@
 
   .view-product-title {
     display: none;
+  }
+
+  .smart-card-product-shell {
+    text-align: center;
+  }
+
+  .smart-card-product-shell .group-block {
+    align-items: center;
+    gap: 1rem;
+    margin: 0 auto;
+    max-width: 760px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .smart-card-product-shell .buy-buttons-block {
+    width: min(100%, 620px);
+  }
+
+  .smart-card-product-shell h1 {
+    color: #384862;
+    font-size: clamp(2rem, 6vw, 3rem);
+    line-height: 1.04;
+    margin: 0;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .smart-card-product-shell h2,
+  .smart-card-product-shell h3,
+  .smart-card-product-shell h4 {
+    text-align: center;
+  }
+
+  .smart-card-image-placeholder {
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(145deg, #ffffff, #f2f6fb);
+    border: 1px solid #dde6ef;
+    border-radius: 24px;
+    box-shadow: 0 18px 48px rgba(56, 72, 98, 0.14);
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto 0;
+    max-width: 420px;
+    width: min(100%, 420px);
+  }
+
+  .smart-card-image-placeholder span {
+    background: rgba(56, 72, 98, 0.08);
+    border: 1px solid rgba(56, 72, 98, 0.14);
+    border-radius: 999px;
+    color: #384862;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.65rem 1rem;
+    text-transform: uppercase;
+  }
+
+  .smart-card-description-box {
+    background: #f7f9fc;
+    border: 1px solid rgba(56, 72, 98, 0.16);
+    border-radius: 14px;
+    margin: 0.8rem auto 0;
+    max-width: 520px;
+    padding: 0.68rem 0.85rem;
+    width: min(100%, 520px);
+  }
+
+  .smart-card-description {
+    color: rgba(56, 72, 98, 0.9);
+    font-size: clamp(0.82rem, 1.8vw, 0.92rem);
+    line-height: 1.45;
+    margin: 0;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .smart-card-product-shell [data-block-id$='__price_tVjtKg'] {
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    margin-top: 0.45rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .smart-card-product-shell [data-block-id$='__price_tVjtKg'] * {
+    text-align: center;
+  }
+
+  .smart-card-product-shell [data-block-id$='__price_tVjtKg'] .price {
+    display: inline-flex;
+    justify-content: center;
+    color: #384862;
+    font-size: clamp(2.1rem, 6vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-inline: auto;
+  }
+
+  .smart-card-guided-pill {
+    background: rgba(255, 166, 101, 0.18);
+    border: 1px solid rgba(255, 166, 101, 0.66);
+    border-radius: 999px;
+    color: #384862;
+    display: inline-flex;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    margin: 0.1rem auto 0;
+    padding: 0.5rem 0.95rem;
+  }
+
+  .smart-card-product-shell [data-block-id$='__variant_picker_R3rGDr'],
+  .smart-card-product-shell [data-block-id$='__divider_VJhene'],
+  .smart-card-product-shell [class*='__text_aEtTtq'] {
+    display: none !important;
+  }
+
+  .smart-card-product-shell variant-picker,
+  .smart-card-product-shell .variant-picker,
+  .smart-card-product-shell .variant-option {
+    display: none !important;
   }
 
   /* Container styles */

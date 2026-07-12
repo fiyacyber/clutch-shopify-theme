@@ -9,6 +9,12 @@
  */
 {
   "sections": {
+    "clutch_shop_page": {
+      "type": "clutch-shop-page",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
     "shop_hero": {
       "type": "clutch-shop-hero",
       "settings": {
@@ -151,6 +157,7 @@
     }
   },
   "order": [
+    "clutch_shop_page",
     "shop_hero",
     "business_kits_landing",
     "main"
