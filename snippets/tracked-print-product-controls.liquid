@@ -1,0 +1,212 @@
+{% doc %}
+  Renders the Phase 4 tracked-print contract inside the native Shopify product form.
+
+  The caller must gate this snippet with custom.tracked_print_enabled. Material type is
+  deliberately not submitted by the browser; the application resolves it from its trusted registry.
+
+  @param {string} section_id - Parent section identifier used to create unique control IDs.
+{% enddoc %}
+
+<tracked-print-controls
+  class="tracked-print-controls"
+  data-tracked-print-controls
+  data-campaign-error="{{ 'tracked_print.validation.campaign' | t | escape }}"
+  data-destination-error="{{ 'tracked_print.validation.destination' | t | escape }}"
+  data-existing-error="{{ 'tracked_print.validation.existing' | t | escape }}"
+  data-file-required-error="{{ 'tracked_print.validation.file_required' | t | escape }}"
+  data-file-size-error="{{ 'tracked_print.validation.file_size' | t | escape }}"
+  data-file-type-error="{{ 'tracked_print.validation.file_type' | t | escape }}"
+  data-instructions-error="{{ 'tracked_print.validation.instructions' | t | escape }}"
+  data-reorder-error="{{ 'tracked_print.validation.reorder' | t | escape }}"
+>
+  <div class="tracked-print-controls__heading">
+    <p class="clutch-eyebrow">{{ 'tracked_print.eyebrow' | t }}</p>
+    <h3>{{ 'tracked_print.heading' | t }}</h3>
+    <p>{{ 'tracked_print.description' | t }}</p>
+  </div>
+
+  <fieldset class="tracked-print-controls__group" data-tracked-print-tracking>
+    <legend>{{ 'tracked_print.tracking.legend' | t }}</legend>
+    <label>
+      <input type="radio" name="properties[Tracking Mode]" value="none" checked>
+      <span><strong>{{ 'tracked_print.tracking.none_title' | t }}</strong><small>{{ 'tracked_print.tracking.none_help' | t }}</small></span>
+    </label>
+    <label>
+      <input type="radio" name="properties[Tracking Mode]" value="new_included_code">
+      <span><strong>{{ 'tracked_print.tracking.new_title' | t }}</strong><small>{{ 'tracked_print.tracking.new_help' | t }}</small></span>
+    </label>
+    <label>
+      <input type="radio" name="properties[Tracking Mode]" value="existing_code">
+      <span><strong>{{ 'tracked_print.tracking.existing_title' | t }}</strong><small>{{ 'tracked_print.tracking.existing_help' | t }}</small></span>
+    </label>
+  </fieldset>
+
+  <div class="tracked-print-controls__panel" data-tracked-print-panel="new_included_code" hidden>
+    <label for="tracked-print-campaign-{{ section_id }}">{{ 'tracked_print.tracking.campaign' | t }}</label>
+    <input id="tracked-print-campaign-{{ section_id }}" type="text" name="properties[Campaign Name]" maxlength="160" disabled>
+    <label for="tracked-print-destination-{{ section_id }}">{{ 'tracked_print.tracking.destination' | t }}</label>
+    <input id="tracked-print-destination-{{ section_id }}" type="url" name="properties[Destination URL]" placeholder="https://" maxlength="2048" disabled>
+  </div>
+
+  <div class="tracked-print-controls__panel" data-tracked-print-panel="existing_code" hidden>
+    <label for="tracked-print-existing-{{ section_id }}">{{ 'tracked_print.tracking.existing_reference' | t }}</label>
+    <input id="tracked-print-existing-{{ section_id }}" type="text" name="properties[Existing Clutch Code]" maxlength="512" disabled>
+    <p>{{ 'tracked_print.tracking.existing_reference_help' | t }}</p>
+    <a href="https://qr.clutchprintshop.com/portal/qr" target="_blank" rel="noopener">{{ 'tracked_print.tracking.find_existing' | t }}</a>
+  </div>
+
+  <div class="tracked-print-controls__panel" data-tracked-print-placement hidden>
+    <label for="tracked-print-placement-{{ section_id }}">{{ 'tracked_print.tracking.placement' | t }}</label>
+    <textarea id="tracked-print-placement-{{ section_id }}" name="properties[QR Placement Instructions]" rows="3" maxlength="500" disabled></textarea>
+  </div>
+
+  <fieldset class="tracked-print-controls__group" data-tracked-print-artwork>
+    <legend>{{ 'tracked_print.artwork.legend' | t }}</legend>
+    <label>
+      <input type="radio" name="properties[Artwork Method]" value="upload_now">
+      <span><strong>{{ 'tracked_print.artwork.upload_now_title' | t }}</strong><small>{{ 'tracked_print.artwork.upload_now_help' | t }}</small></span>
+    </label>
+    <label>
+      <input type="radio" name="properties[Artwork Method]" value="upload_later" checked>
+      <span><strong>{{ 'tracked_print.artwork.upload_later_title' | t }}</strong><small>{{ 'tracked_print.artwork.upload_later_help' | t }}</small></span>
+    </label>
+    <label>
+      <input type="radio" name="properties[Artwork Method]" value="request_design">
+      <span><strong>{{ 'tracked_print.artwork.request_design_title' | t }}</strong><small>{{ 'tracked_print.artwork.request_design_help' | t }}</small></span>
+    </label>
+    <label>
+      <input type="radio" name="properties[Artwork Method]" value="reorder_existing">
+      <span><strong>{{ 'tracked_print.artwork.reorder_title' | t }}</strong><small>{{ 'tracked_print.artwork.reorder_help' | t }}</small></span>
+    </label>
+  </fieldset>
+
+  <div class="tracked-print-controls__panel" data-artwork-panel="upload_now" hidden>
+    <label for="tracked-print-artwork-{{ section_id }}">{{ 'tracked_print.artwork.file' | t }}</label>
+    <input
+      id="tracked-print-artwork-{{ section_id }}"
+      type="file"
+      name="properties[Artwork Upload URL]"
+      accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.eps,application/pdf,image/png,image/jpeg,image/tiff,application/postscript"
+      data-tracked-print-file
+      disabled
+    >
+    <p>{{ 'tracked_print.artwork.file_help' | t }}</p>
+  </div>
+
+  <div class="tracked-print-controls__panel" data-artwork-panel="request_design" hidden>
+    <p>{{ 'tracked_print.artwork.request_design_prompt' | t }}</p>
+  </div>
+
+  <div class="tracked-print-controls__panel" data-artwork-panel="reorder_existing" hidden>
+    <label for="tracked-print-reorder-{{ section_id }}">{{ 'tracked_print.artwork.reorder_reference' | t }}</label>
+    <input id="tracked-print-reorder-{{ section_id }}" type="text" name="properties[Reorder Reference]" maxlength="200" disabled>
+  </div>
+
+  <div class="tracked-print-controls__panel">
+    <label for="tracked-print-instructions-{{ section_id }}">{{ 'tracked_print.artwork.instructions' | t }}</label>
+    <textarea id="tracked-print-instructions-{{ section_id }}" name="properties[Artwork Instructions]" rows="4" maxlength="2000"></textarea>
+    <p>{{ 'tracked_print.artwork.instructions_help' | t }}</p>
+  </div>
+
+  <div class="tracked-print-controls__errors" role="alert" tabindex="-1" data-tracked-print-errors hidden>
+    <strong>{{ 'tracked_print.validation.heading' | t }}</strong>
+    <ul></ul>
+  </div>
+  <input type="hidden" name="properties[_Tracked Print Contract]" value="phase4_v1">
+</tracked-print-controls>
+
+{% stylesheet %}
+  .tracked-print-controls { display: grid; gap: 1.25rem; padding: 1.25rem; border: 1px solid color-mix(in srgb, #384862 25%, transparent); border-radius: 0.75rem; background: #fff; color: #384862; }
+  .tracked-print-controls__heading > * { margin-block: 0 0.45rem; }
+  .tracked-print-controls__heading h3 { color: #384862; }
+  .tracked-print-controls__group { display: grid; gap: 0.65rem; margin: 0; padding: 0; border: 0; }
+  .tracked-print-controls__group legend { margin-block-end: 0.5rem; font-weight: 700; }
+  .tracked-print-controls__group label { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem; border: 1px solid #d7dce3; border-radius: 0.55rem; cursor: pointer; }
+  .tracked-print-controls__group input { margin-block-start: 0.25rem; }
+  .tracked-print-controls__group span { display: grid; gap: 0.2rem; }
+  .tracked-print-controls__group small, .tracked-print-controls__panel p { color: #56657b; }
+  .tracked-print-controls__panel { display: grid; gap: 0.45rem; padding: 1rem; border-left: 4px solid #ffa665; background: #f8f9fb; }
+  .tracked-print-controls__panel input, .tracked-print-controls__panel textarea { width: 100%; padding: 0.75rem; border: 1px solid #8792a3; border-radius: 0.35rem; color: #1c2636; background: #fff; }
+  .tracked-print-controls__errors { padding: 1rem; border: 2px solid #a52626; border-radius: 0.5rem; background: #fff2f2; color: #701b1b; }
+  .tracked-print-controls__errors ul { margin-block-end: 0; }
+  @media screen and (max-width: 749px) { .tracked-print-controls { padding: 1rem; } }
+{% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('tracked-print-controls')) {
+    customElements.define('tracked-print-controls', class extends HTMLElement {
+      connectedCallback() {
+        this.form = this.closest('form');
+        if (!this.form) return;
+        this.errors = this.querySelector('[data-tracked-print-errors]');
+        this.addEventListener('change', () => this.sync());
+        this.form.addEventListener('submit', (event) => this.validate(event), true);
+        this.sync();
+      }
+
+      selected(name) {
+        return this.querySelector(`[name="properties[${name}]"]:checked`)?.value || '';
+      }
+
+      activate(container, active) {
+        container.hidden = !active;
+        container.querySelectorAll('input, textarea, select').forEach((field) => { field.disabled = !active; });
+      }
+
+      sync() {
+        const tracking = this.selected('Tracking Mode');
+        const artwork = this.selected('Artwork Method');
+        this.querySelectorAll('[data-tracked-print-panel]').forEach((panel) => this.activate(panel, panel.dataset.trackedPrintPanel === tracking));
+        const placement = this.querySelector('[data-tracked-print-placement]');
+        this.activate(placement, tracking !== 'none');
+        this.querySelectorAll('[data-artwork-panel]').forEach((panel) => this.activate(panel, panel.dataset.artworkPanel === artwork));
+      }
+
+      validate(event) {
+        this.sync();
+        const messages = [];
+        const invalid = [];
+        const requireValue = (name, message) => {
+          const field = this.querySelector(`[name="properties[${name}]"]`);
+          if (!field || field.disabled || String(field.value || '').trim()) return;
+          messages.push(message); invalid.push(field);
+        };
+        const tracking = this.selected('Tracking Mode');
+        const artwork = this.selected('Artwork Method');
+        if (tracking === 'new_included_code') {
+          requireValue('Campaign Name', this.dataset.campaignError);
+          const destination = this.querySelector('[name="properties[Destination URL]"]');
+          try {
+            const parsed = new URL(destination?.value || '');
+            if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('unsupported protocol');
+          } catch {
+            messages.push(this.dataset.destinationError); invalid.push(destination);
+          }
+        }
+        if (tracking === 'existing_code') requireValue('Existing Clutch Code', this.dataset.existingError);
+        if (artwork === 'upload_now') {
+          const file = this.querySelector('[data-tracked-print-file]');
+          const allowed = /\.(pdf|png|jpe?g|tiff?|eps)$/i;
+          if (!file?.files?.length) { messages.push(this.dataset.fileRequiredError); invalid.push(file); }
+          else if (file.files[0].size > 25 * 1024 * 1024) { messages.push(this.dataset.fileSizeError); invalid.push(file); }
+          else if (!allowed.test(file.files[0].name)) { messages.push(this.dataset.fileTypeError); invalid.push(file); }
+        }
+        if (artwork === 'request_design') requireValue('Artwork Instructions', this.dataset.instructionsError);
+        if (artwork === 'reorder_existing') requireValue('Reorder Reference', this.dataset.reorderError);
+        if (messages.length) {
+          event.preventDefault(); event.stopImmediatePropagation();
+          this.errors.querySelector('ul').innerHTML = messages.map((message) => `<li>${message}</li>`).join('');
+          this.errors.hidden = false; this.errors.focus();
+          invalid[0]?.focus();
+        } else {
+          this.errors.hidden = true;
+          const temporarilyDisabled = [];
+          this.querySelectorAll('input[type="text"], input[type="url"], textarea').forEach((field) => {
+            if (!field.disabled && !String(field.value || '').trim()) { field.disabled = true; temporarilyDisabled.push(field); }
+          });
+          setTimeout(() => temporarilyDisabled.forEach((field) => { field.disabled = false; }), 0);
+        }
+      }
+    });
+  }
+{% endjavascript %}

@@ -232,13 +232,55 @@
                           {%- for property in item.properties -%}
                             {%- assign property_first_char = property.first | slice: 0 -%}
                             {%- if property.last != blank and property_first_char != '_' -%}
+                              {%- liquid
+                                assign property_label = property.first
+                                assign property_value = property.last
+                                case property.first
+                                  when 'Tracking Mode'
+                                    assign property_label = 'tracked_print.cart.tracking_mode' | t
+                                    case property.last
+                                      when 'none'
+                                        assign property_value = 'tracked_print.cart.tracking_none' | t
+                                      when 'new_included_code'
+                                        assign property_value = 'tracked_print.cart.tracking_new' | t
+                                      when 'existing_code'
+                                        assign property_value = 'tracked_print.cart.tracking_existing' | t
+                                    endcase
+                                  when 'Campaign Name'
+                                    assign property_label = 'tracked_print.cart.campaign_name' | t
+                                  when 'Destination URL'
+                                    assign property_label = 'tracked_print.cart.destination_url' | t
+                                  when 'Existing Clutch Code'
+                                    assign property_label = 'tracked_print.cart.existing_code' | t
+                                  when 'Artwork Method'
+                                    assign property_label = 'tracked_print.cart.artwork_method' | t
+                                    case property.last
+                                      when 'upload_now'
+                                        assign property_value = 'tracked_print.cart.artwork_upload_now' | t
+                                      when 'upload_later'
+                                        assign property_value = 'tracked_print.cart.artwork_upload_later' | t
+                                      when 'request_design'
+                                        assign property_value = 'tracked_print.cart.artwork_request_design' | t
+                                      when 'reorder_existing'
+                                        assign property_value = 'tracked_print.cart.artwork_reorder' | t
+                                    endcase
+                                  when 'Artwork Upload URL'
+                                    assign property_label = 'tracked_print.cart.artwork_file' | t
+                                  when 'Artwork Instructions'
+                                    assign property_label = 'tracked_print.cart.artwork_instructions' | t
+                                  when 'Reorder Reference'
+                                    assign property_label = 'tracked_print.cart.reorder_reference' | t
+                                  when 'QR Placement Instructions'
+                                    assign property_label = 'tracked_print.cart.placement_instructions' | t
+                                endcase
+                              -%}
                               <div class="cart-items__property">
-                                <dt>{{ property.first }}:</dt>
+                                <dt>{{ property_label }}:</dt>
                                 <dd>
                                   {%- if property.last contains '/uploads/' -%}
                                     <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
                                   {%- else -%}
-                                    {{ property.last }}
+                                    {{ property_value }}
                                   {%- endif -%}
                                 </dd>
                               </div>
