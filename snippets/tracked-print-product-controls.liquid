@@ -140,7 +140,21 @@
         if (!this.form) return;
         this.errors = this.querySelector('[data-tracked-print-errors]');
         this.addEventListener('change', () => this.sync());
-        this.form.addEventListener('submit', (event) => this.validate(event), true);
+        this.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' || event.isComposing) return;
+          if (!(event.target instanceof HTMLInputElement) || !['text', 'url'].includes(event.target.type)) return;
+          event.preventDefault();
+          this.form.requestSubmit();
+        });
+        this.form.addEventListener('submit', (event) => {
+          const validator = window.ClutchTrackedPrintValidation?.validateTrackedPrintProductForm;
+          if (!validator) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
+          }
+          validator(this.form, event);
+        }, true);
         this.sync();
       }
 
@@ -162,51 +176,6 @@
         this.querySelectorAll('[data-artwork-panel]').forEach((panel) => this.activate(panel, panel.dataset.artworkPanel === artwork));
       }
 
-      validate(event) {
-        this.sync();
-        const messages = [];
-        const invalid = [];
-        const requireValue = (name, message) => {
-          const field = this.querySelector(`[name="properties[${name}]"]`);
-          if (!field || field.disabled || String(field.value || '').trim()) return;
-          messages.push(message); invalid.push(field);
-        };
-        const tracking = this.selected('Tracking Mode');
-        const artwork = this.selected('Artwork Method');
-        if (tracking === 'new_included_code') {
-          requireValue('Campaign Name', this.dataset.campaignError);
-          const destination = this.querySelector('[name="properties[Destination URL]"]');
-          try {
-            const parsed = new URL(destination?.value || '');
-            if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('unsupported protocol');
-          } catch {
-            messages.push(this.dataset.destinationError); invalid.push(destination);
-          }
-        }
-        if (tracking === 'existing_code') requireValue('Existing Clutch Code', this.dataset.existingError);
-        if (artwork === 'upload_now') {
-          const file = this.querySelector('[data-tracked-print-file]');
-          const allowed = /\.(pdf|png|jpe?g|tiff?|eps)$/i;
-          if (!file?.files?.length) { messages.push(this.dataset.fileRequiredError); invalid.push(file); }
-          else if (file.files[0].size > 25 * 1024 * 1024) { messages.push(this.dataset.fileSizeError); invalid.push(file); }
-          else if (!allowed.test(file.files[0].name)) { messages.push(this.dataset.fileTypeError); invalid.push(file); }
-        }
-        if (artwork === 'request_design') requireValue('Artwork Instructions', this.dataset.instructionsError);
-        if (artwork === 'reorder_existing') requireValue('Reorder Reference', this.dataset.reorderError);
-        if (messages.length) {
-          event.preventDefault(); event.stopImmediatePropagation();
-          this.errors.querySelector('ul').innerHTML = messages.map((message) => `<li>${message}</li>`).join('');
-          this.errors.hidden = false; this.errors.focus();
-          invalid[0]?.focus();
-        } else {
-          this.errors.hidden = true;
-          const temporarilyDisabled = [];
-          this.querySelectorAll('input[type="text"], input[type="url"], textarea').forEach((field) => {
-            if (!field.disabled && !String(field.value || '').trim()) { field.disabled = true; temporarilyDisabled.push(field); }
-          });
-          setTimeout(() => temporarilyDisabled.forEach((field) => { field.disabled = false; }), 0);
-        }
-      }
     });
   }
 {% endjavascript %}

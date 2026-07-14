@@ -3,6 +3,7 @@ import { fetchConfig, preloadImage, onAnimationEnd, yieldToMainThread } from '@t
 import { ThemeEvents, CartAddEvent, CartErrorEvent, CartUpdateEvent, VariantUpdateEvent } from '@theme/events';
 import { cartPerformance } from '@theme/performance';
 import { morph } from '@theme/morph';
+import { validateTrackedPrintProductForm } from '@theme/tracked-print-validation';
 
 // Error message display duration - gives users time to read the message
 const ERROR_MESSAGE_DISPLAY_DURATION = 10000;
@@ -284,6 +285,9 @@ class ProductFormComponent extends Component {
 
   /** @param {Event} event */
   handleSubmit(event) {
+    const form = event.target instanceof HTMLFormElement ? event.target : this.querySelector('form');
+    if (!validateTrackedPrintProductForm(form, event)) return;
+
     event.preventDefault();
 
     if (this.#addToCartInProgress) return;

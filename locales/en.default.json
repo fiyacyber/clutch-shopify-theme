@@ -359,7 +359,7 @@
     "validation": {
       "heading": "Please complete your print setup:",
       "campaign": "Enter a campaign name.",
-      "destination": "Enter a valid HTTP or HTTPS destination URL.",
+      "destination": "Enter a valid HTTP or HTTPS destination URL. HTTPS is preferred.",
       "existing": "Enter your existing Clutch Code.",
       "file_required": "Choose an artwork file.",
       "file_size": "Artwork must be 25 MB or smaller.",
