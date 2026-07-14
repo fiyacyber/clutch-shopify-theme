@@ -279,9 +279,9 @@
     {% endif %}
 
     {% if tracked_print_enabled %}
-      {% render 'tracked-print-product-controls', section_id: section_id, is_business_kit: is_business_kit %}
+      {% render 'tracked-print-product-controls', section_id: section_id, product: product, is_business_kit: is_business_kit %}
     {% elsif is_business_kit %}
-      {% render 'tracked-print-product-controls', section_id: section_id, is_business_kit: true, artwork_only: true %}
+      {% render 'tracked-print-product-controls', section_id: section_id, product: product, is_business_kit: true, artwork_only: true %}
     {% endif %}
 
     {% unless tracked_print_enabled or is_business_kit %}

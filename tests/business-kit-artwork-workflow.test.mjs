@@ -170,9 +170,9 @@ test('Clutch NFC Card engraving behavior remains isolated and unchanged', () => 
   assert.match(options, /data-clutch-addon-title="Smart Card Custom Engraving"/);
 });
 
-test('artwork-only Business Kit mode does not claim the tracked-print contract', () => {
+test('artwork-only Business Kit mode claims the contract only when component access is enabled', () => {
   assert.match(options, /render 'tracked-print-product-controls'[\s\S]*artwork_only: true/);
-  assert.match(controls, /unless artwork_only[\s\S]*properties\[_Tracked Print Contract\]/);
+  assert.match(controls, /if artwork_only != true or business_kit_access_enabled[\s\S]*properties\[_Tracked Print Contract\]/);
 });
 
 test('invalid Business Kit artwork configuration creates zero cart requests', () => {

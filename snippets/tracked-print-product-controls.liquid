@@ -10,10 +10,18 @@
   @param {boolean} [artwork_only] - Omits the tracked-print contract when only artwork intake is required.
 {% enddoc %}
 
+{% liquid
+  assign business_kit_access_enabled = false
+  if is_business_kit and product.metafields.custom.clutch_codes_90_day_access_enabled.value == true
+    assign business_kit_access_enabled = true
+  endif
+%}
+
 <tracked-print-controls
   class="tracked-print-controls"
   data-tracked-print-controls
   {% if is_business_kit %}data-business-kit-artwork{% endif %}
+  {% if business_kit_access_enabled %}data-business-kit-components{% endif %}
   {% if artwork_only %}data-artwork-only{% endif %}
   data-campaign-error="{{ 'tracked_print.validation.campaign' | t | escape }}"
   data-destination-error="{{ 'tracked_print.validation.destination' | t | escape }}"
@@ -27,7 +35,64 @@
   {% if product.metafields.custom.clutch_codes_90_day_access_enabled.value == true %}
     {% render 'clutch-codes-included-access', variant: 'full' %}
   {% endif %}
-  {% unless artwork_only %}
+  {% if business_kit_access_enabled %}
+  <div class="tracked-print-controls__heading">
+    <h3>{{ 'tracked_print.business_kit.tracking_heading' | t }}</h3>
+    <p>{{ 'tracked_print.business_kit.tracking_description' | t }}</p>
+  </div>
+
+  {% assign business_kit_component_contracts = 'business-cards|tracked_print.business_kit.business_cards|Business Cards Tracking Mode|Business Cards Campaign Name|Business Cards Destination URL|Business Cards Existing Clutch Code||door-hangers|tracked_print.business_kit.door_hangers|Door Hangers Tracking Mode|Door Hangers Campaign Name|Door Hangers Destination URL|Door Hangers Existing Clutch Code||flyers|tracked_print.business_kit.flyers|Flyers Tracking Mode|Flyers Campaign Name|Flyers Destination URL|Flyers Existing Clutch Code' | split: '||' %}
+  {% for component_contract in business_kit_component_contracts %}
+    {% liquid
+      assign component_parts = component_contract | split: '|'
+      assign component_key = component_parts[0]
+      assign component_label = component_parts[1] | t
+      assign tracking_property = component_parts[2]
+      assign campaign_property = component_parts[3]
+      assign destination_property = component_parts[4]
+      assign existing_property = component_parts[5]
+    %}
+    <section
+      class="business-kit-component"
+      data-business-kit-component
+      data-component-label="{{ component_label | escape }}"
+      data-tracking-property="{{ tracking_property | escape }}"
+      data-campaign-property="{{ campaign_property | escape }}"
+      data-destination-property="{{ destination_property | escape }}"
+      data-existing-property="{{ existing_property | escape }}"
+    >
+      <fieldset class="business-kit-component__choices" data-business-kit-tracking>
+        <legend>{{ component_label }}</legend>
+        <label>
+          <input type="radio" name="properties[{{ tracking_property }}]" value="none" checked>
+          <span><strong>{{ 'tracked_print.tracking.none_title' | t }}</strong><small>{{ 'tracked_print.tracking.none_help' | t }}</small></span>
+        </label>
+        <label>
+          <input type="radio" name="properties[{{ tracking_property }}]" value="new_included_code">
+          <span><strong>{{ 'tracked_print.tracking.new_title' | t }}</strong><small>{{ 'tracked_print.business_kit.new_component_help' | t }}</small></span>
+        </label>
+        <label>
+          <input type="radio" name="properties[{{ tracking_property }}]" value="existing_code">
+          <span><strong>{{ 'tracked_print.tracking.existing_title' | t }}</strong><small>{{ 'tracked_print.business_kit.existing_component_help' | t }}</small></span>
+        </label>
+      </fieldset>
+
+      <div class="business-kit-component__panel" data-business-kit-panel="new_included_code" hidden>
+        <label for="business-kit-{{ component_key }}-campaign-{{ section_id }}">{{ 'tracked_print.tracking.campaign' | t }}</label>
+        <input id="business-kit-{{ component_key }}-campaign-{{ section_id }}" type="text" name="properties[{{ campaign_property }}]" maxlength="160" disabled>
+        <label for="business-kit-{{ component_key }}-destination-{{ section_id }}">{{ 'tracked_print.tracking.destination' | t }}</label>
+        <input id="business-kit-{{ component_key }}-destination-{{ section_id }}" type="url" name="properties[{{ destination_property }}]" placeholder="https://" maxlength="2048" disabled>
+      </div>
+
+      <div class="business-kit-component__panel" data-business-kit-panel="existing_code" hidden>
+        <label for="business-kit-{{ component_key }}-existing-{{ section_id }}">{{ 'tracked_print.tracking.existing_reference' | t }}</label>
+        <input id="business-kit-{{ component_key }}-existing-{{ section_id }}" type="text" name="properties[{{ existing_property }}]" maxlength="512" disabled>
+        <p>{{ 'tracked_print.tracking.existing_reference_help' | t }}</p>
+        <a href="https://qr.clutchprintshop.com/portal/qr" target="_blank" rel="noopener">{{ 'tracked_print.tracking.find_existing' | t }}</a>
+      </div>
+    </section>
+  {% endfor %}
+  {% elsif is_business_kit != true and artwork_only != true %}
   <div class="tracked-print-controls__heading">
     <p class="clutch-eyebrow">{{ 'tracked_print.eyebrow' | t }}</p>
     <h3>{{ 'tracked_print.heading' | t }}</h3>
@@ -68,7 +133,7 @@
     <label for="tracked-print-placement-{{ section_id }}">{{ 'tracked_print.tracking.placement' | t }}</label>
     <textarea id="tracked-print-placement-{{ section_id }}" name="properties[QR Placement Instructions]" rows="3" maxlength="500" disabled></textarea>
   </div>
-  {% endunless %}
+  {% endif %}
 
   <fieldset class="tracked-print-controls__group" data-tracked-print-artwork>
     <legend>
@@ -157,10 +222,10 @@
     <strong>{{ 'tracked_print.validation.heading' | t }}</strong>
     <ul></ul>
   </div>
-  {% unless artwork_only %}
+  {% if artwork_only != true or business_kit_access_enabled %}
     <input type="hidden" name="properties[_Tracked Print Contract]" value="phase4_v1">
-  {% endunless %}
-  {% if product.metafields.custom.clutch_codes_90_day_access_enabled.value == true %}
+  {% endif %}
+  {% if is_business_kit != true and product.metafields.custom.clutch_codes_90_day_access_enabled.value == true %}
     <input type="hidden" name="properties[Clutch Codes Access]" value="none" data-clutch-codes-access-property>
   {% endif %}
 </tracked-print-controls>
@@ -169,6 +234,18 @@
   .tracked-print-controls { display: grid; gap: 1.25rem; padding: 1.25rem; border: 1px solid color-mix(in srgb, #384862 25%, transparent); border-radius: 0.75rem; background: #fff; color: #384862; }
   .tracked-print-controls__heading > * { margin-block: 0 0.45rem; }
   .tracked-print-controls__heading h3 { color: #384862; }
+  .business-kit-component { display: grid; gap: 0.75rem; padding-block: 0.25rem 1rem; border-bottom: 1px solid #d7dce3; }
+  .business-kit-component:last-of-type { border-bottom: 0; }
+  .business-kit-component__choices { display: grid; gap: 0.65rem; margin: 0; padding: 0; border: 0; }
+  .business-kit-component__choices legend { margin-block-end: 0.5rem; font-weight: 700; }
+  .business-kit-component__choices label { display: flex; gap: 0.75rem; align-items: flex-start; min-height: 44px; padding: 0.85rem; border: 1px solid #d7dce3; border-radius: 0.55rem; cursor: pointer; }
+  .business-kit-component__choices label:focus-within { border-color: #384862; outline: 3px solid color-mix(in srgb, #ffa665 65%, transparent); outline-offset: 2px; }
+  .business-kit-component__choices input { margin-block-start: 0.25rem; }
+  .business-kit-component__choices span { display: grid; gap: 0.2rem; }
+  .business-kit-component__choices small, .business-kit-component__panel p { color: #56657b; }
+  .business-kit-component__panel { display: grid; gap: 0.45rem; padding: 1rem; border-left: 4px solid #ffa665; background: #f8f9fb; }
+  .business-kit-component__panel[hidden] { display: none; }
+  .business-kit-component__panel input { width: 100%; padding: 0.75rem; border: 1px solid #8792a3; border-radius: 0.35rem; color: #1c2636; background: #fff; }
   .tracked-print-controls__group { display: grid; gap: 0.65rem; margin: 0; padding: 0; border: 0; }
   .tracked-print-controls__group legend { margin-block-end: 0.5rem; font-weight: 700; }
   .tracked-print-controls__group label { display: flex; gap: 0.75rem; align-items: flex-start; min-height: 44px; padding: 0.85rem; border: 1px solid #d7dce3; border-radius: 0.55rem; cursor: pointer; }
@@ -190,6 +267,8 @@
   if (!customElements.get('tracked-print-controls')) {
     customElements.define('tracked-print-controls', class extends HTMLElement {
       connectedCallback() {
+        if (this.dataset.initialized === 'true') return;
+        this.dataset.initialized = 'true';
         this.form = this.closest('form');
         if (!this.form) return;
         this.errors = this.querySelector('[data-tracked-print-errors]');
@@ -231,6 +310,12 @@
         this.querySelectorAll('[data-artwork-panel]').forEach((panel) => this.activate(panel, panel.dataset.artworkPanel === artwork));
         const access = this.querySelector('[data-clutch-codes-access-property]');
         if (access) access.value = tracking === 'new_included_code' ? 'included_90_days' : 'none';
+        this.querySelectorAll('[data-business-kit-component]').forEach((component) => {
+          const componentTracking = this.selected(component.dataset.trackingProperty);
+          component.querySelectorAll('[data-business-kit-panel]').forEach((panel) => {
+            this.activate(panel, panel.dataset.businessKitPanel === componentTracking);
+          });
+        });
       }
 
     });
