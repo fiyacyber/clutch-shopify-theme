@@ -252,6 +252,54 @@
                                     assign property_label = 'tracked_print.cart.destination_url' | t
                                   when 'Existing Clutch Code'
                                     assign property_label = 'tracked_print.cart.existing_code' | t
+                                  when 'Business Cards Tracking Mode'
+                                    assign property_label = 'tracked_print.cart.business_cards' | t
+                                    case property.last
+                                      when 'none'
+                                        assign property_value = 'tracked_print.cart.tracking_none' | t
+                                      when 'new_included_code'
+                                        assign property_value = 'tracked_print.cart.tracking_new' | t
+                                      when 'existing_code'
+                                        assign property_value = 'tracked_print.cart.tracking_existing' | t
+                                    endcase
+                                  when 'Door Hangers Tracking Mode'
+                                    assign property_label = 'tracked_print.cart.door_hangers' | t
+                                    case property.last
+                                      when 'none'
+                                        assign property_value = 'tracked_print.cart.tracking_none' | t
+                                      when 'new_included_code'
+                                        assign property_value = 'tracked_print.cart.tracking_new' | t
+                                      when 'existing_code'
+                                        assign property_value = 'tracked_print.cart.tracking_existing' | t
+                                    endcase
+                                  when 'Flyers Tracking Mode'
+                                    assign property_label = 'tracked_print.cart.flyers' | t
+                                    case property.last
+                                      when 'none'
+                                        assign property_value = 'tracked_print.cart.tracking_none' | t
+                                      when 'new_included_code'
+                                        assign property_value = 'tracked_print.cart.tracking_new' | t
+                                      when 'existing_code'
+                                        assign property_value = 'tracked_print.cart.tracking_existing' | t
+                                    endcase
+                                  when 'Business Cards Campaign Name'
+                                    assign property_label = 'tracked_print.cart.business_cards_campaign' | t
+                                  when 'Business Cards Destination URL'
+                                    assign property_label = 'tracked_print.cart.business_cards_destination' | t
+                                  when 'Business Cards Existing Clutch Code'
+                                    assign property_label = 'tracked_print.cart.business_cards_existing' | t
+                                  when 'Door Hangers Campaign Name'
+                                    assign property_label = 'tracked_print.cart.door_hangers_campaign' | t
+                                  when 'Door Hangers Destination URL'
+                                    assign property_label = 'tracked_print.cart.door_hangers_destination' | t
+                                  when 'Door Hangers Existing Clutch Code'
+                                    assign property_label = 'tracked_print.cart.door_hangers_existing' | t
+                                  when 'Flyers Campaign Name'
+                                    assign property_label = 'tracked_print.cart.flyers_campaign' | t
+                                  when 'Flyers Destination URL'
+                                    assign property_label = 'tracked_print.cart.flyers_destination' | t
+                                  when 'Flyers Existing Clutch Code'
+                                    assign property_label = 'tracked_print.cart.flyers_existing' | t
                                   when 'Artwork Method'
                                     assign property_label = 'tracked_print.cart.artwork_method' | t
                                     case property.last

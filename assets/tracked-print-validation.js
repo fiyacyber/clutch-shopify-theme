@@ -28,6 +28,14 @@ export function syncTrackedPrintControls(controls) {
   controls.querySelectorAll('[data-artwork-panel]').forEach((panel) => {
     activate(panel, panel.dataset.artworkPanel === artwork);
   });
+  if (controls.hasAttribute?.('data-business-kit-components')) {
+    controls.querySelectorAll('[data-business-kit-component]').forEach((component) => {
+      const mode = selected(component.dataset.trackingProperty);
+      component.querySelectorAll('[data-business-kit-panel]').forEach((panel) => {
+        activate(panel, panel.dataset.businessKitPanel === mode);
+      });
+    });
+  }
 }
 
 /**
@@ -49,11 +57,33 @@ export function validateTrackedPrintProductForm(form, event) {
   const invalid = [];
   const selected = (name) =>
     controls.querySelector(`[name="properties[${name}]"]:checked`)?.value || '';
-  const requireValue = (name, message) => {
+  const addInvalid = (message, field, label = '') => {
+    messages.push(label ? `${label}: ${message}` : message);
+    invalid.push(field);
+  };
+  const requireValue = (name, message, label = '') => {
     const field = controls.querySelector(`[name="properties[${name}]"]`);
     if (!field || field.disabled || String(field.value || '').trim()) return;
-    messages.push(message);
-    invalid.push(field);
+    addInvalid(message, field, label);
+  };
+  const requireDestination = (name, message, label = '') => {
+    const destination = controls.querySelector(`[name="properties[${name}]"]`);
+    const rawDestination = String(destination?.value || '');
+    let valid =
+      !destination?.disabled &&
+      rawDestination.length > 0 &&
+      rawDestination === rawDestination.trim() &&
+      !/\s/.test(rawDestination) &&
+      !rawDestination.startsWith('//');
+    if (valid) {
+      try {
+        const parsed = new URL(rawDestination);
+        valid = ['http:', 'https:'].includes(parsed.protocol) && !parsed.username && !parsed.password;
+      } catch {
+        valid = false;
+      }
+    }
+    if (!valid) addInvalid(message, destination, label);
   };
 
   const tracking = selected('Tracking Mode');
@@ -61,32 +91,25 @@ export function validateTrackedPrintProductForm(form, event) {
 
   if (tracking === 'new_included_code') {
     requireValue('Campaign Name', controls.dataset.campaignError);
-
-    const destination = controls.querySelector('[name="properties[Destination URL]"]');
-    const rawDestination = String(destination?.value || '');
-    let destinationIsValid =
-      rawDestination.length > 0 &&
-      rawDestination === rawDestination.trim() &&
-      !/\s/.test(rawDestination) &&
-      !rawDestination.startsWith('//');
-
-    if (destinationIsValid) {
-      try {
-        const parsed = new URL(rawDestination);
-        destinationIsValid = ['http:', 'https:'].includes(parsed.protocol);
-      } catch {
-        destinationIsValid = false;
-      }
-    }
-
-    if (!destinationIsValid) {
-      messages.push(controls.dataset.destinationError);
-      invalid.push(destination);
-    }
+    requireDestination('Destination URL', controls.dataset.destinationError);
   }
 
   if (tracking === 'existing_code') {
     requireValue('Existing Clutch Code', controls.dataset.existingError);
+  }
+
+  if (controls.hasAttribute?.('data-business-kit-components')) {
+    controls.querySelectorAll('[data-business-kit-component]').forEach((component) => {
+      const mode = selected(component.dataset.trackingProperty);
+      const label = component.dataset.componentLabel;
+      if (mode === 'new_included_code') {
+        requireValue(component.dataset.campaignProperty, controls.dataset.campaignError, label);
+        requireDestination(component.dataset.destinationProperty, controls.dataset.destinationError, label);
+      }
+      if (mode === 'existing_code') {
+        requireValue(component.dataset.existingProperty, controls.dataset.existingError, label);
+      }
+    });
   }
 
   if (artwork === 'upload_now') {
