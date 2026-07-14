@@ -7,7 +7,10 @@ const controls = read('snippets/tracked-print-product-controls.liquid');
 const options = read('snippets/clutch-print-product-options.liquid');
 const cart = read('snippets/cart-products.liquid');
 const productForm = read('assets/product-form.js');
+const validation = read('assets/tracked-print-validation.js');
 const buyButtons = read('blocks/buy-buttons.liquid');
+const quickAdd = read('snippets/quick-add.liquid');
+const locale = read('locales/en.default.json');
 
 test('controls are fail-closed behind the merchant metafield', () => {
   assert.match(options, /product\.metafields\.custom\.tracked_print_enabled\.value == true/);
@@ -32,15 +35,35 @@ test('canonical artwork methods and file contract are present', () => {
   assert.match(controls, /value="upload_later" checked/);
   assert.match(controls, /properties\[Artwork Upload URL\]/);
   assert.match(controls, /\.pdf,.png,.jpg,.jpeg,.tif,.tiff,.eps/);
-  assert.match(controls, /25 \* 1024 \* 1024/);
+  assert.match(validation, /25 \* 1024 \* 1024/);
 });
 
 test('browser validation covers conditional fields and safe URL protocols', () => {
-  assert.match(controls, /new URL\(destination\?\.value/);
-  assert.match(controls, /\['http:', 'https:'\]/);
-  assert.match(controls, /request_design[\s\S]*Artwork Instructions/);
-  assert.match(controls, /reorder_existing[\s\S]*Reorder Reference/);
-  assert.match(controls, /event\.preventDefault\(\)/);
+  assert.match(validation, /new URL\(rawDestination\)/);
+  assert.match(validation, /\['http:', 'https:'\]/);
+  assert.match(validation, /rawDestination === rawDestination\.trim\(\)/);
+  assert.match(validation, /!\/\\s\/\.test\(rawDestination\)/);
+  assert.match(validation, /!rawDestination\.startsWith\('\/\/'\)/);
+  assert.match(validation, /request_design[\s\S]*Artwork Instructions/);
+  assert.match(validation, /reorder_existing[\s\S]*Reorder Reference/);
+  assert.match(validation, /event\.preventDefault\(\)/);
+  assert.match(locale, /HTTP or HTTPS destination URL\. HTTPS is preferred\./);
+});
+
+test('AJAX request boundary validates before cart processing and returns immediately when invalid', () => {
+  const handlerStart = productForm.indexOf('handleSubmit(event)');
+  const handler = productForm.slice(handlerStart, productForm.indexOf('/** @returns {string | undefined} */', handlerStart));
+  const validationIndex = handler.indexOf('validateTrackedPrintProductForm(form, event)');
+  const returnIndex = handler.indexOf('if (!validateTrackedPrintProductForm(form, event)) return;');
+  const processIndex = handler.indexOf('#processAddToCart');
+  assert.ok(validationIndex >= 0);
+  assert.ok(returnIndex >= 0);
+  assert.ok(processIndex > returnIndex);
+});
+
+test('eligible accelerated checkout and direct quick add are disabled without affecting other products', () => {
+  assert.match(buyButtons, /unless is_smart_card_product or tracked_print_enabled/);
+  assert.match(quickAdd, /if tracked_print_enabled != true[\s\S]*assign quick_add_button = 'add'/);
 });
 
 test('browser never submits trusted material classification', () => {
@@ -69,7 +92,7 @@ test('cart renders friendly canonical values and keeps private properties hidden
 test('controls remain keyboard, screen-reader, and mobile friendly', () => {
   assert.match(controls, /<fieldset[\s\S]*<legend/);
   assert.match(controls, /role="alert" tabindex="-1"/);
-  assert.match(controls, /invalid\[0\]\?\.focus\(\)/);
+  assert.match(validation, /invalid\[0\]\?\.focus\(\)/);
   assert.match(controls, /@media screen and \(max-width: 749px\)/);
-  assert.match(controls, /form\.addEventListener\('submit',[\s\S]*true\)/);
+  assert.match(controls, /form\.addEventListener\('submit',[\s\S]*if \(!validator\)[\s\S]*event\.preventDefault\(\)[\s\S]*validator\(this\.form, event\)[\s\S]*true\)/);
 });

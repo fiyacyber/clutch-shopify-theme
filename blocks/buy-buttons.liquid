@@ -11,6 +11,11 @@
     assign is_smart_card_product = true
   endif
 
+  assign tracked_print_enabled = false
+  if product.metafields.custom.tracked_print_enabled.value == true
+    assign tracked_print_enabled = true
+  endif
+
   assign variant = closest.product.selected_or_first_available_variant
   assign inventory_quantity = variant.inventory_quantity
   assign inventory_policy = variant.inventory_policy
@@ -278,7 +283,7 @@
             add_to_cart_text: add_to_cart_text
           %}
 
-          {% unless is_smart_card_product %}
+          {% unless is_smart_card_product or tracked_print_enabled %}
             {% content_for 'block',
               type: 'accelerated-checkout',
               id: 'accelerated-checkout',

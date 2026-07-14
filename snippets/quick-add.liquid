@@ -23,8 +23,11 @@
   endif
 
   assign quick_add_button = 'choose'
-  if product.variants_count == 1 or product.options.size == 1 and product.selected_variant
-    assign quick_add_button = 'add'
+  assign tracked_print_enabled = product.metafields.custom.tracked_print_enabled.value
+  if tracked_print_enabled != true
+    if product.variants_count == 1 or product.options.size == 1 and product.selected_variant
+      assign quick_add_button = 'add'
+    endif
   endif
 %}
 
