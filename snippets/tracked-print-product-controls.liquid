@@ -5,6 +5,7 @@
   deliberately not submitted by the browser; the application resolves it from its trusted registry.
 
   @param {string} section_id - Parent section identifier used to create unique control IDs.
+  @param {object} product - Current product for the 90-day access feature gate.
   @param {boolean} [is_business_kit] - Uses the included Business Kit artwork presentation.
   @param {boolean} [artwork_only] - Omits the tracked-print contract when only artwork intake is required.
 {% enddoc %}
@@ -23,6 +24,9 @@
   data-instructions-error="{{ 'tracked_print.validation.instructions' | t | escape }}"
   data-reorder-error="{{ 'tracked_print.validation.reorder' | t | escape }}"
 >
+  {% if product.metafields.custom.clutch_codes_90_day_access_enabled.value == true %}
+    {% render 'clutch-codes-included-access', variant: 'full' %}
+  {% endif %}
   {% unless artwork_only %}
   <div class="tracked-print-controls__heading">
     <p class="clutch-eyebrow">{{ 'tracked_print.eyebrow' | t }}</p>
@@ -156,6 +160,9 @@
   {% unless artwork_only %}
     <input type="hidden" name="properties[_Tracked Print Contract]" value="phase4_v1">
   {% endunless %}
+  {% if product.metafields.custom.clutch_codes_90_day_access_enabled.value == true %}
+    <input type="hidden" name="properties[Clutch Codes Access]" value="none" data-clutch-codes-access-property>
+  {% endif %}
 </tracked-print-controls>
 
 {% stylesheet %}
@@ -222,6 +229,8 @@
         const placement = this.querySelector('[data-tracked-print-placement]');
         this.activate(placement, tracking !== 'none');
         this.querySelectorAll('[data-artwork-panel]').forEach((panel) => this.activate(panel, panel.dataset.artworkPanel === artwork));
+        const access = this.querySelector('[data-clutch-codes-access-property]');
+        if (access) access.value = tracking === 'new_included_code' ? 'included_90_days' : 'none';
       }
 
     });

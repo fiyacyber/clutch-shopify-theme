@@ -1,0 +1,35 @@
+{% doc %}
+  Renders the compact 90-day Clutch Codes offer. The caller must gate this
+  component with the merchant-owned custom.clutch_codes_90_day_access_enabled boolean.
+
+  @param {string} [variant] - 'full' for product forms or 'compact' for cards.
+{% enddoc %}
+
+{% if variant == 'compact' %}
+  <span class="clutch-codes-access-badge">90-Day Clutch Codes™ Access</span>
+{% else %}
+  <aside class="clutch-codes-access" aria-label="Included Clutch Codes access">
+    <p class="clutch-codes-access__eyebrow">Included with an eligible new code</p>
+    <h3>90 Days of Clutch Codes™ Access Included</h3>
+    <p>Choose a new Clutch Code for this print order to manage its destination and view basic scan analytics for 90 days. No automatic subscription or charge.</p>
+    <details>
+      <summary>How it works</summary>
+      <ol>
+        <li>Add a new Clutch Code</li>
+        <li>Choose its destination</li>
+        <li>Manage the code and view scans for 90 days</li>
+        <li>Subscribe later to continue editing and analytics</li>
+      </ol>
+    </details>
+  </aside>
+{% endif %}
+
+{% stylesheet %}
+  .clutch-codes-access { padding: 1rem 1.1rem; border: 1px solid color-mix(in srgb, #384862 24%, transparent); border-left: 4px solid #ffa665; border-radius: .7rem; background: #fff; color: #384862; }
+  .clutch-codes-access h3 { margin: .15rem 0 .45rem; color: #384862; font-size: clamp(1.15rem, 2vw, 1.45rem); }
+  .clutch-codes-access p { margin: 0 0 .65rem; }
+  .clutch-codes-access__eyebrow { color: #76502f; font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .clutch-codes-access summary { cursor: pointer; font-weight: 700; }
+  .clutch-codes-access ol { margin-bottom: 0; padding-left: 1.25rem; }
+  .clutch-codes-access-badge { display: inline-flex; width: fit-content; margin-top: .45rem; padding: .3rem .55rem; border-radius: 999px; background: #fff1e7; color: #5c3a20; font-size: .76rem; font-weight: 750; line-height: 1.2; }
+{% endstylesheet %}

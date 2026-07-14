@@ -277,6 +277,13 @@
                                     assign property_label = 'tracked_print.cart.reorder_reference' | t
                                   when 'QR Placement Instructions'
                                     assign property_label = 'tracked_print.cart.placement_instructions' | t
+                                  when 'Clutch Codes Access'
+                                    assign property_label = 'Clutch Codes Access'
+                                    if property.last == 'included_90_days'
+                                      assign property_value = '90 Days Included'
+                                    else
+                                      assign property_value = 'None'
+                                    endif
                                 endcase
                               -%}
                               <div class="cart-items__property">
