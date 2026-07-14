@@ -102,6 +102,20 @@
             {% assign first_accordion_open = false %}
             {% assign animation_index = 0 %}
             {%- for link in linklist.links -%}
+              {% if link.url == routes.root_url %}
+                {% continue %}
+              {% endif %}
+              {% if link.url contains '/pages/qr-pro' %}
+                {% continue %}
+              {% endif %}
+              {% assign clutch_mobile_title = link.title %}
+              {% assign clutch_mobile_url = link.url %}
+              {% if link.title == 'Business Kits' %}
+                {% assign clutch_mobile_url = routes.collections_url | append: '/business-kits' %}
+              {% endif %}
+              {% if link.url contains '/pages/smart-business-card' or link.url contains '/products/clutch-connect-card' %}
+                {% assign clutch_mobile_title = 'Clutch NFC Card' %}
+              {% endif %}
               {% assign animation_index = animation_index | plus: 1 %}
               <li
                 style="--menu-drawer-animation-index: {{ animation_index }};"
@@ -126,7 +140,7 @@
                         id="HeaderDrawer-{{ link.handle }}"
                         class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset"
                       >
-                        <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                        <span class="menu-drawer__menu-item-text wrap-text">{{ clutch_mobile_title | escape }}</span>
                         <span class="svg-wrapper icon-plus">
                           {{- 'icon-plus.svg' | inline_asset_content -}}
                         </span>
@@ -184,13 +198,13 @@
                   {%- endcomment -%}
                   <a
                     id="HeaderDrawer-{{ link.handle }}"
-                    href="{{ link.url }}"
+                    href="{{ clutch_mobile_url }}"
                     class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset"
                     {% if link.current %}
                       aria-current="page"
                     {% endif %}
                   >
-                    <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                    <span class="menu-drawer__menu-item-text wrap-text">{{ clutch_mobile_title | escape }}</span>
                   </a>
                   {% liquid
                     assign render_link_image = false
@@ -238,16 +252,34 @@
                   {%- endcomment -%}
                   <a
                     id="HeaderDrawer-{{ link.handle }}"
-                    href="{{ link.url }}"
+                    href="{{ clutch_mobile_url }}"
                     class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset"
                     {% if link.current %}
                       aria-current="page"
                     {% endif %}
                   >
-                    <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                    <span class="menu-drawer__menu-item-text wrap-text">{{ clutch_mobile_title | escape }}</span>
                   </a>
                 {% endif %}
               </li>
+              {% if link.title == 'Business Kits' %}
+                {% assign animation_index = animation_index | plus: 1 %}
+                <li
+                  style="--menu-drawer-animation-index: {{ animation_index }};"
+                  class="menu-drawer__list-item--flat{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
+                >
+                  <a
+                    id="HeaderDrawer-clutch-codes"
+                    href="/pages/qr-pro"
+                    class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset{% if request.path contains '/pages/qr-pro' %} menu-drawer__menu-item--active{% endif %}"
+                    {% if request.path contains '/pages/qr-pro' %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    <span class="menu-drawer__menu-item-text wrap-text">Clutch Codes™</span>
+                  </a>
+                </li>
+              {% endif %}
             {%- endfor -%}
           {% else %}
             {%- comment -%}
@@ -255,6 +287,20 @@
             {%- endcomment -%}
             {% assign animation_index = 0 %}
             {%- for link in linklist.links -%}
+              {% if link.url == routes.root_url %}
+                {% continue %}
+              {% endif %}
+              {% if link.url contains '/pages/qr-pro' %}
+                {% continue %}
+              {% endif %}
+              {% assign clutch_mobile_title = link.title %}
+              {% assign clutch_mobile_url = link.url %}
+              {% if link.title == 'Business Kits' %}
+                {% assign clutch_mobile_url = routes.collections_url | append: '/business-kits' %}
+              {% endif %}
+              {% if link.url contains '/pages/smart-business-card' or link.url contains '/products/clutch-connect-card' %}
+                {% assign clutch_mobile_title = 'Clutch NFC Card' %}
+              {% endif %}
               {% assign animation_index = animation_index | plus: 1 %}
               <li
                 class="menu-drawer__list-item"
@@ -273,7 +319,7 @@
                       class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset{% if link.child_active %} menu-drawer__menu-item--active{% endif %}"
                       on:click="header-drawer/open/submenu"
                     >
-                      <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                      <span class="menu-drawer__menu-item-text wrap-text">{{ clutch_mobile_title | escape }}</span>
                       <span class="svg-wrapper icon-caret icon-caret--forward">
                         {{- 'icon-caret.svg' | inline_asset_content -}}
                       </span>
@@ -289,12 +335,12 @@
                           <button
                             class="button menu-drawer__back-button focus-inset"
                             on:click="header-drawer/back"
-                            aria-label="{{ 'actions.back_to' | t: title: link.title }}"
+                            aria-label="{{ 'actions.back_to' | t: title: clutch_mobile_title }}"
                           >
                             <span class="svg-wrapper icon-caret icon-caret--backward">
                               {{- 'icon-caret.svg' | inline_asset_content -}}
                             </span>
-                            <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                            <span class="menu-drawer__menu-item-text wrap-text">{{ clutch_mobile_title | escape }}</span>
                           </button>
                           <button
                             class="button button-unstyled close-button menu-drawer__close-button"
@@ -558,16 +604,34 @@
                   {%- endcomment -%}
                   <a
                     id="HeaderDrawer-{{ link.handle }}"
-                    href="{{ link.url }}"
+                    href="{{ clutch_mobile_url }}"
                     class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset"
                     {% if link.current %}
                       aria-current="page"
                     {% endif %}
                   >
-                    <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                    <span class="menu-drawer__menu-item-text wrap-text">{{ clutch_mobile_title | escape }}</span>
                   </a>
                 {%- endif -%}
               </li>
+              {% if link.title == 'Business Kits' %}
+                {% assign animation_index = animation_index | plus: 1 %}
+                <li
+                  class="menu-drawer__list-item"
+                  style="--menu-drawer-animation-index: {{ animation_index }};"
+                >
+                  <a
+                    id="HeaderDrawer-clutch-codes"
+                    href="/pages/qr-pro"
+                    class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset{% if request.path contains '/pages/qr-pro' %} menu-drawer__menu-item--active{% endif %}"
+                    {% if request.path contains '/pages/qr-pro' %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    <span class="menu-drawer__menu-item-text wrap-text">Clutch Codes™</span>
+                  </a>
+                </li>
+              {% endif %}
             {%- endfor -%}
           {% endif %}
         </ul>
