@@ -48,7 +48,7 @@
       </div>
 
       <div class="clutch-kit-landing__compare" aria-label="Business Kit comparison">
-        <article class="clutch-kit-card">
+        <article class="clutch-kit-card" data-product-source="{% if starter_product == blank %}fallback{% else %}shopify-product{% endif %}">
           <a class="clutch-kit-card__media" href="{{ starter_url }}" aria-label="View {{ starter_product.title | default: 'Starter Kit' | escape }}">
             {% if starter_product.featured_image != blank %}
               {{ starter_product.featured_image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: '(min-width: 960px) 31vw, 100vw', loading: 'lazy', class: 'clutch-kit-card__image' }}
@@ -58,10 +58,10 @@
           </a>
           <div class="clutch-kit-card__body">
             <span class="clutch-kit-card__label">Starter</span>
-            <h3>{{ starter_product.title | default: 'Starter Kit' }}</h3>
+            <h3><a class="clutch-kit-card__title-link" href="{{ starter_url }}">{{ starter_product.title | default: 'Starter Kit' }}</a></h3>
             <p class="clutch-kit-card__outcome">Build a polished foundation for launch-day outreach and everyday networking.</p>
             {% if starter_product != blank %}
-              <p class="clutch-kit-card__price" aria-label="Current price {{ starter_product.price_min | money_without_trailing_zeros }}">{{ starter_product.price_min | money_without_trailing_zeros }}</p>
+              <p class="clutch-kit-card__price"><a class="clutch-kit-card__price-link" href="{{ starter_url }}" aria-label="View Starter Kit, current price {{ starter_product.price_min | money_without_trailing_zeros }}">{{ starter_product.price_min | money_without_trailing_zeros }}</a></p>
             {% endif %}
             <p class="clutch-kit-card__design"><strong>Professional Design Included</strong><span>$200 Value</span></p>
             <div class="clutch-kit-card__contains">
@@ -76,7 +76,7 @@
           </div>
         </article>
 
-        <article class="clutch-kit-card clutch-kit-card--featured">
+        <article class="clutch-kit-card clutch-kit-card--featured" data-product-source="{% if growth_product == blank %}fallback{% else %}shopify-product{% endif %}">
           <span class="clutch-kit-card__badge">Most Popular</span>
           <a class="clutch-kit-card__media" href="{{ growth_url }}" aria-label="View {{ growth_product.title | default: 'Growth Kit' | escape }}">
             {% if growth_product.featured_image != blank %}
@@ -87,10 +87,10 @@
           </a>
           <div class="clutch-kit-card__body">
             <span class="clutch-kit-card__label">Growth</span>
-            <h3>{{ growth_product.title | default: 'Growth Kit' }}</h3>
+            <h3><a class="clutch-kit-card__title-link" href="{{ growth_url }}">{{ growth_product.title | default: 'Growth Kit' }}</a></h3>
             <p class="clutch-kit-card__outcome">Scale local outreach with coordinated materials for larger campaigns.</p>
             {% if growth_product != blank %}
-              <p class="clutch-kit-card__price" aria-label="Current price {{ growth_product.price_min | money_without_trailing_zeros }}">{{ growth_product.price_min | money_without_trailing_zeros }}</p>
+              <p class="clutch-kit-card__price"><a class="clutch-kit-card__price-link" href="{{ growth_url }}" aria-label="View Growth Kit, current price {{ growth_product.price_min | money_without_trailing_zeros }}">{{ growth_product.price_min | money_without_trailing_zeros }}</a></p>
             {% endif %}
             <p class="clutch-kit-card__design"><strong>Professional Design Included</strong><span>$200 Value</span></p>
             <div class="clutch-kit-card__contains">
@@ -262,6 +262,14 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  }
+
+  .clutch-kit-card:has(.clutch-kit-card__title-link:hover),
+  .clutch-kit-card:has(.clutch-kit-card__title-link:focus-visible) {
+    border-color: rgba(255, 166, 101, 0.85);
+    box-shadow: 0 18px 40px rgba(56, 72, 98, 0.14);
+    transform: translateY(-2px);
   }
 
   .clutch-kit-card--featured {
@@ -289,6 +297,8 @@
     background: #e8edf2;
     display: block;
     overflow: hidden;
+    position: relative;
+    z-index: 2;
   }
 
   .clutch-kit-card__image {
@@ -347,6 +357,34 @@
     padding: 1.25rem;
   }
 
+  .clutch-kit-card__title-link,
+  .clutch-kit-card__price-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .clutch-kit-card__price-link {
+    position: relative;
+    z-index: 2;
+  }
+
+  .clutch-kit-card__title-link::after {
+    content: '';
+    inset: 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .clutch-kit-card__title-link:hover,
+  .clutch-kit-card__title-link:focus-visible,
+  .clutch-kit-card__price-link:hover,
+  .clutch-kit-card__price-link:focus-visible {
+    text-decoration: underline;
+    text-decoration-color: #c66f32;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
+  }
+
   .clutch-kit-card__label {
     display: block;
     margin-bottom: 0.55rem;
@@ -393,6 +431,8 @@
 
   .clutch-kit-card__contains {
     margin-top: 1.15rem;
+    position: relative;
+    z-index: 2;
   }
 
   .clutch-kit-card__contains > strong {
@@ -443,6 +483,8 @@
 
   .clutch-kit-card .clutch-kit-button {
     margin-top: auto;
+    position: relative;
+    z-index: 2;
   }
 
   .clutch-kit-button--primary {
@@ -469,7 +511,9 @@
 
   .clutch-kit-button:focus-visible,
   .clutch-kit-text-link:focus-visible,
-  .clutch-kit-card__media:focus-visible {
+  .clutch-kit-card__media:focus-visible,
+  .clutch-kit-card__title-link:focus-visible,
+  .clutch-kit-card__price-link:focus-visible {
     outline: 3px solid #ffa665;
     outline-offset: 3px;
   }
@@ -586,11 +630,14 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .clutch-kit-button {
+    .clutch-kit-button,
+    .clutch-kit-card {
       transition: none;
     }
 
-    .clutch-kit-button:hover {
+    .clutch-kit-button:hover,
+    .clutch-kit-card:has(.clutch-kit-card__title-link:hover),
+    .clutch-kit-card:has(.clutch-kit-card__title-link:focus-visible) {
       transform: none;
     }
   }

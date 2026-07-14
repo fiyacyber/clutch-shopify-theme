@@ -41,12 +41,12 @@
 
   assign starter_kit_product = section.settings.starter_kit_product
   if starter_kit_product == blank
-    assign starter_kit_product = all_products['startup-kit']
+    assign starter_kit_product = all_products['starter-business-kit']
   endif
 
   assign growth_kit_product = section.settings.growth_kit_product
   if growth_kit_product == blank
-    assign growth_kit_product = all_products['growth-kit']
+    assign growth_kit_product = all_products['growth-business-kit']
   endif
 
   assign custom_kit_product = section.settings.custom_kit_product
@@ -259,13 +259,15 @@
               when 'growth'
                 assign kit_product = growth_kit_product
               when 'custom'
-                assign kit_product = custom_kit_product
+                assign kit_product = blank
             endcase
             assign kit_url = kit_product.url
             if kit_key == 'custom' and kit_url == blank
               assign kit_url = custom_order_url
-            elsif kit_url == blank
-              assign kit_url = '/collections/business-kits'
+            elsif kit_key == 'starter' and kit_url == blank
+              assign kit_url = '/products/starter-business-kit'
+            elsif kit_key == 'growth' and kit_url == blank
+              assign kit_url = '/products/growth-business-kit'
             endif
           -%}
           <a class="chp-kit-card chp-reveal{% if kit_key == 'growth' %} chp-kit-card--featured{% endif %}" href="{{ kit_url }}" style="--chp-stagger: {{ forloop.index0 | times: 80 }}ms">
