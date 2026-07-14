@@ -1,6 +1,36 @@
 const TRACKED_PRINT_CONTROLS_SELECTOR = '[data-tracked-print-controls]';
 
 /**
+ * Keeps conditional tracked-print fields visible and enabled even when the
+ * theme renders this snippet without upgrading its custom element.
+ *
+ * @param {Element | null | undefined} controls
+ */
+export function syncTrackedPrintControls(controls) {
+  if (!controls) return;
+
+  const selected = (name) =>
+    controls.querySelector(`[name="properties[${name}]"]:checked`)?.value || '';
+  const activate = (container, active) => {
+    if (!container) return;
+    container.hidden = !active;
+    container.querySelectorAll('input, textarea, select').forEach((field) => {
+      field.disabled = !active;
+    });
+  };
+
+  const tracking = selected('Tracking Mode');
+  const artwork = selected('Artwork Method');
+  controls.querySelectorAll('[data-tracked-print-panel]').forEach((panel) => {
+    activate(panel, panel.dataset.trackedPrintPanel === tracking);
+  });
+  activate(controls.querySelector('[data-tracked-print-placement]'), tracking !== 'none');
+  controls.querySelectorAll('[data-artwork-panel]').forEach((panel) => {
+    activate(panel, panel.dataset.artworkPanel === artwork);
+  });
+}
+
+/**
  * Validates tracked-print controls belonging to one active Shopify product form.
  * Forms without eligible tracked-print controls pass through unchanged.
  *
@@ -12,7 +42,8 @@ export function validateTrackedPrintProductForm(form, event) {
   const controls = form?.querySelector(TRACKED_PRINT_CONTROLS_SELECTOR);
   if (!controls) return true;
 
-  controls.sync?.();
+  if (typeof controls.sync === 'function') controls.sync();
+  else syncTrackedPrintControls(controls);
 
   const messages = [];
   const invalid = [];
@@ -108,5 +139,21 @@ export function validateTrackedPrintProductForm(form, event) {
 }
 
 if (typeof window !== 'undefined') {
-  window.ClutchTrackedPrintValidation = { validateTrackedPrintProductForm };
+  window.ClutchTrackedPrintValidation = { validateTrackedPrintProductForm, syncTrackedPrintControls };
+
+  const syncAll = () => {
+    document.querySelectorAll(TRACKED_PRINT_CONTROLS_SELECTOR).forEach(syncTrackedPrintControls);
+  };
+  document.addEventListener('change', (event) => {
+    const controls = event.target?.closest?.(TRACKED_PRINT_CONTROLS_SELECTOR);
+    if (controls) syncTrackedPrintControls(controls);
+  });
+  document.addEventListener('submit', (event) => {
+    const form = event.target;
+    if (form?.querySelector?.(TRACKED_PRINT_CONTROLS_SELECTOR)) {
+      validateTrackedPrintProductForm(form, event);
+    }
+  }, true);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', syncAll, { once: true });
+  else syncAll();
 }

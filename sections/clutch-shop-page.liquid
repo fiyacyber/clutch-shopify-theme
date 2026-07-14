@@ -78,12 +78,12 @@
 
   assign starter_kit_product = section.settings.starter_kit_product
   if starter_kit_product == blank
-    assign starter_kit_product = all_products['startup-kit']
+    assign starter_kit_product = all_products['starter-business-kit']
   endif
 
   assign growth_kit_product = section.settings.growth_kit_product
   if growth_kit_product == blank
-    assign growth_kit_product = all_products['growth-kit']
+    assign growth_kit_product = all_products['growth-business-kit']
   endif
 
   assign custom_kit_product = section.settings.custom_kit_product
@@ -483,7 +483,7 @@
               <a class="csp-card-cta" href="{{ starter_kit_product.url }}">View Starter Kit</a>
             {%- else -%}
               <strong>Current pricing</strong>
-              <a class="csp-card-cta" href="{{ routes.collections_url }}/business-kits">View Starter Kit</a>
+              <a class="csp-card-cta" href="/products/starter-business-kit">View Starter Kit</a>
             {%- endif -%}
           </article>
           <article class="csp-kit-card csp-kit-card--featured csp-reveal">
@@ -495,14 +495,14 @@
               <a class="csp-card-cta" href="{{ growth_kit_product.url }}">View Growth Kit</a>
             {%- else -%}
               <strong>Current pricing</strong>
-              <a class="csp-card-cta" href="{{ routes.collections_url }}/business-kits">View Growth Kit</a>
+              <a class="csp-card-cta" href="/products/growth-business-kit">View Growth Kit</a>
             {%- endif -%}
           </article>
           <article class="csp-kit-card csp-reveal">
             <h3>Custom Business Kit</h3>
             <p>Choose your own products, quantities, campaign goals, and production requirements.</p>
             <strong>Custom Quote</strong>
-            <a class="csp-card-cta" href="{% if custom_kit_product != blank and custom_kit_product.price_min > 0 %}{{ custom_kit_product.url }}{% else %}{{ custom_order_url }}{% endif %}">Request a Custom Kit</a>
+            <a class="csp-card-cta" href="{{ custom_order_url }}">Request a Custom Kit</a>
           </article>
         </div>
       </div>

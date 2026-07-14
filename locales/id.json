@@ -385,6 +385,22 @@
       "instructions_help": "Optional unless you are requesting design assistance.",
       "reorder_reference": "Previous order reference"
     },
+    "business_kit": {
+      "design_title": "Professional Design Included",
+      "design_value": "$200 Value",
+      "design_help": "Work with Clutch to prepare a coordinated, print-ready design for the products included in your Business Kit.",
+      "artwork_legend": "How Would You Like to Provide Your Artwork?",
+      "upload_now_title": "Upload Print-Ready Artwork",
+      "upload_now_help": "Upload completed files now for review.",
+      "upload_later_title": "Send Artwork After Ordering",
+      "upload_later_help": "Complete checkout now and send your files securely afterward.",
+      "request_design_title": "Request Included Professional Design",
+      "request_design_help": "Professional design is included with your Business Kit at no additional charge.",
+      "request_panel_title": "Tell Us About Your Business",
+      "request_panel_help": "Share the information you want included. We’ll contact you if logos, photos, or other files are still needed.",
+      "instructions_placeholder": "Business name, industry, preferred colors, contact details, services, key message, and any design preferences.",
+      "reorder_title": "Reorder an Existing Kit"
+    },
     "validation": {
       "heading": "Please complete your print setup:",
       "campaign": "Enter a campaign name.",
@@ -408,6 +424,7 @@
       "artwork_upload_now": "Uploaded with order",
       "artwork_upload_later": "Upload after checkout",
       "artwork_request_design": "Design help requested",
+      "artwork_request_design_included": "Included Professional Design",
       "artwork_reorder": "Reuse existing artwork",
       "artwork_file": "Artwork file",
       "artwork_instructions": "Artwork instructions",
