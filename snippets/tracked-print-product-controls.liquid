@@ -5,11 +5,15 @@
   deliberately not submitted by the browser; the application resolves it from its trusted registry.
 
   @param {string} section_id - Parent section identifier used to create unique control IDs.
+  @param {boolean} [is_business_kit] - Uses the included Business Kit artwork presentation.
+  @param {boolean} [artwork_only] - Omits the tracked-print contract when only artwork intake is required.
 {% enddoc %}
 
 <tracked-print-controls
   class="tracked-print-controls"
   data-tracked-print-controls
+  {% if is_business_kit %}data-business-kit-artwork{% endif %}
+  {% if artwork_only %}data-artwork-only{% endif %}
   data-campaign-error="{{ 'tracked_print.validation.campaign' | t | escape }}"
   data-destination-error="{{ 'tracked_print.validation.destination' | t | escape }}"
   data-existing-error="{{ 'tracked_print.validation.existing' | t | escape }}"
@@ -19,6 +23,7 @@
   data-instructions-error="{{ 'tracked_print.validation.instructions' | t | escape }}"
   data-reorder-error="{{ 'tracked_print.validation.reorder' | t | escape }}"
 >
+  {% unless artwork_only %}
   <div class="tracked-print-controls__heading">
     <p class="clutch-eyebrow">{{ 'tracked_print.eyebrow' | t }}</p>
     <h3>{{ 'tracked_print.heading' | t }}</h3>
@@ -59,24 +64,43 @@
     <label for="tracked-print-placement-{{ section_id }}">{{ 'tracked_print.tracking.placement' | t }}</label>
     <textarea id="tracked-print-placement-{{ section_id }}" name="properties[QR Placement Instructions]" rows="3" maxlength="500" disabled></textarea>
   </div>
+  {% endunless %}
 
   <fieldset class="tracked-print-controls__group" data-tracked-print-artwork>
-    <legend>{{ 'tracked_print.artwork.legend' | t }}</legend>
+    <legend>
+      {% if is_business_kit %}
+        {{ 'tracked_print.business_kit.artwork_legend' | t }}
+      {% else %}
+        {{ 'tracked_print.artwork.legend' | t }}
+      {% endif %}
+    </legend>
     <label>
       <input type="radio" name="properties[Artwork Method]" value="upload_now">
-      <span><strong>{{ 'tracked_print.artwork.upload_now_title' | t }}</strong><small>{{ 'tracked_print.artwork.upload_now_help' | t }}</small></span>
+      <span>
+        <strong>{% if is_business_kit %}{{ 'tracked_print.business_kit.upload_now_title' | t }}{% else %}{{ 'tracked_print.artwork.upload_now_title' | t }}{% endif %}</strong>
+        <small>{% if is_business_kit %}{{ 'tracked_print.business_kit.upload_now_help' | t }}{% else %}{{ 'tracked_print.artwork.upload_now_help' | t }}{% endif %}</small>
+      </span>
     </label>
     <label>
       <input type="radio" name="properties[Artwork Method]" value="upload_later" checked>
-      <span><strong>{{ 'tracked_print.artwork.upload_later_title' | t }}</strong><small>{{ 'tracked_print.artwork.upload_later_help' | t }}</small></span>
+      <span>
+        <strong>{% if is_business_kit %}{{ 'tracked_print.business_kit.upload_later_title' | t }}{% else %}{{ 'tracked_print.artwork.upload_later_title' | t }}{% endif %}</strong>
+        <small>{% if is_business_kit %}{{ 'tracked_print.business_kit.upload_later_help' | t }}{% else %}{{ 'tracked_print.artwork.upload_later_help' | t }}{% endif %}</small>
+      </span>
     </label>
     <label>
       <input type="radio" name="properties[Artwork Method]" value="request_design">
-      <span><strong>{{ 'tracked_print.artwork.request_design_title' | t }}</strong><small>{{ 'tracked_print.artwork.request_design_help' | t }}</small></span>
+      <span>
+        <strong>{% if is_business_kit %}{{ 'tracked_print.business_kit.request_design_title' | t }}{% else %}{{ 'tracked_print.artwork.request_design_title' | t }}{% endif %}</strong>
+        <small>{% if is_business_kit %}{{ 'tracked_print.business_kit.request_design_help' | t }}{% else %}{{ 'tracked_print.artwork.request_design_help' | t }}{% endif %}</small>
+      </span>
     </label>
-    <label>
+    <label{% if is_business_kit %} class="tracked-print-controls__choice--secondary"{% endif %}>
       <input type="radio" name="properties[Artwork Method]" value="reorder_existing">
-      <span><strong>{{ 'tracked_print.artwork.reorder_title' | t }}</strong><small>{{ 'tracked_print.artwork.reorder_help' | t }}</small></span>
+      <span>
+        <strong>{% if is_business_kit %}{{ 'tracked_print.business_kit.reorder_title' | t }}{% else %}{{ 'tracked_print.artwork.reorder_title' | t }}{% endif %}</strong>
+        <small>{{ 'tracked_print.artwork.reorder_help' | t }}</small>
+      </span>
     </label>
   </fieldset>
 
@@ -94,7 +118,22 @@
   </div>
 
   <div class="tracked-print-controls__panel" data-artwork-panel="request_design" hidden>
-    <p>{{ 'tracked_print.artwork.request_design_prompt' | t }}</p>
+    {% if is_business_kit %}
+      <h4>{{ 'tracked_print.business_kit.request_panel_title' | t }}</h4>
+      <p id="tracked-print-design-help-{{ section_id }}">{{ 'tracked_print.business_kit.request_panel_help' | t }}</p>
+      <label for="tracked-print-instructions-{{ section_id }}">{{ 'tracked_print.artwork.instructions' | t }}</label>
+      <textarea
+        id="tracked-print-instructions-{{ section_id }}"
+        name="properties[Artwork Instructions]"
+        rows="5"
+        maxlength="2000"
+        placeholder="{{ 'tracked_print.business_kit.instructions_placeholder' | t | escape }}"
+        aria-describedby="tracked-print-design-help-{{ section_id }}"
+        disabled
+      ></textarea>
+    {% else %}
+      <p>{{ 'tracked_print.artwork.request_design_prompt' | t }}</p>
+    {% endif %}
   </div>
 
   <div class="tracked-print-controls__panel" data-artwork-panel="reorder_existing" hidden>
@@ -102,17 +141,21 @@
     <input id="tracked-print-reorder-{{ section_id }}" type="text" name="properties[Reorder Reference]" maxlength="200" disabled>
   </div>
 
+  {% unless is_business_kit %}
   <div class="tracked-print-controls__panel">
     <label for="tracked-print-instructions-{{ section_id }}">{{ 'tracked_print.artwork.instructions' | t }}</label>
     <textarea id="tracked-print-instructions-{{ section_id }}" name="properties[Artwork Instructions]" rows="4" maxlength="2000"></textarea>
     <p>{{ 'tracked_print.artwork.instructions_help' | t }}</p>
   </div>
+  {% endunless %}
 
   <div class="tracked-print-controls__errors" role="alert" tabindex="-1" data-tracked-print-errors hidden>
     <strong>{{ 'tracked_print.validation.heading' | t }}</strong>
     <ul></ul>
   </div>
-  <input type="hidden" name="properties[_Tracked Print Contract]" value="phase4_v1">
+  {% unless artwork_only %}
+    <input type="hidden" name="properties[_Tracked Print Contract]" value="phase4_v1">
+  {% endunless %}
 </tracked-print-controls>
 
 {% stylesheet %}
@@ -121,11 +164,15 @@
   .tracked-print-controls__heading h3 { color: #384862; }
   .tracked-print-controls__group { display: grid; gap: 0.65rem; margin: 0; padding: 0; border: 0; }
   .tracked-print-controls__group legend { margin-block-end: 0.5rem; font-weight: 700; }
-  .tracked-print-controls__group label { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem; border: 1px solid #d7dce3; border-radius: 0.55rem; cursor: pointer; }
+  .tracked-print-controls__group label { display: flex; gap: 0.75rem; align-items: flex-start; min-height: 44px; padding: 0.85rem; border: 1px solid #d7dce3; border-radius: 0.55rem; cursor: pointer; }
+  .tracked-print-controls__group label:focus-within { border-color: #384862; outline: 3px solid color-mix(in srgb, #ffa665 65%, transparent); outline-offset: 2px; }
+  .tracked-print-controls__choice--secondary { background: #f8f9fb; }
   .tracked-print-controls__group input { margin-block-start: 0.25rem; }
   .tracked-print-controls__group span { display: grid; gap: 0.2rem; }
   .tracked-print-controls__group small, .tracked-print-controls__panel p { color: #56657b; }
+  .tracked-print-controls__panel h4 { margin: 0; color: #384862; }
   .tracked-print-controls__panel { display: grid; gap: 0.45rem; padding: 1rem; border-left: 4px solid #ffa665; background: #f8f9fb; }
+  .tracked-print-controls__panel[hidden] { display: none; }
   .tracked-print-controls__panel input, .tracked-print-controls__panel textarea { width: 100%; padding: 0.75rem; border: 1px solid #8792a3; border-radius: 0.35rem; color: #1c2636; background: #fff; }
   .tracked-print-controls__errors { padding: 1rem; border: 2px solid #a52626; border-radius: 0.5rem; background: #fff2f2; color: #701b1b; }
   .tracked-print-controls__errors ul { margin-block-end: 0; }
@@ -163,6 +210,7 @@
       }
 
       activate(container, active) {
+        if (!container) return;
         container.hidden = !active;
         container.querySelectorAll('input, textarea, select').forEach((field) => { field.disabled = !active; });
       }

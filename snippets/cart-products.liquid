@@ -260,7 +260,12 @@
                                       when 'upload_later'
                                         assign property_value = 'tracked_print.cart.artwork_upload_later' | t
                                       when 'request_design'
-                                        assign property_value = 'tracked_print.cart.artwork_request_design' | t
+                                        case item.product.handle
+                                          when 'starter-business-kit', 'growth-business-kit', 'starter-kit', 'startup-kit', 'growth-kit'
+                                            assign property_value = 'tracked_print.cart.artwork_request_design_included' | t
+                                          else
+                                            assign property_value = 'tracked_print.cart.artwork_request_design' | t
+                                        endcase
                                       when 'reorder_existing'
                                         assign property_value = 'tracked_print.cart.artwork_reorder' | t
                                     endcase
