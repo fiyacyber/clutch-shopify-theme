@@ -94,5 +94,6 @@ test('controls remain keyboard, screen-reader, and mobile friendly', () => {
   assert.match(controls, /role="alert" tabindex="-1"/);
   assert.match(validation, /invalid\[0\]\?\.focus\(\)/);
   assert.match(controls, /@media screen and \(max-width: 749px\)/);
+  assert.match(controls, /addEventListener\('keydown',[\s\S]*event\.key !== 'Enter'[\s\S]*\['text', 'url'\][\s\S]*form\.requestSubmit\(\)/);
   assert.match(controls, /form\.addEventListener\('submit',[\s\S]*if \(!validator\)[\s\S]*event\.preventDefault\(\)[\s\S]*validator\(this\.form, event\)[\s\S]*true\)/);
 });
