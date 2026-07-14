@@ -13,6 +13,11 @@
   assign product_handle = product.handle | downcase
   assign is_business_kit = false
   assign is_connect_card = false
+  assign tracked_print_enabled = false
+
+  if product.metafields.custom.tracked_print_enabled.value == true
+    assign tracked_print_enabled = true
+  endif
 
   if product_handle == 'starter-kit' or product_handle == 'startup-kit' or product_handle == 'growth-kit'
     assign is_business_kit = true
@@ -286,6 +291,11 @@
       </p>
     {% endunless %}
 
+    {% if tracked_print_enabled %}
+      {% render 'tracked-print-product-controls', section_id: section_id %}
+    {% endif %}
+
+    {% unless tracked_print_enabled %}
     <div class="clutch-option-card clutch-option-card--highlight">
       <label class="clutch-field-label" for="clutch-artwork-file-{{ section_id }}">Artwork &amp; File Upload</label>
       <input
@@ -299,6 +309,7 @@
         Accepted files: PDF, AI, EPS, PSD, PNG, JPG. 300 DPI recommended. 0.125 inch bleed required when applicable.
       </p>
     </div>
+    {% endunless %}
 
     {% if is_business_kit %}
       <div class="clutch-option-card clutch-option-card--included">

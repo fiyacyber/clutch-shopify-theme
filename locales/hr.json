@@ -355,5 +355,71 @@
       "success_moderated": "Komentar je objavljen, čeka moderiranje",
       "success": "Komentar objavljen"
     }
+  },
+  "tracked_print": {
+    "eyebrow": "CLUTCH CODES™ + PRINT",
+    "heading": "Make This Print Trackable",
+    "description": "Add a dynamic Clutch Code™ to this print run and track scans after delivery.",
+    "tracking": {
+      "legend": "Clutch Code tracking",
+      "none_title": "No tracking",
+      "none_help": "Print this item without a Clutch Code.",
+      "new_title": "Create a new included Clutch Code",
+      "new_help": "Create one dynamic code for this line item. The ordered quantity shares that code.",
+      "existing_title": "Use an existing Clutch Code",
+      "existing_help": "Use an active, editable subscription code already in your account.",
+      "campaign": "Campaign name",
+      "destination": "Destination URL",
+      "existing_reference": "Existing Clutch Code",
+      "existing_reference_help": "Enter the code ID, slug, or full qr.clutchprintshop.com/qr/ link.",
+      "find_existing": "Find my Clutch Code",
+      "placement": "QR placement instructions (optional)"
+    },
+    "artwork": {
+      "legend": "Artwork method",
+      "upload_now_title": "Upload artwork now",
+      "upload_now_help": "Attach one print-ready file to this cart line.",
+      "upload_later_title": "Upload artwork after checkout",
+      "upload_later_help": "Use your secure dashboard after checkout.",
+      "request_design_title": "Request design help",
+      "request_design_help": "Tell the Clutch Print Shop team what you need.",
+      "request_design_prompt": "Describe the layout, content, and brand direction you need below.",
+      "reorder_title": "Reorder existing artwork",
+      "reorder_help": "Reference a previous order whose artwork should be reused.",
+      "file": "Artwork file",
+      "file_help": "PDF, PNG, JPG, TIFF, or EPS; maximum 25 MB.",
+      "instructions": "Artwork instructions",
+      "instructions_help": "Optional unless you are requesting design assistance.",
+      "reorder_reference": "Previous order reference"
+    },
+    "validation": {
+      "heading": "Please complete your print setup:",
+      "campaign": "Enter a campaign name.",
+      "destination": "Enter a valid HTTP or HTTPS destination URL.",
+      "existing": "Enter your existing Clutch Code.",
+      "file_required": "Choose an artwork file.",
+      "file_size": "Artwork must be 25 MB or smaller.",
+      "file_type": "Use a PDF, PNG, JPG, TIFF, or EPS file.",
+      "instructions": "Enter instructions for the design team.",
+      "reorder": "Enter the previous order reference."
+    },
+    "cart": {
+      "tracking_mode": "Clutch Code tracking",
+      "tracking_none": "No tracking",
+      "tracking_new": "New included Clutch Code",
+      "tracking_existing": "Existing Clutch Code",
+      "campaign_name": "Campaign",
+      "destination_url": "Destination",
+      "existing_code": "Existing Clutch Code",
+      "artwork_method": "Artwork",
+      "artwork_upload_now": "Uploaded with order",
+      "artwork_upload_later": "Upload after checkout",
+      "artwork_request_design": "Design help requested",
+      "artwork_reorder": "Reuse existing artwork",
+      "artwork_file": "Artwork file",
+      "artwork_instructions": "Artwork instructions",
+      "reorder_reference": "Previous order",
+      "placement_instructions": "QR placement instructions"
+    }
   }
 }
