@@ -8,8 +8,8 @@
 
 {% liquid
   assign block_settings = block.settings
-  assign clutch_nav_titles = 'HOME|SHOP|BUSINESS KITS|CONNECT|CUSTOM ORDER' | split: '|'
-  assign clutch_nav_urls = '/|/collections/all|/collections/business-kits|/pages/smart-business-card|/pages/contact' | split: '|'
+  assign clutch_nav_titles = 'Shop|Business Kits|Clutch NFC Card|Custom Order' | split: '|'
+  assign clutch_nav_urls = '/collections/all|/collections/business-kits|/pages/smart-business-card|/pages/contact' | split: '|'
   assign current_path = request.path
 %}
 
@@ -46,22 +46,18 @@
               {% assign is_active = false %}
               {% case forloop.index %}
                 {% when 1 %}
-                  {% if current_path == '/' %}
-                    {% assign is_active = true %}
-                  {% endif %}
-                {% when 2 %}
                   {% if current_path contains '/collections/all' %}
                     {% assign is_active = true %}
                   {% endif %}
-                {% when 3 %}
+                {% when 2 %}
                   {% if current_path contains '/collections/business-kits' %}
                     {% assign is_active = true %}
                   {% endif %}
-                {% when 4 %}
+                {% when 3 %}
                   {% if current_path contains '/pages/smart-business-card' or current_path contains '/products/clutch-connect-card' %}
                     {% assign is_active = true %}
                   {% endif %}
-                {% when 5 %}
+                {% when 4 %}
                   {% if current_path contains '/pages/contact' %}
                     {% assign is_active = true %}
                   {% endif %}
@@ -86,8 +82,6 @@
   {% else %}
     {% liquid
       assign block_settings = block.settings
-      assign menu_content_type = block_settings.menu_style | default: 'text'
-      assign image_border_radius = block_settings.image_border_radius
       assign color_scheme_classes = ''
       assign color_scheme_setting_id = 'color_scheme_' | append: section.settings.menu_row
       assign current_color_scheme = block_settings.color_scheme
@@ -102,11 +96,6 @@
         assign color_scheme_classes = color_scheme_classes | append: ' color-scheme-matches-parent'
       endif
 
-      if block_settings.menu_style == 'featured_collections'
-        assign ratio = block_settings.featured_collections_aspect_ratio
-      elsif block_settings.menu_style == 'featured_products'
-        assign ratio = block_settings.featured_products_aspect_ratio
-      endif
     %}
 
     <div
@@ -127,22 +116,18 @@
               {% assign is_active = false %}
               {% case forloop.index %}
                 {% when 1 %}
-                  {% if current_path == '/' %}
-                    {% assign is_active = true %}
-                  {% endif %}
-                {% when 2 %}
                   {% if current_path contains '/collections/all' %}
                     {% assign is_active = true %}
                   {% endif %}
-                {% when 3 %}
+                {% when 2 %}
                   {% if current_path contains '/collections/business-kits' %}
                     {% assign is_active = true %}
                   {% endif %}
-                {% when 4 %}
+                {% when 3 %}
                   {% if current_path contains '/pages/smart-business-card' or current_path contains '/products/clutch-connect-card' %}
                     {% assign is_active = true %}
                   {% endif %}
-                {% when 5 %}
+                {% when 4 %}
                   {% if current_path contains '/pages/contact' %}
                     {% assign is_active = true %}
                   {% endif %}
