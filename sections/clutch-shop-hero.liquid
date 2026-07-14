@@ -1,15 +1,11 @@
 {% unless collection.handle == 'all' or collection.handle == 'print-products' %}
 <section class="clutch-shop-hero color-{{ section.settings.color_scheme }}" aria-labelledby="clutch-shop-title">
-  <div class="clutch-shop-hero__inner">
+  <div class="clutch-shop-hero__inner{% if collection.handle == 'business-kits' %} clutch-shop-hero__inner--business-kits{% endif %}">
     <div class="clutch-shop-hero__copy">
       {% if collection.handle == 'business-kits' %}
-        <p class="clutch-shop-hero__eyebrow">Business Kits</p>
-        <h1 id="clutch-shop-title">Print campaigns with analytics included.</h1>
-        <p>
-          Every Business Kit includes Clutch Connect Basic free.
-          Your kit includes a free digital profile for contact info, links, request forms, and save-contact options.
-          Upgrade to QR Pro when you want to track individual printed materials like business cards, flyers, door hangers, and signs.
-        </p>
+        <p class="clutch-shop-hero__eyebrow">BUSINESS KITS</p>
+        <h1 id="clutch-shop-title">Launch With Everything Your Business Needs</h1>
+        <p>Choose a coordinated package of professional print products, included design support, and connected marketing tools—all in one order.</p>
       {% else %}
         <p class="clutch-shop-hero__eyebrow">Premium Print Products</p>
         <h1 id="clutch-shop-title">Print products built for business growth.</h1>
@@ -19,12 +15,18 @@
         </p>
       {% endif %}
       <div class="clutch-shop-hero__actions">
-        <a href="{{ routes.collections_url }}/business-kits" class="clutch-shop-hero__button clutch-shop-hero__button--primary">Shop Business Kits</a>
-        <a href="/pages/smart-business-card" class="clutch-shop-hero__button clutch-shop-hero__button--secondary">View Smart Business Card</a>
+        {% if collection.handle == 'business-kits' %}
+          <a href="#compare-kits" class="clutch-shop-hero__button clutch-shop-hero__button--primary">Compare Kits</a>
+          <a href="/pages/contact" class="clutch-shop-hero__button clutch-shop-hero__button--secondary">Request a Custom Kit</a>
+        {% else %}
+          <a href="{{ routes.collections_url }}/business-kits" class="clutch-shop-hero__button clutch-shop-hero__button--primary">Shop Business Kits</a>
+          <a href="/pages/smart-business-card" class="clutch-shop-hero__button clutch-shop-hero__button--secondary">View Smart Business Card</a>
+        {% endif %}
       </div>
     </div>
 
-    <div class="clutch-shop-hero__panel" aria-label="Shop highlights">
+    {% unless collection.handle == 'business-kits' %}
+      <div class="clutch-shop-hero__panel" aria-label="Shop highlights">
       <article>
         <span>{% if collection.handle == 'business-kits' %}Included{% else %}Campaign-ready{% endif %}</span>
         <strong>{% if collection.handle == 'business-kits' %}QR tracking{% else %}Business Kits{% endif %}</strong>
@@ -40,7 +42,8 @@
         <strong>{% if collection.handle == 'business-kits' %}Free shipping{% else %}Flyers, signs, mailers{% endif %}</strong>
         <p>{% if collection.handle == 'business-kits' %}Free shipping is messaged across Business Kit ordering.{% else %}Materials designed for measurable outreach campaigns.{% endif %}</p>
       </article>
-    </div>
+      </div>
+    {% endunless %}
   </div>
 </section>
 {% endunless %}
@@ -61,6 +64,10 @@
     grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.72fr);
     margin-inline: auto;
     max-width: 1180px;
+  }
+
+  .clutch-shop-hero__inner--business-kits {
+    grid-template-columns: minmax(0, 820px);
   }
 
   .clutch-shop-hero__eyebrow {
@@ -116,15 +123,25 @@
   }
 
   .clutch-shop-hero__button--primary {
-    background: #FFA665;
-    box-shadow: 0 16px 32px rgba(255, 166, 101, 0.28);
-    color: #071D33;
+    background: #fff;
+    box-shadow: inset 0 -3px 0 #FFA665, 0 14px 28px rgba(0, 0, 0, 0.16);
+    color: #384862;
   }
 
   .clutch-shop-hero__button--secondary {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.22);
     color: #fff;
+  }
+
+  .clutch-shop-hero__button:focus-visible {
+    outline: 3px solid #FFA665;
+    outline-offset: 3px;
+  }
+
+  .clutch-shop-hero__button:active {
+    box-shadow: none;
+    transform: translateY(0);
   }
 
   .clutch-shop-hero__panel {
@@ -194,6 +211,16 @@
 
     .clutch-shop-hero__panel p {
       display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .clutch-shop-hero__button {
+      transition: none;
+    }
+
+    .clutch-shop-hero__button:hover {
+      transform: none;
     }
   }
 {% endstylesheet %}

@@ -20,7 +20,7 @@
   }
 {% endjavascript %}
 
-{% unless collection.handle == 'all' or collection.handle == 'print-products' %}
+{% unless collection.handle == 'all' or collection.handle == 'print-products' or collection.handle == 'business-kits' %}
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <results-list
