@@ -105,6 +105,9 @@
               {% if link.url == routes.root_url %}
                 {% continue %}
               {% endif %}
+              {% if link.url contains '/pages/qr-pro' %}
+                {% continue %}
+              {% endif %}
               {% assign clutch_mobile_title = link.title %}
               {% assign clutch_mobile_url = link.url %}
               {% if link.title == 'Business Kits' %}
@@ -259,6 +262,24 @@
                   </a>
                 {% endif %}
               </li>
+              {% if link.title == 'Business Kits' %}
+                {% assign animation_index = animation_index | plus: 1 %}
+                <li
+                  style="--menu-drawer-animation-index: {{ animation_index }};"
+                  class="menu-drawer__list-item--flat{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
+                >
+                  <a
+                    id="HeaderDrawer-clutch-codes"
+                    href="/pages/qr-pro"
+                    class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset{% if request.path contains '/pages/qr-pro' %} menu-drawer__menu-item--active{% endif %}"
+                    {% if request.path contains '/pages/qr-pro' %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    <span class="menu-drawer__menu-item-text wrap-text">Clutch Codes™</span>
+                  </a>
+                </li>
+              {% endif %}
             {%- endfor -%}
           {% else %}
             {%- comment -%}
@@ -267,6 +288,9 @@
             {% assign animation_index = 0 %}
             {%- for link in linklist.links -%}
               {% if link.url == routes.root_url %}
+                {% continue %}
+              {% endif %}
+              {% if link.url contains '/pages/qr-pro' %}
                 {% continue %}
               {% endif %}
               {% assign clutch_mobile_title = link.title %}
@@ -590,6 +614,24 @@
                   </a>
                 {%- endif -%}
               </li>
+              {% if link.title == 'Business Kits' %}
+                {% assign animation_index = animation_index | plus: 1 %}
+                <li
+                  class="menu-drawer__list-item"
+                  style="--menu-drawer-animation-index: {{ animation_index }};"
+                >
+                  <a
+                    id="HeaderDrawer-clutch-codes"
+                    href="/pages/qr-pro"
+                    class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element focus-inset{% if request.path contains '/pages/qr-pro' %} menu-drawer__menu-item--active{% endif %}"
+                    {% if request.path contains '/pages/qr-pro' %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    <span class="menu-drawer__menu-item-text wrap-text">Clutch Codes™</span>
+                  </a>
+                </li>
+              {% endif %}
             {%- endfor -%}
           {% endif %}
         </ul>

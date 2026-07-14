@@ -40,7 +40,7 @@
     assign clutch_codes_url = section.settings.clutch_codes_page.url
   endif
 
-  assign connect_url = '/pages/smart-business-card'
+  assign connect_url = section.settings.clutch_connect_preview_link
   if section.settings.connect_page != blank
     assign connect_url = section.settings.connect_page.url
   endif
@@ -67,26 +67,50 @@
 
       <div class="clutch-hero__visual clutch-reveal" aria-label="Printed marketing connected to a digital destination and scan activity">
         <div class="clutch-hero__print">
-          <span class="clutch-hero__print-mark">CLUTCH</span>
-          <span class="clutch-hero__print-title">Make every impression count.</span>
-          <span class="clutch-demo-qr" aria-label="Clutch Code demonstration">
-            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          </span>
-          <small>Clutch Code · Demo</small>
+          {%- if section.settings.hero_print_image != blank -%}
+            <picture class="clutch-hero__configured-media">
+              {%- if section.settings.hero_print_image_mobile != blank -%}
+                <source media="(max-width: 767px)" srcset="{{ section.settings.hero_print_image_mobile | image_url: width: 900 }}">
+              {%- endif -%}
+              {{ section.settings.hero_print_image | image_url: width: 1200 | image_tag: widths: '480, 720, 960, 1200', sizes: '(min-width: 1024px) 34vw, 62vw', loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_print_image_alt }}
+            </picture>
+          {%- else -%}
+            <span class="clutch-hero__print-mark">CLUTCH</span>
+            <span class="clutch-hero__print-title">Make every impression count.</span>
+            <span class="clutch-hero__code-badge">Dynamic Clutch Code</span>
+            <small>Editable destination · Demo workflow</small>
+          {%- endif -%}
         </div>
         <span class="clutch-hero__connector" aria-hidden="true">→</span>
-        <div class="clutch-hero__phone" aria-hidden="true">
-          <span class="clutch-hero__phone-bar"></span>
-          <span class="clutch-hero__phone-logo">C</span>
-          <strong>Campaign destination</strong>
-          <span class="clutch-hero__phone-line"></span>
-          <span class="clutch-hero__phone-line clutch-hero__phone-line--short"></span>
-          <span class="clutch-hero__phone-action">Learn more</span>
+        <div class="clutch-hero__phone">
+          {%- if section.settings.hero_destination_image != blank -%}
+            <picture class="clutch-hero__configured-media">
+              {%- if section.settings.hero_destination_image_mobile != blank -%}
+                <source media="(max-width: 767px)" srcset="{{ section.settings.hero_destination_image_mobile | image_url: width: 600 }}">
+              {%- endif -%}
+              {{ section.settings.hero_destination_image | image_url: width: 800 | image_tag: widths: '320, 480, 640, 800', sizes: '(min-width: 1024px) 17vw, 38vw', loading: 'eager', alt: section.settings.hero_destination_image_alt }}
+            </picture>
+          {%- else -%}
+            <span class="clutch-hero__phone-bar" aria-hidden="true"></span>
+            <span class="clutch-hero__phone-logo" aria-hidden="true">C</span>
+            <strong>Campaign destination</strong>
+            <span class="clutch-hero__phone-detail">Website, offer, booking page, or profile</span>
+            <span class="clutch-hero__phone-action">Connected experience</span>
+          {%- endif -%}
         </div>
         <div class="clutch-hero__analytics">
-          <span>Scan Activity</span>
-          <strong>Demo</strong>
-          <i></i><i></i><i></i><i></i>
+          {%- if section.settings.hero_analytics_image != blank -%}
+            <picture class="clutch-hero__configured-media">
+              {%- if section.settings.hero_analytics_image_mobile != blank -%}
+                <source media="(max-width: 767px)" srcset="{{ section.settings.hero_analytics_image_mobile | image_url: width: 700 }}">
+              {%- endif -%}
+              {{ section.settings.hero_analytics_image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: '(min-width: 1024px) 23vw, 52vw', loading: 'eager', alt: section.settings.hero_analytics_image_alt }}
+            </picture>
+          {%- else -%}
+            <span>Scan Activity</span>
+            <strong>Demo</strong>
+            <i></i><i></i><i></i><i></i>
+          {%- endif -%}
         </div>
       </div>
     </div>
@@ -106,7 +130,7 @@
               <span class="clutch-media-placeholder" aria-hidden="true">PRINT</span>
             {%- endif -%}
           </span>
-          <span class="clutch-need-card__body"><span class="clutch-card-number">01</span><strong>Print Products</strong><span>Business cards, flyers, postcards, signs, banners, and other essentials.</span><em>Shop Print <span aria-hidden="true">→</span></em></span>
+          <span class="clutch-need-card__body"><span class="clutch-card-number">01</span><strong>Print Products</strong><span>Business cards, flyers, postcards, signs, banners, and other essentials.</span><em>Shop Print Products <span aria-hidden="true">→</span></em></span>
         </a>
 
         <a class="clutch-need-card clutch-reveal" href="{{ kits_url }}" role="listitem" style="--reveal-delay: 80ms">
@@ -117,10 +141,17 @@
               <span class="clutch-media-placeholder" aria-hidden="true">KITS</span>
             {%- endif -%}
           </span>
-          <span class="clutch-need-card__body"><span class="clutch-card-number">02</span><strong>Business Kits</strong><span>Coordinated print products bundled for launches, campaigns, and local marketing.</span><em>Explore Kits <span aria-hidden="true">→</span></em></span>
+          <span class="clutch-need-card__body"><span class="clutch-card-number">02</span><strong>Business Kits</strong><span>Coordinated print products bundled for launches, campaigns, and local marketing.</span><em>Explore Business Kits <span aria-hidden="true">→</span></em></span>
         </a>
 
-        <a class="clutch-need-card clutch-reveal" href="{{ nfc_product.url | default: '/products/clutch-connect-card' }}" role="listitem" style="--reveal-delay: 160ms">
+        <a class="clutch-need-card clutch-reveal" href="{{ clutch_codes_url }}" role="listitem" style="--reveal-delay: 160ms">
+          <span class="clutch-need-card__media clutch-need-card__media--codes">
+            <span class="clutch-code-card-mini" aria-hidden="true"><b>CLUTCH CODES™</b><i>Dynamic destination</i><small>Demo analytics</small></span>
+          </span>
+          <span class="clutch-need-card__body"><span class="clutch-card-number">03</span><strong>Clutch Codes™</strong><span>Dynamic QR campaigns with editable destinations and clearly labeled scan insights.</span><em>Explore Clutch Codes™ <span aria-hidden="true">→</span></em></span>
+        </a>
+
+        <a class="clutch-need-card clutch-reveal" href="{{ nfc_product.url | default: '/products/clutch-connect-card' }}" role="listitem" style="--reveal-delay: 240ms">
           <span class="clutch-need-card__media clutch-need-card__media--dark">
             {%- if nfc_product.featured_image != blank -%}
               {{ nfc_product.featured_image | image_url: width: 720 | image_tag: widths: '320, 480, 720', sizes: '(min-width: 1024px) 25vw, (min-width: 640px) 46vw, 82vw', loading: 'lazy', alt: nfc_product.featured_image.alt | default: 'Clutch NFC Card' }}
@@ -128,14 +159,14 @@
               <span class="clutch-nfc-mini" aria-hidden="true"><b>CLUTCH</b><i></i><small>NFC + QR</small></span>
             {%- endif -%}
           </span>
-          <span class="clutch-need-card__body"><span class="clutch-card-number">03</span><strong>Clutch NFC Card</strong><span>One reusable metal card connected to your editable digital profile.</span><em>Explore the Card <span aria-hidden="true">→</span></em></span>
+          <span class="clutch-need-card__body"><span class="clutch-card-number">04</span><strong>Clutch NFC Card</strong><span>One reusable metal card connected to your editable digital profile.</span><em>Explore the Clutch NFC Card <span aria-hidden="true">→</span></em></span>
         </a>
 
-        <a class="clutch-need-card clutch-reveal" href="{{ custom_order_url }}" role="listitem" style="--reveal-delay: 240ms">
+        <a class="clutch-need-card clutch-reveal" href="{{ custom_order_url }}" role="listitem" style="--reveal-delay: 320ms">
           <span class="clutch-need-card__media clutch-need-card__media--custom" aria-hidden="true">
             <span class="clutch-custom-stack"><i></i><i></i><i></i><b>YOUR IDEA</b></span>
           </span>
-          <span class="clutch-need-card__body"><span class="clutch-card-number">04</span><strong>Custom Orders</strong><span>Custom products, quantities, sizes, artwork, and business packages.</span><em>Request a Quote <span aria-hidden="true">→</span></em></span>
+          <span class="clutch-need-card__body"><span class="clutch-card-number">05</span><strong>Custom Orders</strong><span>Custom products, quantities, sizes, artwork, and business packages.</span><em>Request a Custom Order <span aria-hidden="true">→</span></em></span>
         </a>
       </div>
     </div>
@@ -208,7 +239,9 @@
         </ul>
         <div class="clutch-actions">
           <a class="clutch-button clutch-button--primary" href="{{ nfc_product.url | default: '/products/clutch-connect-card' }}">Explore the Clutch NFC Card</a>
-          <a class="clutch-button clutch-button--secondary clutch-button--on-dark" href="{{ connect_url }}">Preview Clutch Connect</a>
+          {%- if connect_url != blank -%}
+            <a class="clutch-button clutch-button--secondary clutch-button--on-dark" href="{{ connect_url }}">Preview Clutch Connect</a>
+          {%- endif -%}
         </div>
       </div>
     </div>
@@ -360,7 +393,7 @@
   .clutch-button,
   .clutch-inline-link {
     align-items: center;
-    border-radius: 10px;
+    border-radius: 12px;
     display: inline-flex;
     font-weight: 800;
     justify-content: center;
@@ -375,14 +408,15 @@
   }
 
   .clutch-button--primary {
-    background: var(--clutch-orange);
-    box-shadow: 0 12px 28px rgba(255, 166, 101, 0.24);
-    color: #1C2838;
+    background: var(--clutch-navy);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 -3px 0 var(--clutch-orange), 0 12px 28px rgba(56, 72, 98, 0.2);
+    color: var(--clutch-white);
   }
 
   .clutch-button--secondary {
     background: var(--clutch-white);
-    border-color: var(--clutch-line);
+    border-color: var(--clutch-navy);
     color: var(--clutch-navy);
   }
 
@@ -397,16 +431,36 @@
     gap: 0.4rem;
     justify-self: start;
     padding-inline: 0.15rem;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.3em;
   }
 
-  .clutch-button:hover,
-  .clutch-inline-link:hover {
-    transform: translateY(-2px);
+  @media (hover: hover) and (pointer: fine) {
+    .clutch-button:hover,
+    .clutch-inline-link:hover {
+      transform: translateY(-2px);
+    }
+
+    .clutch-button--primary:hover {
+      background: #2D3C55;
+      box-shadow: inset 0 -3px 0 var(--clutch-orange), 0 16px 34px rgba(56, 72, 98, 0.26);
+    }
+
+    .clutch-button--secondary:hover {
+      border-color: var(--clutch-orange);
+      box-shadow: 0 10px 24px rgba(56, 72, 98, 0.12);
+    }
+
+    .clutch-inline-link:hover {
+      text-decoration-color: var(--clutch-orange);
+    }
   }
 
-  .clutch-button--primary:hover {
-    background: #FFB47B;
-    box-shadow: 0 16px 34px rgba(255, 166, 101, 0.3);
+  .clutch-button:active,
+  .clutch-inline-link:active {
+    box-shadow: none;
+    transform: translateY(0);
   }
 
   .clutch-button:focus-visible,
@@ -419,7 +473,7 @@
   }
 
   .clutch-hero {
-    background: radial-gradient(circle at 80% 24%, rgba(255, 166, 101, 0.18), transparent 28%), linear-gradient(180deg, #FFFFFF 0%, #F7F8FA 100%);
+    background: radial-gradient(circle at 82% 22%, rgba(56, 72, 98, 0.08), transparent 30%), linear-gradient(180deg, #FFFFFF 0%, #F7F8FA 100%);
     min-height: min(820px, calc(100svh - 80px));
     padding-top: clamp(5rem, 10vw, 8.5rem);
   }
@@ -488,6 +542,33 @@
     font-weight: 700;
   }
 
+  .clutch-hero__code-badge {
+    align-self: end;
+    background: var(--clutch-navy);
+    border-left: 4px solid var(--clutch-orange);
+    border-radius: 8px;
+    color: var(--clutch-white);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.75rem;
+    width: max-content;
+  }
+
+  .clutch-hero__configured-media {
+    display: block;
+    height: 100%;
+    inset: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+  }
+
+  .clutch-hero__configured-media img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
   .clutch-demo-qr {
     background: #FFFFFF;
     border: 5px solid #FFFFFF;
@@ -513,18 +594,16 @@
 
   .clutch-hero__connector {
     align-items: center;
-    background: var(--clutch-orange);
-    border-radius: 50%;
-    color: var(--clutch-ink);
+    color: var(--clutch-orange);
     display: flex;
     font-size: 1.4rem;
     font-weight: 900;
-    height: 48px;
+    height: 44px;
     justify-content: center;
     left: 54%;
     position: absolute;
     top: 40%;
-    width: 48px;
+    width: 44px;
     z-index: 4;
   }
 
@@ -542,6 +621,7 @@
     right: 0;
     top: 5%;
     width: min(45%, 225px);
+    min-height: 290px;
     z-index: 3;
   }
 
@@ -569,6 +649,13 @@
 
   .clutch-hero__phone strong {
     font-size: 0.82rem;
+    text-align: center;
+  }
+
+  .clutch-hero__phone-detail {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.68rem;
+    line-height: 1.45;
     text-align: center;
   }
 
@@ -602,11 +689,16 @@
     display: grid;
     gap: 0.35rem;
     grid-template-columns: repeat(4, 1fr);
+    min-height: 128px;
     padding: 1rem;
     position: absolute;
     right: 6%;
     width: min(52%, 260px);
     z-index: 5;
+  }
+
+  .clutch-hero__analytics .clutch-hero__configured-media {
+    border-radius: inherit;
   }
 
   .clutch-hero__analytics span,
@@ -643,7 +735,7 @@
   .clutch-needs-grid {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .clutch-need-card {
@@ -685,6 +777,42 @@
 
   .clutch-need-card__media--kits {
     background: #F4E9DF;
+  }
+
+  .clutch-need-card__media--codes {
+    background: linear-gradient(145deg, #172033, var(--clutch-navy));
+  }
+
+  .clutch-code-card-mini {
+    background: var(--clutch-white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 13px;
+    box-shadow: 0 18px 36px rgba(8, 15, 28, 0.28);
+    display: grid;
+    gap: 0.55rem;
+    padding: 1rem;
+    transform: rotate(-3deg);
+    width: 76%;
+  }
+
+  .clutch-code-card-mini b {
+    color: var(--clutch-navy);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  .clutch-code-card-mini i {
+    background: var(--clutch-soft);
+    border-left: 3px solid var(--clutch-orange);
+    color: var(--clutch-ink);
+    font-size: 0.62rem;
+    font-style: normal;
+    padding: 0.5rem;
+  }
+
+  .clutch-code-card-mini small {
+    color: var(--clutch-muted);
+    font-size: 0.58rem;
   }
 
   .clutch-need-card__media--dark {
@@ -1353,6 +1481,62 @@
   "name": "Clutch premium homepage",
   "settings": [
     {
+      "type": "header",
+      "content": "Hero media"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_print_image",
+      "label": "Print product desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_print_image_mobile",
+      "label": "Print product mobile image"
+    },
+    {
+      "type": "text",
+      "id": "hero_print_image_alt",
+      "label": "Print product image alt text",
+      "default": "Printed marketing piece with a Clutch Code"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_destination_image",
+      "label": "Digital destination desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_destination_image_mobile",
+      "label": "Digital destination mobile image"
+    },
+    {
+      "type": "text",
+      "id": "hero_destination_image_alt",
+      "label": "Digital destination image alt text",
+      "default": "Digital campaign destination preview"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_analytics_image",
+      "label": "Analytics desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_analytics_image_mobile",
+      "label": "Analytics mobile image"
+    },
+    {
+      "type": "text",
+      "id": "hero_analytics_image_alt",
+      "label": "Analytics image alt text",
+      "default": "Example Clutch Code scan activity"
+    },
+    {
+      "type": "header",
+      "content": "Shopping destinations"
+    },
+    {
       "type": "collection",
       "id": "print_collection",
       "label": "Print collection"
@@ -1391,6 +1575,11 @@
       "type": "page",
       "id": "connect_page",
       "label": "Clutch Connect page"
+    },
+    {
+      "type": "url",
+      "id": "clutch_connect_preview_link",
+      "label": "Clutch Connect preview link"
     },
     {
       "type": "page",

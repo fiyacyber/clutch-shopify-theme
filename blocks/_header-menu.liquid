@@ -8,8 +8,8 @@
 
 {% liquid
   assign block_settings = block.settings
-  assign clutch_nav_titles = 'Shop|Business Kits|Clutch NFC Card|Custom Order' | split: '|'
-  assign clutch_nav_urls = '/collections/all|/collections/business-kits|/pages/smart-business-card|/pages/contact' | split: '|'
+  assign clutch_nav_titles = 'Shop|Business Kits|Clutch Codes™|Clutch NFC Card|Custom Order' | split: '|'
+  assign clutch_nav_urls = '/collections/all|/collections/business-kits|/pages/qr-pro|/pages/smart-business-card|/pages/contact' | split: '|'
   assign current_path = request.path
 %}
 
@@ -54,10 +54,14 @@
                     {% assign is_active = true %}
                   {% endif %}
                 {% when 3 %}
-                  {% if current_path contains '/pages/smart-business-card' or current_path contains '/products/clutch-connect-card' %}
+                  {% if current_path contains '/pages/qr-pro' %}
                     {% assign is_active = true %}
                   {% endif %}
                 {% when 4 %}
+                  {% if current_path contains '/pages/smart-business-card' or current_path contains '/products/clutch-connect-card' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 5 %}
                   {% if current_path contains '/pages/contact' %}
                     {% assign is_active = true %}
                   {% endif %}
@@ -124,10 +128,14 @@
                     {% assign is_active = true %}
                   {% endif %}
                 {% when 3 %}
-                  {% if current_path contains '/pages/smart-business-card' or current_path contains '/products/clutch-connect-card' %}
+                  {% if current_path contains '/pages/qr-pro' %}
                     {% assign is_active = true %}
                   {% endif %}
                 {% when 4 %}
+                  {% if current_path contains '/pages/smart-business-card' or current_path contains '/products/clutch-connect-card' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% when 5 %}
                   {% if current_path contains '/pages/contact' %}
                     {% assign is_active = true %}
                   {% endif %}
